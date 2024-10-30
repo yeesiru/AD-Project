@@ -11,12 +11,10 @@
         <img src="../img/SJAM-logo.png" alt="Logo" class="logo">
         <h1>Ambulance Management</h1>
     </div>
-    <a href="../homepage.html" class="button">Back</a>
-    <button class="button" onclick="showAddAmbulanceForm()">Add Ambulance</button>
-    <div id="ambulance-list">
-        <!-- Ambulance list will be populated here dynamically -->
+    <div class="button-container">
+        <a href="../homepage.html" class="button">Back</a>
+        <button class="button" onclick="showAddAmbulanceForm()">Add Ambulance</button>
     </div>
-
     <!-- Add/Edit Ambulance Form -->
     <div id="ambulance-form" class="form-popup">
         <h3 id="form-title">Add Ambulance</h3>
@@ -33,6 +31,10 @@
         </select>
         <button class="button" id="saveButton" onclick="saveAmbulance()">Save</button>
         <button class="button" onclick="closeForm()">Cancel</button>
+    </div>
+
+    <div id="ambulance-list">
+        <!-- Ambulance list will be populated here dynamically -->
     </div>
 
     <script src="../script/ambulanceScript.js"></script>

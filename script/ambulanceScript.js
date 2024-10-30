@@ -32,7 +32,7 @@ const saveAmbulance = () => {
         // Update the existing ambulance
         ambulances[index] = { vehicleId, type, capacity, availability };
         alert("Ambulance updated successfully!");
-        
+
         // Reset the save button to default mode
         saveButton.removeAttribute("data-editing");
         saveButton.removeAttribute("data-index");
@@ -41,7 +41,7 @@ const saveAmbulance = () => {
         ambulances.push({ vehicleId, type, capacity, availability });
         alert("Ambulance added successfully!");
     }
-    
+
     displayAmbulances();
     closeForm();
 };
@@ -74,19 +74,26 @@ const deleteAmbulance = (index) => {
 // Display the list of ambulances
 const displayAmbulances = () => {
     const ambulanceList = document.getElementById("ambulance-list");
-    ambulanceList.innerHTML = "";
-    ambulances.forEach((amb, index) => {
-        ambulanceList.innerHTML += `
-            <div>
-                <p>Vehicle ID: ${amb.vehicleId}</p>
-                <p>Type: ${amb.type}</p>
-                <p>Capacity: ${amb.capacity}</p>
-                <p>Availability: ${amb.availability}</p>
-                <button class="button" onclick="editAmbulance(${index})">Edit</button>
-                <button class="button" onclick="deleteAmbulance(${index})">Delete</button>
-            </div>
-        `;
-    });
+    ambulanceList.innerHTML = ""; // Clear the current list
+
+    // Check if there are any ambulances to display
+    if (ambulances.length === 0) {
+        ambulanceList.style.display = "none"; // Hide if no ambulances
+    } else {
+        ambulanceList.style.display = "block"; // Show if there are ambulances
+        ambulances.forEach((amb, index) => {
+            ambulanceList.innerHTML += `
+                <div>
+                    <p>Vehicle ID: ${amb.vehicleId}</p>
+                    <p>Type: ${amb.type}</p>
+                    <p>Capacity: ${amb.capacity}</p>
+                    <p>Availability: ${amb.availability}</p>
+                    <button class="button" onclick="editAmbulance(${index})">Edit</button>
+                    <button class="button" onclick="deleteAmbulance(${index})">Delete</button>
+                </div>
+            `;
+        });
+    }
 };
 
 // Show the form to add a new booking
@@ -115,15 +122,15 @@ const saveBooking = () => {
 // Display the list of bookings
 const displayBookings = () => {
     const bookingList = document.getElementById("booking-list");
-    bookingList.innerHTML = "";
+    bookingList.innerHTML = ""; // Clear the current list
     bookings.forEach((book, index) => {
         bookingList.innerHTML += `
             <div>
                 <p>Booking Date: ${book.bookingDate}</p>
                 <p>Booking Time: ${book.bookingTime}</p>
                 <p>Destination: ${book.destination}</p>
-                <button onclick="editAmbulance(${index})">Edit</button>
-                <button onclick="deleteAmbulance(${index})">Delete</button>
+                <button class="button" onclick="editBooking(${index})">Edit</button>
+                <button class="button" onclick="deleteBooking(${index})">Delete</button>
             </div>
         `;
     });
@@ -133,7 +140,7 @@ const displayBookings = () => {
 const closeForm = () => {
     const bookingForm = document.getElementById("booking-form");
     const ambulanceForm = document.getElementById("ambulance-form");
-    
+
     if (bookingForm) {
         bookingForm.style.display = "none";
     }
@@ -142,4 +149,4 @@ const closeForm = () => {
     }
 };
 
-
+// (Optional) Add functions to edit and delete bookings if needed
