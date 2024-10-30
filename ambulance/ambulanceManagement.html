@@ -4,8 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ambulance Management</title>
+    <link rel="stylesheet" href="../css/ambulance.css">
 </head>
 <body>
-    
+    <h2>Ambulance Management</h2>
+    <a href="../homepage.html" class="button">Back</a>
+    <button class="button" onclick="showAddAmbulanceForm()">Add Ambulance</button>
+    <div id="ambulance-list">
+        <!-- Ambulance list will be populated here dynamically -->
+    </div>
+
+    <!-- Add/Edit Ambulance Form -->
+    <div id="ambulance-form" class="form-popup">
+        <h3 id="form-title">Add Ambulance</h3>
+        <label>Vehicle ID:</label>
+        <input type="text" id="vehicleId" placeholder="S123" required>
+        <label>Type:</label>
+        <input type="text" id="type" placeholder="S" required>
+        <label>Capacity:</label>
+        <input type="number" id="capacity" min="1" max="12" placeholder="1" required>
+        <label>Availability:</label>
+        <select id="availability">
+            <option value="Available">Available</option>
+            <option value="Unavailable">Unavailable</option>
+        </select>
+        <button class="button" id="saveButton" onclick="saveAmbulance()">Save</button>
+        <button class="button" onclick="closeForm()">Cancel</button>
+    </div>
+
+    <script src="../script/ambulanceScript.js"></script>
 </body>
 </html>

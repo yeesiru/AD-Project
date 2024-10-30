@@ -11,11 +11,22 @@ h1, h2 {
     align-items: center;
     margin: 20px auto;
 }
-button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
+
+.button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
 .form-popup {
     display: none;
     border: 1px solid #ddd;
