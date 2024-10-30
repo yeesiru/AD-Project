@@ -1,0 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1, h2 {
+    text-align: center;
+}
+.dashboard, .form-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+}
+button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+.form-popup {
+    display: none;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 300px;
+    background-color: #f9f9f9;
+}
+input, select {
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
