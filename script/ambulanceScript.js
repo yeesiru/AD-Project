@@ -1,16 +1,19 @@
 let ambulances = [];
 let bookings = [];
 
-function goBack(){
+// Navigate back to the homepage
+const goBack = () => {
     window.location.href = "homepage.html";
-}
+};
 
-function showAddAmbulanceForm() {
+// Show the form to add a new ambulance
+const showAddAmbulanceForm = () => {
     document.getElementById("ambulance-form").style.display = "block";
     document.getElementById("form-title").innerText = "Add Ambulance";
-}
+};
 
-function saveAmbulance() {
+// Save a new ambulance or update an existing one
+const saveAmbulance = () => {
     const vehicleId = document.getElementById("vehicleId").value;
     const type = document.getElementById("type").value;
     const capacity = document.getElementById("capacity").value;
@@ -23,26 +26,53 @@ function saveAmbulance() {
 
     const saveButton = document.getElementById("saveButton");
     const isEditing = saveButton.getAttribute("data-editing") === "true";
-    const index = saveButton.getAttribute("data-index");
+    const index = parseInt(saveButton.getAttribute("data-index"));
 
-    if (isEditing) {
+    if (isEditing && !isNaN(index)) {
         // Update the existing ambulance
         ambulances[index] = { vehicleId, type, capacity, availability };
+        alert("Ambulance updated successfully!");
         
         // Reset the save button to default mode
         saveButton.removeAttribute("data-editing");
         saveButton.removeAttribute("data-index");
+    } else {
+        // Add a new ambulance
+        ambulances.push({ vehicleId, type, capacity, availability });
+        alert("Ambulance added successfully!");
     }
-
-    ambulances.push({ vehicleId, type, capacity, availability });
-
-    alert("Ambulance added successfully!");
-    alert(isEditing ? "Ambulance updated successfully!" : "Ambulance added successfully!")
+    
     displayAmbulances();
     closeForm();
-}
+};
 
-function displayAmbulances() {
+// Edit an ambulance's details
+const editAmbulance = (index) => {
+    const ambulance = ambulances[index];
+
+    document.getElementById("vehicleId").value = ambulance.vehicleId;
+    document.getElementById("type").value = ambulance.type;
+    document.getElementById("capacity").value = ambulance.capacity;
+    document.getElementById("availability").value = ambulance.availability;
+
+    document.getElementById("form-title").innerText = "Edit Ambulance";
+    document.getElementById("ambulance-form").style.display = "block";
+
+    const saveButton = document.getElementById("saveButton");
+    saveButton.setAttribute("data-editing", "true");
+    saveButton.setAttribute("data-index", index);
+};
+
+// Delete an ambulance from the list
+const deleteAmbulance = (index) => {
+    if (confirm("Are you sure you want to delete this ambulance?")) {
+        ambulances.splice(index, 1);
+        displayAmbulances();
+    }
+};
+
+// Display the list of ambulances
+const displayAmbulances = () => {
     const ambulanceList = document.getElementById("ambulance-list");
     ambulanceList.innerHTML = "";
     ambulances.forEach((amb, index) => {
@@ -57,14 +87,16 @@ function displayAmbulances() {
             </div>
         `;
     });
-}
+};
 
-function showAddBookingForm() {
+// Show the form to add a new booking
+const showAddBookingForm = () => {
     document.getElementById("booking-form").style.display = "block";
     document.getElementById("form-title").innerText = "Add Booking";
-}
+};
 
-function saveBooking() {
+// Save a new booking
+const saveBooking = () => {
     const bookingDate = document.getElementById("bookingDate").value;
     const bookingTime = document.getElementById("bookingTime").value;
     const destination = document.getElementById("destination").value;
@@ -78,9 +110,10 @@ function saveBooking() {
     alert("Booking added successfully!");
     displayBookings();
     closeForm();
-}
+};
 
-function displayBookings() {
+// Display the list of bookings
+const displayBookings = () => {
     const bookingList = document.getElementById("booking-list");
     bookingList.innerHTML = "";
     bookings.forEach((book, index) => {
@@ -94,9 +127,10 @@ function displayBookings() {
             </div>
         `;
     });
-}
+};
 
-function closeForm() {
+// Close the form
+const closeForm = () => {
     const bookingForm = document.getElementById("booking-form");
     const ambulanceForm = document.getElementById("ambulance-form");
     
@@ -106,31 +140,6 @@ function closeForm() {
     if (ambulanceForm) {
         ambulanceForm.style.display = "none";
     }
-}
+};
 
-// Function to edit an ambulance's details
-function editAmbulance(index) {
-    const ambulance = ambulances[index];
 
-    document.getElementById("vehicleId").value = ambulance.vehicleId;
-    document.getElementById("type").value = ambulance.type;
-    document.getElementById("capacity").value = ambulance.capacity;
-    document.getElementById("availability").value = ambulance.availability;
-
-    document.getElementById("form-title").innerText = "Edit Ambulance";
-    document.getElementById("ambulance-form").style.display = "block";
-
-    const saveButton = document.getElementById("saveButton");
-    saveButton.setAttribute("data-editing", "true");
-    saveButton.setAttribute("data-index", index);
-}
-
-// Function to delete an ambulance from the list
-function deleteAmbulance(index) {
-    if (confirm("Are you sure you want to delete this ambulance?")) {
-        ambulances.splice(index, 1);
-        displayAmbulances();
-    }
-}
-
-// Similar functions for managing bookings
