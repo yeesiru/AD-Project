@@ -91,7 +91,6 @@ button[type="submit"]:hover {
     border-radius: 20px;
     background-color: #dbeae6;
     padding: 40px;
-    display: flex;   
     width: 100%; 
 }
 
@@ -110,5 +109,3 @@ input[type="radio"] {
     height: 40px;
 }
 
-/* .user-table input,
-select {} */
