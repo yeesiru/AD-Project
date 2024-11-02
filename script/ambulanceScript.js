@@ -24,6 +24,11 @@ const saveAmbulance = () => {
         return;
     }
 
+    if (capacity<1 || capacity>12) {
+        alert("Please fill in correct capacity.");
+        return;
+    }
+
     const saveButton = document.getElementById("saveButton");
     const isEditing = saveButton.getAttribute("data-editing") === "true";
     const index = parseInt(saveButton.getAttribute("data-index"));
