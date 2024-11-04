@@ -14,42 +14,58 @@ const showAddAmbulanceForm = () => {
 
 // Save a new ambulance or update an existing one
 const saveAmbulance = () => {
+    // Get form data
     const vehicleId = document.getElementById("vehicleId").value;
     const type = document.getElementById("type").value;
     const capacity = document.getElementById("capacity").value;
     const availability = document.getElementById("availability").value;
 
+    // Check for required fields
     if (!vehicleId || !type || !capacity) {
         alert("Please fill in all mandatory fields.");
         return;
     }
 
-    if (capacity<1 || capacity>12) {
-        alert("Please fill in correct capacity.");
+    if (capacity < 1 || capacity > 12) {
+        alert("Please enter a valid capacity (1-12).");
         return;
     }
 
-    const saveButton = document.getElementById("saveButton");
-    const isEditing = saveButton.getAttribute("data-editing") === "true";
-    const index = parseInt(saveButton.getAttribute("data-index"));
+    // Prepare data to be sent
+    const formData = new FormData();
+    formData.append("vehicleId", vehicleId);
+    formData.append("type", type);
+    formData.append("capacity", capacity);
+    formData.append("availability", availability);
 
-    if (isEditing && !isNaN(index)) {
-        // Update the existing ambulance
-        ambulances[index] = { vehicleId, type, capacity, availability };
-        alert("Ambulance updated successfully!");
-
-        // Reset the save button to default mode
-        saveButton.removeAttribute("data-editing");
-        saveButton.removeAttribute("data-index");
-    } else {
-        // Add a new ambulance
-        ambulances.push({ vehicleId, type, capacity, availability });
-        alert("Ambulance added successfully!");
-    }
-
-    displayAmbulances();
-    closeForm();
+    // Send data to add_ambulance.php
+    fetch("add_ambulance.php", {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => {
+        // Check if the response is OK
+        if (!response.ok) {
+            throw new Error(`Network response was not ok, status: ${response.status}`);
+        }
+        return response.json(); // Parse JSON response
+    })
+    .then(data => {
+        if (data.status === "success") {
+            alert("Ambulance added successfully!");
+            displayAmbulances(); // Refresh the list (assuming this function pulls updated data from the database)
+            closeForm();
+        } else {
+            throw new Error(data.message || "Failed to add ambulance");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error); // Log the error to the console
+        alert("Failed to add ambulance. " + error.message);
+    });
 };
+
+
 
 // Edit an ambulance's details
 const editAmbulance = (index) => {
@@ -71,10 +87,27 @@ const editAmbulance = (index) => {
 // Delete an ambulance from the list
 const deleteAmbulance = (index) => {
     if (confirm("Are you sure you want to delete this ambulance?")) {
-        ambulances.splice(index, 1);
-        displayAmbulances();
+        const ambulanceId = ambulances[index].id; // Get the id of the ambulance to delete
+        const formData = new FormData();
+        formData.append("id", ambulanceId);
+
+        fetch('delete_ambulance.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Ambulance deleted successfully!");
+                displayAmbulances();
+            } else {
+                alert(data.message || "An error occurred");
+            }
+        })
+        .catch(error => console.error('Error:', error));
     }
 };
+
 
 // Display the list of ambulances
 const displayAmbulances = () => {
@@ -101,46 +134,6 @@ const displayAmbulances = () => {
     }
 };
 
-// Show the form to add a new booking
-const showAddBookingForm = () => {
-    document.getElementById("booking-form").style.display = "block";
-    document.getElementById("form-title").innerText = "Add Booking";
-};
-
-// Save a new booking
-const saveBooking = () => {
-    const bookingDate = document.getElementById("bookingDate").value;
-    const bookingTime = document.getElementById("bookingTime").value;
-    const destination = document.getElementById("destination").value;
-
-    if (!bookingDate || !bookingTime || !destination) {
-        alert("Please fill in all mandatory fields.");
-        return;
-    }
-
-    bookings.push({ bookingDate, bookingTime, destination });
-    alert("Booking added successfully!");
-    displayBookings();
-    closeForm();
-};
-
-// Display the list of bookings
-const displayBookings = () => {
-    const bookingList = document.getElementById("booking-list");
-    bookingList.innerHTML = ""; // Clear the current list
-    bookings.forEach((book, index) => {
-        bookingList.innerHTML += `
-            <div>
-                <p>Booking Date: ${book.bookingDate}</p>
-                <p>Booking Time: ${book.bookingTime}</p>
-                <p>Destination: ${book.destination}</p>
-                <button class="button" onclick="editBooking(${index})">Edit</button>
-                <button class="button" onclick="deleteBooking(${index})">Delete</button>
-            </div>
-        `;
-    });
-};
-
 // Close the form
 const closeForm = () => {
     const bookingForm = document.getElementById("booking-form");
@@ -154,4 +147,14 @@ const closeForm = () => {
     }
 };
 
-// (Optional) Add functions to edit and delete bookings if needed
+window.onload = () => {
+    fetch('fetch_ambulances.php')
+        .then(response => response.json())
+        .then(data => {
+            ambulances = data;
+            displayAmbulances();
+        })
+        .catch(error => console.error('Error fetching ambulances:', error));
+};
+
+window.onload = displayAmbulances;
