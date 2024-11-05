@@ -1,35 +1,41 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>add Hall</title>
-        <link rel="stylesheet" href="../css/ambulance.css">
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hall Management</title>
+    <link rel="stylesheet" href="../css/hall.css">
+</head>
+<body>
+    <div class="overlay"></div> <!-- Background overlay -->
+    <div class="header">
+        <img src="" alt="Logo" class="logo">
+        <h1>Hall Management</h1>
+    </div>
+    <div class="button-container">
+        <a href="../homepage.html" class="button">Back</a>
+        <button class="button" onclick="showAddHallForm()">Add Hall</button>
+    </div>
+    <!-- Add/Edit Hall Form -->
+    <div id="hall-form" class="form-popup">
+        <h3 id="form-title">Add Hall</h3>
+        <label>Hall ID:</label>
+        <input type="text" id="hallId" placeholder="H123" required>
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Main Hall" required>
+        <label>Capacity:</label>
+        <input type="number" id="capacity" min="1" max="500" placeholder="100" required>
+        <label>Location:</label>
+        <input type="text" id="location" placeholder="Level 2" required>
+        <label>Facilities:</label>
+        <input type="text" id="facility" placeholder="Audio Equipment" required>
+        <button class="button" id="saveButton" onclick="saveHall()">Save</button>
+        <button class="button" onclick="closeForm()">Cancel</button>
+    </div>
 
-    <body>
-        <!-- Add hall form -->
-        <div class="form-container">
-            <h2>Add Hall</h2>
-            <form id="hallForm">
-                <label for="hallName">Hall ID:</label>
-                <input type="text" id="hallID" placeholder="H123" required>
+    <div id="hall-list">
+        <!-- Hall list will be populated here dynamically -->
+    </div>
 
-                <label for="hallName">Hall Name:</label>
-                <input type="text" id="hallName" placeholder="Dewan Tun Tan Cheng Lok" required>
-    
-                <label for="hallCapacity">Capacity:</label>
-                <input type="number" id="hallCapacity" min="0" placeholder="0" required>
-    
-                <label for="hallLocation">Location:</label>
-                <input type="text" id="hallLocation" placeholder="Level 1" required>
-
-                <label for="hallFacility">Facility:</label>
-                <input type="text" id="hallFacility" placeholder="Projector" required>
-    
-                <button type="button" onclick="addHall()">Save</button>
-            </form>
-        </div>
-
-    </body>
-</html>
+    <script src="../script/hallScript.js"></script>
+</body>
