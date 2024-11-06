@@ -43,6 +43,7 @@ $result = $conn->query($sql);
 <body>
     <div class="container">
         <h1>Ambulance Management</h1>
+        <a href="../index.html" class="btn btn-secondary mb-3">Back to Home</a>
         <a href="addAmbulance.php" class="btn btn-primary mb-3">Add New Ambulance</a>
 
         <table class="table table-bordered table-striped">
