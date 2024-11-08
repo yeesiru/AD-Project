@@ -48,5 +48,21 @@ if (mysqli_query($conn, $sql3)) {
   echo "Error creating ambulance table: " . mysqli_error($conn) . "<br>";
 }
 
+$sql4 = "CREATE TABLE IF NOT EXISTS feedback (
+  id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  serviceType VARCHAR(50) NOT NULL,
+  rating INT,
+  feedbackText TEXT NOT NULL,
+  submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status ENUM('pending', 'responded') DEFAULT 'pending',
+  admin_response TEXT
+)";
+
+if (mysqli_query($conn, $sql4)) {
+  echo "Table feedback created successfully.<br>";
+} else {
+  echo "Error creating feedback table: " . mysqli_error($conn) . "<br>";
+}
+
 mysqli_close($conn);
 ?>
