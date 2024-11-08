@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $facility = $_POST['facility'];
 
     // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hallId, name, capacity, location, facility) VALUES ('$hallId', '$name', '$capacity', '$location', '$facility')";
+    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hallId', '$name', '$capacity', '$location', '$facility')";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
