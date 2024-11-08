@@ -75,7 +75,7 @@ $sql5 = "CREATE TABLE IF NOT EXISTS halls (
 )";
 
 if (mysqli_query($conn, $sql5)) {
-  echo "Table feedback created successfully.<br>";
+  echo "Table hall created successfully.<br>";
 } else {
   echo "Error creating hall table: " . mysqli_error($conn) . "<br>";
 }

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $facility = $_POST['facility'];
 
     // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hallId, name, capacity, location, facility) VALUES ('$hallId', '$name', '$capacity', '$location', '$facility')";
+    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hallId', '$name', '$capacity', '$location', '$facility')";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="../css/navigation.css"> 
     <link rel="stylesheet" href="../css/hall.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
