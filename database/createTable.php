@@ -34,18 +34,19 @@ if (mysqli_query($conn, $sql2)) {
   echo "Error creating equipment table: " . mysqli_error($conn) . "<br>";
 }
 
+// SQL to create ambulances table
 $sql3 = "CREATE TABLE IF NOT EXISTS ambulance (
   id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  vehicle_id VARCHAR(50) NOT NULL,
-  type VARCHAR(1) NOT NULL,
-  capacity INT(2) NOT NULL,
+  vehicleId VARCHAR(11) NOT NULL,
+  type ENUM('Basic Life Support', 'Advanced Life Support', 'Critical Care') NOT NULL,
+  capacity INT(11) NOT NULL,
   availability ENUM('Available', 'Unavailable') NOT NULL
 )";
 
 if (mysqli_query($conn, $sql3)) {
-  echo "Table ambulance created successfully<br>";
+  echo "Table ambulances created successfully<br>";
 } else {
-  echo "Error creating ambulance table: " . mysqli_error($conn) . "<br>";
+  echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
 }
 
 $sql4 = "CREATE TABLE IF NOT EXISTS feedback (
