@@ -1,116 +1,107 @@
-/* General styling */
-body {
-    font-family: Arial, sans-serif;
+/* General reset */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
+    box-sizing: border-box;
 }
 
-.header {
-    background-color: #017b56;
-    color: #fff;
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+}
+
+/* Container styling */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #f3f4f6;
+}
+
+/* Header */
+.container h1 {
+    font-size: 2rem;
     text-align: center;
+    color: #ffffff;
+    background-color: #006837;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.header .logo {
-    width: 50px;
-    height: auto;
-    vertical-align: middle;
-}
-
-h1 {
-    display: inline;
-    margin-left: 10px;
-    font-size: 24px;
-}
-
-.button-container {
-    margin: 20px;
-    text-align: center;
-}
-
-.button {
-    padding: 10px 20px;
-    background-color: #017b56;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 5px;
+/* Buttons */
+.btn {
+    font-size: 1rem;
+    padding: 8px 16px;
+    margin: 0 10px 20px 0;
     border-radius: 5px;
+    border: none;
 }
 
-.button:hover {
-    background-color: #555;
+.btn-secondary {
+    background-color: #388e3c;
+    color: white;
 }
 
-/* Popup form styling */
-.form-popup {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 2px solid #333;
-    border-radius: 8px;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+.btn-primary {
+    background-color: #00796b;
+    color: white;
+}
+
+.btn-secondary:hover, .btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Table styling */
+table {
     width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-.form-popup h3 {
-    margin-top: 0;
-}
-
-.form-popup label {
-    display: block;
-    margin: 10px 0 5px;
-}
-
-.form-popup input, .form-popup select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.form-popup .button {
-    width: 48%;
-    display: inline-block;
-}
-
-/* Hall list styling */
-#hall-list {
-    margin: 20px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#hall-list .hall-item {
+.table thead th {
+    background-color: #388e3c;
+    color: white;
+    font-weight: bold;
+    text-align: left;
     padding: 10px;
+}
+
+.table tbody tr {
+    background-color: #ffffff;
     border-bottom: 1px solid #ddd;
 }
 
-#hall-list .hall-item:last-child {
-    border-bottom: none;
+.table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
-/* Background overlay when form is open */
-.overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+.table td {
+    padding: 12px;
+}
+
+/* Action buttons in the table */
+.table .btn-sm {
+    padding: 5px 10px;
+    font-size: 0.875rem;
+    margin-right: 5px;
+}
+
+.btn-warning {
+    background-color: #ffa000;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #ff8f00;
+}
+
+.btn-danger {
+    background-color: #d32f2f;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c62828;
 }
