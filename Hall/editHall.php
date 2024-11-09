@@ -5,22 +5,31 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$hall_id = $_GET['hall_id'];
+$sql = "SELECT * FROM halls WHERE hall_id = '$hall_id'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+} else {
+    echo "No such hall found!";
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $hall_id = $_POST['hall_id'];
     $name = $_POST['name'];
     $capacity = $_POST['capacity'];
     $location = $_POST['location'];
     $facility = $_POST['facility'];
 
-    // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hall_id', '$name', '$capacity', '$location', '$facility')";
+    $updateSql = "UPDATE halls SET name='$name', capacity='$capacity', location='$location', facility='$facility' WHERE hall_id='$hall_id'";
     
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->query($updateSql) === TRUE) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Hall added successfully.',
+                    text: 'Hall updated successfully.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
@@ -34,26 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>
             Swal.fire({
                 title: 'Error!',
-                text: 'Error adding new hall record: " . $conn->error . "',
+                text: 'Error updating hall record: " . $conn->error . "',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         </script>";
     }
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Hall Management</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Hall</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">   
-    <link rel="stylesheet" href="../css/navigation.css"> 
-    <link rel="stylesheet" href="../css/hall.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/navigation.css">    
+    <link rel="stylesheet" href="../css/manageHall.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         /* Add the additional styles here */
@@ -118,45 +127,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <div class="modal-container">
-        <div class="modal-form">
-            <h1>Add Hall</h1>
-            <form id="addHallForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-                
-                <div class="form-group hall-input">
-                    <label for="hall_id" class="form-label">Hall ID: </label>
-                    <input type="text" id="hall_id" name="hall_id" placeholder="H123" required>
-                </div>
+    <div class="container">
+        <a href="./manageHall.php" class="btn btn-secondary mb-3">Back to Home</a>
+        <br>
+        <h1>Edit Hall Details</h1>
 
-                <div class="form-group hall-input">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Main Hall" required>
-                </div>
+        <form action="" method="POST">
+            <div class="form-group hall-input">
+                <label for="hall_id">Hall ID: </label>
+                <input type="text" id="hall_id" name="hall_id" value="<?php echo $row['hall_id']; ?>" readonly>
+            </div>
 
-                <div class="form-group hall-input">
-                    <label for="capacity" class="form-label">Capacity: </label>
-                    <input type="number" id="capacity" name="capacity" placeholder="0"required min="1" max="500">
-                </div>
+            <div class="form-group hall-input">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>" required>
+            </div>
 
-                <div class="form-group hall-input">
-                    <label for="location" class="form-label">Location: </label>
-                    <input type="text" id="location" name="location" placeholder="Level 2" required>
-                </div>
+            <div class="form-group hall-input">
+                <label for="capacity">Capacity: </label>
+                <input type="number" id="capacity" name="capacity" value="<?php echo $row['capacity']; ?>" required min="1">
+            </div>
 
-                <div class="form-group hall-input">
-                    <label for="facility" class="form-label">Facility:</label>
-                    <input type="text" id="facility" name="facility" placeholder="Audio Equipment" required>
-                </div>
+            <div class="form-group hall-input">
+                <label for="location">Location: </label>
+                <input type="text" id="location" name="location" value="<?php echo $row['location']; ?>" required>
+            </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Save</button>
-                <a href="manageHall.php" class="btn btn-secondary mt-2">Cancel</a>
-            </form>
-        </div>
+            <div class="form-group hall-input">
+                <label for="facility">Facility:</label>
+                <input type="text" id="facility" name="facility" value="<?php echo $row['facility']; ?>" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Hall</button>
+        </form>
     </div>
-
-    <?php
-    $conn->close();
-    ?>
 </body>
 
 </html>
