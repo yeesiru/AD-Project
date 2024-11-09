@@ -1,107 +1,76 @@
-/* General reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* hall.css */
+
+/* General body styling */
+body {
+    background-color: #f3f4f6;
+    font-family: Arial, sans-serif;
 }
 
-/* Body styling */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f4f6;
+/* Header styling */
+h1 {
+    background-color: #006d47;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
 
 /* Container styling */
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
     padding: 20px;
-    background-color: #f3f4f6;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header */
-.container h1 {
-    font-size: 2rem;
-    text-align: center;
-    color: #ffffff;
-    background-color: #006837;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-/* Buttons */
+/* Button styling */
 .btn {
-    font-size: 1rem;
-    padding: 8px 16px;
-    margin: 0 10px 20px 0;
+    font-weight: bold;
     border-radius: 5px;
+    padding: 10px 15px;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #006d47;
+    color: white;
     border: none;
 }
 
 .btn-secondary {
-    background-color: #388e3c;
+    background-color: #777;
     color: white;
+    border: none;
 }
 
-.btn-primary {
-    background-color: #00796b;
-    color: white;
-}
-
-.btn-secondary:hover, .btn-primary:hover {
+.btn:hover {
     opacity: 0.9;
 }
 
 /* Table styling */
 table {
     width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
-    margin-bottom: 20px;
 }
 
-.table thead th {
-    background-color: #388e3c;
-    color: white;
-    font-weight: bold;
-    text-align: left;
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
     padding: 10px;
+    text-align: left;
 }
 
-.table tbody tr {
-    background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
-}
-
-.table tbody tr:hover {
-    background-color: #f1f1f1;
-}
-
-.table td {
-    padding: 12px;
-}
-
-/* Action buttons in the table */
-.table .btn-sm {
-    padding: 5px 10px;
-    font-size: 0.875rem;
-    margin-right: 5px;
-}
-
-.btn-warning {
-    background-color: #ffa000;
+th {
+    background-color: #006d47;
     color: white;
 }
 
-.btn-warning:hover {
-    background-color: #ff8f00;
-}
-
-.btn-danger {
-    background-color: #d32f2f;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #c62828;
+tr:nth-child(even) {
+    background-color: #f3f4f6;
 }

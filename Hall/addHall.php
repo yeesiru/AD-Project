@@ -6,14 +6,14 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $hallId = $_POST['hallId'];
+    $hall_id = $_POST['hall_id'];
     $name = $_POST['name'];
     $capacity = $_POST['capacity'];
     $location = $_POST['location'];
     $facility = $_POST['facility'];
 
     // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hallId', '$name', '$capacity', '$location', '$facility')";
+    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hall_id', '$name', '$capacity', '$location', '$facility')";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
@@ -67,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form id="addHallForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                 
                 <div class="form-group hall-input">
-                    <label for="hallId" class="form-label">Hall ID: </label>
-                    <input type="text" id="hallId" name="hallId" required>
+                    <label for="hall_id" class="form-label">Hall ID: </label>
+                    <input type="text" id="hall_id" name="hall_id" required>
                 </div>
 
                 <div class="form-group hall-input">
