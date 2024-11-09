@@ -37,13 +37,12 @@ $result = $conn->query($sql);
             });
         }
     </script>
-
 </head>
 <body>
 <div class="container">
         <h1>Hall Management</h1>
-        <a href="../homepage.html" class="btn btn-secondary mb-3">Back to Home</a>
-        <a href="../Hall/addHall.php" class="btn btn-primary mb-3">Add New Hall</a>
+        <a href="../homepage.html" class="btn btn-secondary mb-3" style="background-color: #777; color: white; border: none;">Back to Home</a>
+        <a href="addHall.php" class="btn btn-primary mb-3" style="background-color: #006d47; color: white; border: none;">Add New Hall</a>
 
         <table class="table table-bordered table-striped">
             <thead>
