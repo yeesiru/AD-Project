@@ -46,7 +46,7 @@ $result = $conn->query($sql);
 
         <table class="table table-bordered table-striped">
             <thead>
-                <tr>
+                <tr style="color: black">
                     <th>Hall ID</th>
                     <th>Name</th>
                     <th>Capacity</th>
