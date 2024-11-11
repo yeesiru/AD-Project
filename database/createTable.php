@@ -65,5 +65,20 @@ if (mysqli_query($conn, $sql4)) {
   echo "Error creating feedback table: " . mysqli_error($conn) . "<br>";
 }
 
+//SQL to create hall table
+$sql5 = "CREATE TABLE IF NOT EXISTS halls (
+    hall_id VARCHAR(10) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    capacity INT NOT NULL,
+    location VARCHAR(100),
+    facility VARCHAR(100)
+)";
+
+if (mysqli_query($conn, $sql5)) {
+  echo "Table hall created successfully.<br>";
+} else {
+  echo "Error creating hall table: " . mysqli_error($conn) . "<br>";
+}
+
 mysqli_close($conn);
 ?>
