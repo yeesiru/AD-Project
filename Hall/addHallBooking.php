@@ -7,25 +7,26 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hall_id = $_POST['hall_id'];
-    $name = $_POST['name'];
-    $capacity = $_POST['capacity'];
-    $location = $_POST['location'];
-    $facility = $_POST['facility'];
+    $school_name = $_POST['school_name'];
+    $booking_date = $_POST['booking_date'];
+    $start_time = $_POST['start_time'];
+    $end_time = $_POST['end_time'];
 
-    // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hall_id', '$name', '$capacity', '$location', '$facility')";
-    
+    // Insert the new booking entry into the database
+    $sql = "INSERT INTO bookings (hall_id, school_name, booking_date, start_time, end_time) 
+            VALUES ('$hall_id', '$school_name', '$booking_date', '$start_time', '$end_time')";
+
     if ($conn->query($sql) === TRUE) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Success!',
-                    text: 'Hall added successfully.',
+                    text: 'Hall booked successfully.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHall.php';
+                        window.location.href = 'manageBookings.php';
                     }
                 });
             });
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>
             Swal.fire({
                 title: 'Error!',
-                text: 'Error adding new hall record: " . $conn->error . "',
+                text: 'Error adding booking record: " . $conn->error . "',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 
 <head>
-    <title>Hall Management</title>
+    <title>Hall Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">   
@@ -55,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Add the additional styles here */
+        /* Additional styles */
         .modal-container {
             display: flex;
             justify-content: center;
@@ -119,36 +120,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="modal-container">
         <div class="modal-form">
-            <h1>Add Hall</h1>
-            <form id="addHallForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-                
-                <div class="form-group hall-input">
-                    <label for="hall_id" class="form-label">Hall ID: </label>
+            <h1>Book Hall</h1>
+            <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+
+                <div class="form-group">
+                    <label for="hall_id">Hall ID:</label>
                     <input type="text" id="hall_id" name="hall_id" placeholder="H123" required>
                 </div>
 
-                <div class="form-group hall-input">
-                    <label for="name" class="form-label">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="Main Hall" required>
+                <div class="form-group">
+                    <label for="school_name">School Name:</label>
+                    <input type="text" id="school_name" name="school_name" placeholder="ABC School" required>
                 </div>
 
-                <div class="form-group hall-input">
-                    <label for="capacity" class="form-label">Capacity: </label>
-                    <input type="number" id="capacity" name="capacity" placeholder="0"required min="1" max="500">
+                <div class="form-group">
+                    <label for="booking_date">Booking Date:</label>
+                    <input type="date" id="booking_date" name="booking_date" required>
                 </div>
 
-                <div class="form-group hall-input">
-                    <label for="location" class="form-label">Location: </label>
-                    <input type="text" id="location" name="location" placeholder="Level 2" required>
+                <div class="form-group">
+                    <label for="start_time">Start Time:</label>
+                    <input type="time" id="start_time" name="start_time" required>
                 </div>
 
-                <div class="form-group hall-input">
-                    <label for="facility" class="form-label">Facility:</label>
-                    <input type="text" id="facility" name="facility" placeholder="Audio Equipment" required>
+                <div class="form-group">
+                    <label for="end_time">End Time:</label>
+                    <input type="time" id="end_time" name="end_time" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Save</button>
-                <a href="manageHall.php" class="btn btn-secondary mt-2">Cancel</a>
+                <button type="submit" class="btn btn-primary mt-3">Book</button>
+                <a href="manageBookings.php" class="btn btn-secondary mt-2">Cancel</a>
             </form>
         </div>
     </div>
