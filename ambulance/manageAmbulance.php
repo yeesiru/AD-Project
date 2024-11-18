@@ -41,7 +41,7 @@ $result = $conn->query($sql);
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-xl" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <h1>Ambulance Management</h1>
         <a href="../index.html" class="btn btn-secondary mb-3">Back to Home</a>
         <a href="addAmbulance.php" class="btn btn-primary mb-3">Add New Ambulance</a>
@@ -65,7 +65,7 @@ $result = $conn->query($sql);
                             <td><?php echo htmlspecialchars($row['capacity']); ?></td>
                             <td><?php echo htmlspecialchars($row['availability']); ?></td>
                             <td>
-                                <a href="editAmbulance.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="editAmbulanceBooking.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')">Delete</button>
                             </td>
                         </tr>
