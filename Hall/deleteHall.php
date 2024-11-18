@@ -9,7 +9,7 @@ if (isset($_GET['hall_id'])) {
     $hall_id = $conn->real_escape_string($_GET['hall_id']); // Sanitize the input to prevent SQL injection
 
     // Delete the hall record
-    $sql = "DELETE FROM halls WHERE hall_id = '$hall_id'";
+    $sql = "DELETE FROM hall WHERE hall_id = '$hall_id'";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
