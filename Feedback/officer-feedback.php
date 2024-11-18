@@ -1,5 +1,24 @@
 <?php
 include("../database/db_conn.php"); // Include the database connection file
+
+// Initialize a variable for SweetAlert message
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $serviceType = $_POST['serviceType'];
+    $rating = $_POST['rating'];
+    $feedbackText = $_POST['feedbackText'];
+
+    // Insert the feedback into the database
+    $sql = "INSERT INTO feedback (serviceType, rating, feedbackText, status) VALUES ('$serviceType', '$rating', '$feedbackText', 'pending')";
+    
+    if ($conn->query($sql) === TRUE) {
+        $message = "Success! Your feedback has been submitted.";
+    } else {
+        $message = "Error submitting feedback: " . $conn->error;
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -117,7 +136,7 @@ include("../database/db_conn.php"); // Include the database connection file
         }
 
         table.table th {
-            background-color: #0B6623;
+            background-color: BLACK;
             color: white;
             text-align: center;
         }
@@ -188,6 +207,19 @@ include("../database/db_conn.php"); // Include the database connection file
 </head>
 
 <body>
+<?php if ($message): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: '<?php echo strpos($message, 'Error') === false ? 'Success!' : 'Error!'; ?>',
+                    text: '<?php echo $message; ?>',
+                    icon: '<?php echo strpos($message, 'Error') === false ? 'success' : 'error'; ?>',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    <?php endif; ?>
+
     <!-- Navigation bar -->
     <nav>
         <ul class="sidebar">
@@ -217,12 +249,17 @@ include("../database/db_conn.php"); // Include the database connection file
         </ul>
     </nav>
 
-    <!-- Feedback Table -->
-    <h2>Feedback Listings</h2>
-    <div class="table-responsive">
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Feedback Listings</h2>
+        </div>
+
+        <!-- Feedback Table -->
+        <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
-                    <tr>
+                <tr>
                         <th>Service Type</th>
                         <th>Rating</th>
                         <th>Message</th>
@@ -254,6 +291,7 @@ include("../database/db_conn.php"); // Include the database connection file
                 </tbody>
             </table>
         </div>
+    </div>
     
     <!-- Button aligned to the right side of the screen -->
     <div id="addFeedbackButton">
@@ -263,7 +301,7 @@ include("../database/db_conn.php"); // Include the database connection file
     <!-- Feedback form initially hidden -->
     <div id="feedbackForm">
         <h3>Submit Your Feedback</h3>
-        <form action="addfeedback.php" method="POST">
+        <form action="" method="POST">
             <label for="serviceType">Service Type:</label>
             <select name="serviceType" id="serviceType" required>
                 <option value="">Select Service</option>
