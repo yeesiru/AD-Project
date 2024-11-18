@@ -50,7 +50,7 @@ if (mysqli_query($conn, $sql3)) {
 }
 
 // SQL to create ambulances booking table
-$sql4 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
+$sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   contact VARCHAR(15) NOT NULL,
