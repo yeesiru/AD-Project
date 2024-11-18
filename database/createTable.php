@@ -98,6 +98,27 @@ if (mysqli_query($conn, $sql6)) {
     echo "Error creating 'equipment_booking' table: " . mysqli_error($conn) . "<br>";
 }
 
+// SQL to create ambulances booking table
+$sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
+  id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  contact VARCHAR(15) NOT NULL,
+  destination VARCHAR(255) NOT NULL,
+  booking_time TIME NOT NULL,
+  booking_date DATE NOT NULL,
+  vehicleId VARCHAR(11),
+  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+)";
+
+
+if (mysqli_query($conn, $sql7)) {
+  echo "Table ambulances booking created successfully<br>";
+} else {
+  echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
+}
+
 // Close the connection
 mysqli_close($conn);
 ?>
