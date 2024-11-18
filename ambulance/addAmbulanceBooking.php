@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sql = "INSERT INTO ambulanceBooking (name, contact, destination, booking_time, booking_date, vehicleId) 
             VALUES ('$name', '$contact', '$destination', '$bookingTime', '$bookingDate', '$vehicleId')";
 
+    //test
     // Check for success or error
     if ($conn->query($sql) === TRUE) {
         // Mark the selected ambulance as unavailable
