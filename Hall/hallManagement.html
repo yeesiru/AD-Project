@@ -9,7 +9,7 @@
 <body>
     <div class="overlay"></div> <!-- Background overlay -->
     <div class="header">
-        <img src="" alt="Logo" class="logo">
+        <img src="..\img\SJAM-logo.png" alt="Logo" class="logo">
         <h1>Hall Management</h1>
     </div>
     <div class="button-container">
@@ -29,8 +29,13 @@
         <input type="text" id="location" placeholder="Level 2" required>
         <label>Facilities:</label>
         <input type="text" id="facility" placeholder="Audio Equipment" required>
-        <button class="button" id="saveButton" onclick="saveHall()">Save</button>
-        <button class="button" onclick="closeForm()">Cancel</button>
+        <div>
+            <button class="button" id="saveButton" onclick="saveHall()">Save</button>
+        </div>
+        <div>
+            <button class="button" onclick="closeForm()">Cancel</button>
+        </div>
+        
     </div>
 
     <div id="hall-list">
