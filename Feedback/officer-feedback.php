@@ -1,3 +1,26 @@
+<?php
+include("../database/db_conn.php"); // Include the database connection file
+
+// Initialize a variable for SweetAlert message
+$message = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $serviceType = $_POST['serviceType'];
+    $rating = $_POST['rating'];
+    $feedbackText = $_POST['feedbackText'];
+
+    // Insert the feedback into the database
+    $sql = "INSERT INTO feedback (serviceType, rating, feedbackText, status) VALUES ('$serviceType', '$rating', '$feedbackText', 'pending')";
+    
+    if ($conn->query($sql) === TRUE) {
+        $message = "Success! Your feedback has been submitted.";
+    } else {
+        $message = "Error submitting feedback: " . $conn->error;
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,14 +30,22 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navigation.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
     <style>
+        body {
+        background-color: #f8f9fa;
+        font-family: 'Poppins', Arial, sans-serif;
+        color: #343a40;
+        }
+
         nav li:first-child {
             margin-right: auto;
         }
+
         .message-container {
             display: flex;
             justify-content: center; /* Centers the message horizontally */
@@ -34,10 +65,16 @@
         }
         #feedbackForm {
             display: none;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             margin-top: 20px;
-            margin-left: 50px;
-            margin-right: 50px;
-        } /* Initially hidden */
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         label {
             font-weight: bold;
         }
@@ -48,15 +85,21 @@
             margin-top: 5px;
         }
         button {
-            padding: 10px;
-            background-color: #4CAF50;
+            background-color: #0B6623;
             color: white;
             border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
             cursor: pointer;
         }
+
         button:hover {
-            background-color: #45a049;
+            background-color: #1D8348;
         }
+
         .rating {
             display: flex;
             flex-direction: row-reverse;
@@ -71,12 +114,78 @@
             color: #ddd;
             cursor: pointer;
             padding: 0 0.2rem;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
         .rating input:checked ~ label,
         .rating label:hover,
-        .rating label:hover ~ label {
-            color: #f5c518;
+        .rating label:hover ~ label  {
+            transform: scale(1.1);
+            color: #FFD700;
         }
+
+        h2 {
+            color: #343a40;
+            font-weight: bold;
+        }
+
+        /* Table Styling */
+        table.table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table.table th {
+            background-color: BLACK;
+            color: white;
+            text-align: center;
+        }
+
+        table.table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        table.table td, table.table th {
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+
+        .table-actions a {
+            margin-right: 8px;
+        }
+
+        /* Status Styling */
+        .status-pending {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-responded {
+            color: green;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+        }
+
+        tbody tr:nth-child(even) {
+        background-color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+    table.table {
+        font-size: 0.8rem;
+    }
+
+    #feedbackForm {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
     </style>
 
     <script>
@@ -98,6 +207,19 @@
 </head>
 
 <body>
+<?php if ($message): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    title: '<?php echo strpos($message, 'Error') === false ? 'Success!' : 'Error!'; ?>',
+                    text: '<?php echo $message; ?>',
+                    icon: '<?php echo strpos($message, 'Error') === false ? 'success' : 'error'; ?>',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    <?php endif; ?>
+
     <!-- Navigation bar -->
     <nav>
         <ul class="sidebar">
@@ -127,9 +249,48 @@
         </ul>
     </nav>
 
-    <!-- Message centered in the page -->
-    <div class="message-container">
-        <p class="message">No feedback available yet.</p>
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Feedback Listings</h2>
+        </div>
+
+        <!-- Feedback Table -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr>
+                        <th>Service Type</th>
+                        <th>Rating</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Fetch feedback from the database
+                    $sql = "SELECT id, serviceType, rating, feedbackText, status FROM feedback";
+                    $result = $conn->query($sql);
+
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['serviceType']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['rating']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['feedbackText']) . "</td>";
+
+                            // Apply conditional styling to the status column
+                            $statusClass = ($row['status'] === 'pending') ? 'status-pending' : 'status-responded';
+                            echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='text-center'>No feedback found.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     
     <!-- Button aligned to the right side of the screen -->
@@ -140,7 +301,7 @@
     <!-- Feedback form initially hidden -->
     <div id="feedbackForm">
         <h3>Submit Your Feedback</h3>
-        <form action="addfeedback.php" method="POST">
+        <form action="" method="POST">
             <label for="serviceType">Service Type:</label>
             <select name="serviceType" id="serviceType" required>
                 <option value="">Select Service</option>

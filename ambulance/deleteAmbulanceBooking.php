@@ -5,23 +5,23 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if (isset($_GET['hall_id'])) {
-    $hall_id = $conn->real_escape_string($_GET['hall_id']); // Sanitize the input to prevent SQL injection
+if (isset($_GET['vehicleId'])) {
+    $vehicleId = $conn->real_escape_string($_GET['vehicleId']); 
 
-    // Delete the hall record
-    $sql = "DELETE FROM hall WHERE hall_id = '$hall_id'";
+    // Delete the booking record
+    $sql = "DELETE FROM ambulanceBooking WHERE vehicleId = '$vehicleId'";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Deleted!',
-                    text: 'Hall record has been deleted successfully.',
+                    text: 'Ambulance booking record has been deleted successfully.',
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHall.php';
+                        window.location.href = 'manageAmbulanceBooking.php';
                     }
                 });
             });
@@ -31,12 +31,12 @@ if (isset($_GET['hall_id'])) {
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Failed to delete hall record: " . $conn->error . "',
+                    text: 'Failed to delete ambulance booking record: " . $conn->error . "',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHall.php';
+                        window.location.href = 'manageAmbulanceBooking.php';
                     }
                 });
             });
@@ -47,12 +47,12 @@ if (isset($_GET['hall_id'])) {
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
                 title: 'Error!',
-                text: 'Invalid request: Hall ID missing.',
+                text: 'Invalid request: Booking ID missing.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'manageHall.php';
+                    window.location.href = 'manageAmbulanceBooking.php';
                 }
             });
         });

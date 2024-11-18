@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 }
 
 $hall_id = $_GET['hall_id'];
-$sql = "SELECT * FROM halls WHERE hall_id = '$hall_id'";
+$sql = "SELECT * FROM hall WHERE hall_id = '$hall_id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $location = $_POST['location'];
     $facility = $_POST['facility'];
 
-    $updateSql = "UPDATE halls SET name='$name', capacity='$capacity', location='$location', facility='$facility' WHERE hall_id='$hall_id'";
+    $updateSql = "UPDATE hall SET name='$name', capacity='$capacity', location='$location', facility='$facility' WHERE hall_id='$hall_id'";
     
     if ($conn->query($updateSql) === TRUE) {
         echo "<script>

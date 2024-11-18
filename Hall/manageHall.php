@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch all hall records
-$sql = "SELECT * FROM halls";
+$sql = "SELECT * FROM hall";
 $result = $conn->query($sql);
 
 ?>
