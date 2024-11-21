@@ -1,24 +1,5 @@
 <?php
 include("../database/db_conn.php"); // Include the database connection file
-
-// Initialize a variable for SweetAlert message
-$message = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $serviceType = $_POST['serviceType'];
-    $rating = $_POST['rating'];
-    $feedbackText = $_POST['feedbackText'];
-
-    // Insert the feedback into the database
-    $sql = "INSERT INTO feedback (serviceType, rating, feedbackText, status) VALUES ('$serviceType', '$rating', '$feedbackText', 'pending')";
-    
-    if ($conn->query($sql) === TRUE) {
-        $message = "Success! Your feedback has been submitted.";
-    } else {
-        $message = "Error submitting feedback: " . $conn->error;
-    }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -63,27 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             justify-content: center; /* Aligns the button to the right */
             margin-top: 20px;
         }
-        #feedbackForm {
-            display: none;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        label {
-            font-weight: bold;
-        }
-        select, input[type="number"], textarea {
-            padding: 8px;
-            font-size: 1rem;
-            width: 100%;
-            margin-top: 5px;
-        }
+    
         button {
             background-color: #0B6623;
             color: white;
@@ -98,34 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         button:hover {
             background-color: #1D8348;
-        }
-
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: left; /* Centers the stars */
-            margin-top: 10px;
-        }
-        .rating input {
-            display: none;
-        }
-        .rating label {
-            font-size: 2rem;
-            color: #ddd;
-            cursor: pointer;
-            padding: 0 0.2rem;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .rating input:checked ~ label,
-        .rating label:hover,
-        .rating label:hover ~ label  {
-            transform: scale(1.1);
-            color: #FFD700;
-        }
-
-        h2 {
-            color: #343a40;
-            font-weight: bold;
         }
 
         /* Table Styling */
@@ -176,15 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         @media (max-width: 768px) {
-    table.table {
-        font-size: 0.8rem;
-    }
+        table.table {
+            font-size: 0.8rem;
+        }
 
-    #feedbackForm {
-        margin-left: 10px;
-        margin-right: 10px;
     }
-}
 
     </style>
 
@@ -199,27 +128,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sidebar.style.display = 'none'
         }
 
-        function toggleForm() {
-            var form = document.getElementById('feedbackForm');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        }
+        function redirectToAddFeedback() {
+        window.location.href = 'addFeedback.php';
+    }
     </script>
 </head>
 
 <body>
-<?php if ($message): ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    title: '<?php echo strpos($message, 'Error') === false ? 'Success!' : 'Error!'; ?>',
-                    text: '<?php echo $message; ?>',
-                    icon: '<?php echo strpos($message, 'Error') === false ? 'success' : 'error'; ?>',
-                    confirmButtonText: 'OK'
-                });
-            });
-        </script>
-    <?php endif; ?>
-
     <!-- Navigation bar -->
     <nav>
         <ul class="sidebar">
@@ -295,35 +210,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <!-- Button aligned to the right side of the screen -->
     <div id="addFeedbackButton">
-        <button onclick="toggleForm()">Add Feedback</button>
+        <button onclick="redirectToAddFeedback()">Add Feedback</button>
     </div>
-
-    <!-- Feedback form initially hidden -->
-    <div id="feedbackForm">
-        <h3>Submit Your Feedback</h3>
-        <form action="" method="POST">
-            <label for="serviceType">Service Type:</label>
-            <select name="serviceType" id="serviceType" required>
-                <option value="">Select Service</option>
-                <option value="hall">Hall Condition</option>
-                <option value="equipment">Equipment Functionality</option>
-                <option value="ambulance">Ambulance Service</option>
-            </select>
-
-            <label for="rating">Rating:</label>
-            <div class="rating">
-                <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-            </div>
-
-            <label for="feedbackText">Feedback:</label>
-            <textarea id="feedbackText" name="feedbackText" rows="5" required></textarea>
-
-            <button type="submit">Submit Feedback</button>
-        </form>
-    </div>
+    
+    <?php
+    $conn->close();
+    ?>
+    
 </body>
 </html>
