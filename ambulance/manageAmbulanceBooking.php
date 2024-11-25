@@ -22,7 +22,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/manageAmbulance.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirmDelete(bookingId) {
+        function confirmDelete(vehicleId) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You will not be able to recover this booking record!',
@@ -70,7 +70,7 @@ $result = $conn->query($sql);
                                 <td><?php echo htmlspecialchars($row['vehicleId']); ?></td>
                                 <td>
                                     <a href="editAmbulanceBooking.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')">Delete</button>
+                                    <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo htmlspecialchars($row['vehicleId']); ?>')">Delete</button>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

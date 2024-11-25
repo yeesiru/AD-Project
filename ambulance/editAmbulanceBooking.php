@@ -112,10 +112,11 @@ $conn->close();
                     $ambulanceSql = "SELECT vehicleId FROM ambulance WHERE availability = 'Available' OR vehicleId = '{$row['vehicleId']}'";
                     $ambulanceResult = $conn->query($ambulanceSql);
 
-                    if ($ambulanceResult->num_rows > 0) {
+                    if ($ambulanceResult && $ambulanceResult->num_rows > 0) {
                         while ($ambulance = $ambulanceResult->fetch_assoc()) {
-                            $selected = ($ambulance['vehicleId'] === $row['vehicleId']) ? 'selected' : '';
-                            echo "<option value='{$ambulance['vehicleId']}' $selected>{$ambulance['vehicleId']}</option>";
+                            $vehicleId = htmlspecialchars($ambulance['vehicleId']);
+                            $selected = ($vehicleId === $row['vehicleId']) ? 'selected' : '';
+                            echo "<option value='$vehicleId' $selected>$vehicleId</option>";
                         }
                     } else {
                         echo "<option value='' disabled>No ambulances available</option>";

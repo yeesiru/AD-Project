@@ -65,7 +65,7 @@ $result = $conn->query($sql);
                             <td><?php echo htmlspecialchars($row['capacity']); ?></td>
                             <td><?php echo htmlspecialchars($row['availability']); ?></td>
                             <td>
-                                <a href="editAmbulanceBooking.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="editAmbulance.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')">Delete</button>
                             </td>
                         </tr>
