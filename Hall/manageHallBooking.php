@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 
 // Fetch all hall bookings
 $sql = "SELECT b.booking_id, b.hall_id, h.name AS hall_name, b.booked_by, b.date, b.time_slot 
-        FROM bookings b 
+        FROM hallBooking b 
         INNER JOIN hall h ON b.hall_id = h.hall_id";
 $result = $conn->query($sql);
 

@@ -124,7 +124,7 @@ if (mysqli_query($conn, $sql7)) {
 }
 
 //SQL to create hall booking table
-$sql8 = "CREATE TABLE bookings (
+$sql8 = "CREATE TABLE hallBooking (
     booking_id INT AUTO_INCREMENT PRIMARY KEY,
     hall_id INT NOT NULL,
     booked_by VARCHAR(255) NOT NULL,
