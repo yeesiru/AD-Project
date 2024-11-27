@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="contact">Contact Name:</label>
-                    <input type="text" id="contact_name" name="contact_name" placeholder="ABC School" required>
+                    <input type="text" id="contact_name" name="contact_name" placeholder="Ali Bin Abu" required>
                 </div>
 
                 <div class="form-group">
