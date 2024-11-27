@@ -7,14 +7,14 @@ if ($conn->connect_error) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hall_id = $_POST['hall_id'];
-    $school_name = $_POST['school_name'];
+    $contact_name = $_POST['contact_name'];
     $booking_date = $_POST['booking_date'];
     $start_time = $_POST['start_time'];
     $end_time = $_POST['end_time'];
 
     // Insert the new booking entry into the database
-    $sql = "INSERT INTO bookings (hall_id, school_name, booking_date, start_time, end_time) 
-            VALUES ('$hall_id', '$school_name', '$booking_date', '$start_time', '$end_time')";
+    $sql = "INSERT INTO bookings (hall_id, contact_name, booking_date, start_time, end_time) 
+            VALUES ('$hall_id', '$contact_name', '$booking_date', '$start_time', '$end_time')";
 
     if ($conn->query($sql) === TRUE) {
         echo "<script>
@@ -129,8 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="school_name">School Name:</label>
-                    <input type="text" id="school_name" name="school_name" placeholder="ABC School" required>
+                    <label for="contact">Contact Name:</label>
+                    <input type="text" id="contact_name" name="contact_name" placeholder="Ali Bin Abu" required>
                 </div>
 
                 <div class="form-group">

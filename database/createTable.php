@@ -70,8 +70,6 @@ if (mysqli_query($conn, $sql4)) {
 
 
 //SQL to create hall table
-$sql5 = "CREATE TABLE IF NOT EXISTS hall (
-// Create the Halls table
 $sql5 = "CREATE TABLE IF NOT EXISTS halls (
 
     hall_id VARCHAR(10) PRIMARY KEY,
@@ -121,6 +119,22 @@ if (mysqli_query($conn, $sql7)) {
   echo "Table ambulances booking created successfully<br>";
 } else {
   echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
+}
+
+//SQL to create hall booking table
+$sql8 = "CREATE TABLE hallBooking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    hall_id INT NOT NULL,
+    booked_by VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    time_slot VARCHAR(50) NOT NULL,
+    FOREIGN KEY (hall_id) REFERENCES hall(hall_id)
+)";
+
+if (mysqli_query($conn, $sql8)) {
+  echo "Table hall booking created successfully<br>";
+} else {
+  echo "Error creating hall booking table: " . mysqli_error($conn) . "<br>";
 }
 
 // Close the connection
