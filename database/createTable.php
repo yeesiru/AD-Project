@@ -104,12 +104,13 @@ if (mysqli_query($conn, $sql6)) {
 //SQL to create hall booking table
 $sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
     booking_id INT AUTO_INCREMENT PRIMARY KEY,
-    hall_id INT NOT NULL,
+    hall_id VARCHAR(10) NOT NULL, 
     booked_by VARCHAR(255) NOT NULL,
     date DATE NOT NULL,
     time_slot VARCHAR(50) NOT NULL,
     FOREIGN KEY (hall_id) REFERENCES hall(hall_id)
 )";
+
 
 if (mysqli_query($conn, $sql8)) {
   echo "Table hall booking created successfully<br>";
@@ -127,6 +128,7 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   booking_date DATE NOT NULL,
   vehicleId VARCHAR(11),
   FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) ON DELETE CASCADE
+  ON UPDATE CASCADE
 )";
 
 if (mysqli_query($conn, $sql7)) {
