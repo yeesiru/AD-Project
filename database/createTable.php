@@ -70,7 +70,7 @@ if (mysqli_query($conn, $sql4)) {
 
 
 //SQL to create hall table
-$sql5 = "CREATE TABLE IF NOT EXISTS halls (
+$sql5 = "CREATE TABLE IF NOT EXISTS hall (
 
     hall_id VARCHAR(10) PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -78,10 +78,11 @@ $sql5 = "CREATE TABLE IF NOT EXISTS halls (
     location VARCHAR(100),
     facility VARCHAR(100)
 )";
+
 if (mysqli_query($conn, $sql5)) {
-    echo "Table 'halls' created successfully.<br>";
+    echo "Table 'hall' created successfully.<br>";
 } else {
-    echo "Error creating 'halls' table: " . mysqli_error($conn) . "<br>";
+    echo "Error creating 'hall' table: " . mysqli_error($conn) . "<br>";
 }
 
 // Create the Equipment Booking table
