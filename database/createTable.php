@@ -88,7 +88,7 @@ if (mysqli_query($conn, $sql5)) {
 $sql6 = "CREATE TABLE IF NOT EXISTS equipment_booking (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     equipment_id INT(11) UNSIGNED NOT NULL,
-    user_id INT(11) UNSIGNED NOT NULL,
+    user_id INT(11) UNSIGNED NULL,
     quantity INT(11) NOT NULL,
     booking_date DATE NOT NULL,
     FOREIGN KEY (equipment_id) REFERENCES equipment(id) ON DELETE CASCADE,
