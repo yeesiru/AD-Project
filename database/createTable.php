@@ -126,7 +126,7 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   destination VARCHAR(255) NOT NULL,
   booking_time TIME NOT NULL,
   booking_date DATE NOT NULL,
-  vehicleId VARCHAR(11),
+  vehicleId VARCHAR(11) NOT NULL,
   FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) ON DELETE CASCADE
   ON UPDATE CASCADE
 )";
