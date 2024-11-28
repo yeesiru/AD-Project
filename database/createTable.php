@@ -114,7 +114,6 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
     ON UPDATE CASCADE
 )";
 
-
 if (mysqli_query($conn, $sql7)) {
   echo "Table ambulances booking created successfully<br>";
 } else {
@@ -122,7 +121,7 @@ if (mysqli_query($conn, $sql7)) {
 }
 
 //SQL to create hall booking table
-$sql8 = "CREATE TABLE hallBooking (
+$sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
     booking_id INT AUTO_INCREMENT PRIMARY KEY,
     hall_id INT NOT NULL,
     booked_by VARCHAR(255) NOT NULL,
