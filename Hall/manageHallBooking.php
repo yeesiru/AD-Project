@@ -44,7 +44,7 @@ $result = $conn->query($sql);
 <div class="container">
     <h1>Manage Hall Bookings</h1>
     <a href="../homepage.html" class="btn btn-secondary mb-3" style="background-color: #777; color: white; border: none;">Back to Home</a>
-    <a href="addBooking.php" class="btn btn-primary mb-3" style="background-color: #006d47; color: white; border: none;">Add Booking</a>
+    <a href="addHallBooking.php" class="btn btn-primary mb-3" style="background-color: #006d47; color: white; border: none;">Add Booking</a>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -67,7 +67,7 @@ $result = $conn->query($sql);
                         <td><?php echo htmlspecialchars($row['date']); ?></td>
                         <td><?php echo htmlspecialchars($row['time_slot']); ?></td>
                         <td>
-                            <a href="editBooking.php?booking_id=<?php echo $row['booking_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="editHallBooking.php?booking_id=<?php echo $row['booking_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
                             <button class="btn btn-danger btn-sm" onclick="confirmDeleteBooking('<?php echo $row['booking_id']; ?>')">Delete</button>
                         </td>
                     </tr>
