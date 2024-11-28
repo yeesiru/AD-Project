@@ -101,6 +101,22 @@ if (mysqli_query($conn, $sql6)) {
     echo "Error creating 'equipment_booking' table: " . mysqli_error($conn) . "<br>";
 }
 
+//SQL to create hall booking table
+$sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    hall_id INT NOT NULL,
+    booked_by VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    time_slot VARCHAR(50) NOT NULL,
+    FOREIGN KEY (hall_id) REFERENCES hall(hall_id)
+)";
+
+if (mysqli_query($conn, $sql8)) {
+  echo "Table hall booking created successfully<br>";
+} else {
+  echo "Error creating hall booking table: " . mysqli_error($conn) . "<br>";
+}
+
 // SQL to create ambulances booking table
 $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -119,21 +135,7 @@ if (mysqli_query($conn, $sql7)) {
   echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
 }
 
-//SQL to create hall booking table
-$sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
-    booking_id INT AUTO_INCREMENT PRIMARY KEY,
-    hall_id INT NOT NULL,
-    booked_by VARCHAR(255) NOT NULL,
-    date DATE NOT NULL,
-    time_slot VARCHAR(50) NOT NULL,
-    FOREIGN KEY (hall_id) REFERENCES hall(hall_id)
-)";
 
-if (mysqli_query($conn, $sql8)) {
-  echo "Table hall booking created successfully<br>";
-} else {
-  echo "Error creating hall booking table: " . mysqli_error($conn) . "<br>";
-}
 
 // Close the connection
 mysqli_close($conn);
