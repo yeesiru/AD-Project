@@ -8,15 +8,30 @@ if ($conn->connect_error) {
 
 // Handle selected equipment deletion
 if (isset($_POST['deleteSelected'])) {
-    $selectedEquipment = $_POST['equipmentToDelete'] ?? [];
-    if (!empty($selectedEquipment)) {
-        $idsToDelete = implode(",", array_map('intval', $selectedEquipment));
-        $deleteQuery = "DELETE FROM equipment_booking WHERE id IN ($idsToDelete)";
-        if ($conn->query($deleteQuery)) {
-            echo "<script>alert('Selected equipment bookings deleted successfully.');</script>";
-        } else {
-            echo "<script>alert('Failed to delete selected equipment bookings: " . $conn->error . "');</script>";
+    if (!empty($_POST['equipmentToDelete'])) {
+        $selectedEquipment = $_POST['equipmentToDelete'];
+        foreach ($selectedEquipment as $bookingId) {
+            $bookingId = intval($bookingId);
+
+            // Retrieve the quantity and equipment_id before deletion
+            $fetchQuery = "SELECT equipment_id, quantity FROM equipment_booking WHERE id = $bookingId";
+            $fetchResult = $conn->query($fetchQuery);
+
+            if ($fetchResult->num_rows > 0) {
+                $row = $fetchResult->fetch_assoc();
+                $equipmentId = intval($row['equipment_id']);
+                $quantity = intval($row['quantity']);
+
+                // Update the equipment table
+                $updateEquipmentQuery = "UPDATE equipment SET quantity = quantity + $quantity WHERE id = $equipmentId";
+                $conn->query($updateEquipmentQuery);
+
+                // Delete the booking
+                $deleteQuery = "DELETE FROM equipment_booking WHERE id = $bookingId";
+                $conn->query($deleteQuery);
+            }
         }
+        echo "<script>alert('Selected equipment bookings deleted successfully.'); window.location.reload();</script>";
     } else {
         echo "<script>alert('No equipment selected for deletion.');</script>";
     }
@@ -25,11 +40,30 @@ if (isset($_POST['deleteSelected'])) {
 // Handle all bookings deletion for a date
 if (isset($_POST['deleteAllBookings'])) {
     $selectedDate = $conn->real_escape_string($_POST['deleteAllBookings']);
-    $deleteAllQuery = "DELETE FROM equipment_booking WHERE booking_date = '$selectedDate'";
-    if ($conn->query($deleteAllQuery)) {
-        echo "<script>alert('All bookings for the selected date have been deleted successfully.');</script>";
+
+    // Retrieve all equipment_id and quantity for the selected date
+    $fetchAllQuery = "SELECT equipment_id, quantity FROM equipment_booking WHERE booking_date = '$selectedDate'";
+    $fetchAllResult = $conn->query($fetchAllQuery);
+
+    if ($fetchAllResult->num_rows > 0) {
+        while ($row = $fetchAllResult->fetch_assoc()) {
+            $equipmentId = intval($row['equipment_id']);
+            $quantity = intval($row['quantity']);
+
+            // Update the equipment table
+            $updateEquipmentQuery = "UPDATE equipment SET quantity = quantity + $quantity WHERE id = $equipmentId";
+            $conn->query($updateEquipmentQuery);
+        }
+
+        // Delete all bookings for the selected date
+        $deleteAllQuery = "DELETE FROM equipment_booking WHERE booking_date = '$selectedDate'";
+        if ($conn->query($deleteAllQuery)) {
+            echo "<script>alert('All bookings for the selected date have been deleted successfully.'); window.location.reload();</script>";
+        } else {
+            echo "<script>alert('Error deleting bookings for the selected date: " . $conn->error . "');</script>";
+        }
     } else {
-        echo "<script>alert('Failed to delete bookings for the selected date: " . $conn->error . "');</script>";
+        echo "<script>alert('No bookings found for the selected date.');</script>";
     }
 }
 
