@@ -106,7 +106,7 @@ $conn->close();
 
             <div class="form-group mt-3">
                 <label for="vehicleId">Ambulance (Vehicle ID):</label>
-                <select id="vehicleId" name="vehicleId" class="form-select">
+                <select id="vehicleId" name="vehicleId" class="form-select" required>
                     <?php
                     // Fetch available ambulances
                     $ambulanceSql = "SELECT vehicleId FROM ambulance WHERE availability = 'Available' OR vehicleId = '{$row['vehicleId']}'";

@@ -69,8 +69,6 @@ if (mysqli_query($conn, $sql4)) {
 }
 
 
-//SQL to create hall table
-$sql5 = "CREATE TABLE IF NOT EXISTS hall (
 // Create the Halls table
 $sql5 = "CREATE TABLE IF NOT EXISTS halls (
 
