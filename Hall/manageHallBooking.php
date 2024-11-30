@@ -34,7 +34,7 @@ $result = $conn->query($sql);
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `deleteBooking.php?booking_id=${booking_id}`;
+                    window.location.href = `deleteHallBooking.php?booking_id=${booking_id}`;
                 }
             });
         }

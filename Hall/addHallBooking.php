@@ -163,8 +163,8 @@ $hallResult = $conn->query($hallQuery);
                 </div>
 
                 <div class="form-group">
-                    <label for="timeSlot" class="form-label">Time Slot:</label>
-                    <input type="text" id="timeSlot" name="timeSlot" class="form-control" required>
+                    <label for="timeSlot" class="form-label">Time:</label>
+                    <input type="time" id="timeSlot" name="timeSlot" class="form-control" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-3">Book Hall</button>
