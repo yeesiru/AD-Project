@@ -103,7 +103,7 @@ if (mysqli_query($conn, $sql6)) {
 
 //SQL to create hall booking table
 $sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
-    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    booking_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     hall_id VARCHAR(10) NOT NULL, 
     booked_by VARCHAR(255) NOT NULL,
     date DATE NOT NULL,

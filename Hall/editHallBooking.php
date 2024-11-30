@@ -87,18 +87,13 @@ $conn->close();
             </div>
 
             <div class="form-group mt-3">
-                <label for="contact">Contact:</label>
-                <input type="text" id="contact" name="contact" class="form-control" value="<?php echo htmlspecialchars($row['contact']); ?>" required>
-            </div>
-
-            <div class="form-group mt-3">
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date" class="form-control" value="<?php echo htmlspecialchars($row['date']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="timeSlot">Time Slot:</label>
-                <input type="text" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
+                <label for="timeSlot">Time:</label>
+                <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
