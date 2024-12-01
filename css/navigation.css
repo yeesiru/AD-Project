@@ -8,6 +8,7 @@ nav {
     background-color: #017b56;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
     padding-right: 2rem;
+    width: 100vw;
 }
 
 ul {
@@ -23,7 +24,7 @@ ul li {
 ul li a {
     display: block;
     padding: 20px 25px;
-    color: black;
+    color: white;
     text-decoration: none;
     text-align: center;
     font-size: 20px;
@@ -45,6 +46,7 @@ ul li ul.dropdown {
 
 ul li a:hover {
     background-color: #f0f0f0;
+    color: black;
 }
 
 ul li:hover ul.dropdown {
