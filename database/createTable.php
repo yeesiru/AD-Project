@@ -41,7 +41,7 @@ if (mysqli_query($conn, $sql2)) {
 // Create the Ambulance table
 $sql3 = "CREATE TABLE IF NOT EXISTS ambulance (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    vehicleId VARCHAR(11) NOT NULL,
+    vehicleId VARCHAR(11) NOT NULL UNIQUE,
     type ENUM('Basic Life Support', 'Advanced Life Support', 'Critical Care') NOT NULL,
     capacity INT(11) NOT NULL,
     availability ENUM('Available', 'Unavailable') NOT NULL
@@ -127,7 +127,8 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   booking_time TIME NOT NULL,
   booking_date DATE NOT NULL,
   vehicleId VARCHAR(11) NOT NULL,
-  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) ON DELETE CASCADE
+  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) 
+  ON DELETE CASCADE
   ON UPDATE CASCADE
 )";
 

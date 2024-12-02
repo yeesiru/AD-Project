@@ -22,13 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $contact = $_POST['contact'];
     $destination = $_POST['destination'];
-    $bookingTime = $_POST['bookingTime'];
-    $bookingDate = $_POST['bookingDate'];
-    $vehicleId = $_POST['vehicleId'];
+    $booking_time = $_POST['booking_time'];
+    $booking_date = $_POST['booking_date'];
+    // $vehicleId = $_POST['vehicleId'];
 
-    $updateSql = "UPDATE ambulance_booking 
+    $updateSql = "UPDATE ambulancebooking 
                   SET name='$name', contact='$contact', destination='$destination', 
-                      bookingTime='$bookingTime', bookingDate='$bookingDate', vehicleId='$vehicleId' 
+                      booking_time='$booking_time', booking_date='$booking_date', vehicleId='$vehicleId' 
                   WHERE vehicleId='$vehicleId'";
     
     if ($conn->query($updateSql) === TRUE) {
@@ -104,7 +104,9 @@ $conn->close();
                 <input type="date" id="booking_date" name="booking_date" class="form-control" value="<?php echo htmlspecialchars($row['booking_date'] ?? ''); ?>" required>
             </div>
 
-            <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
+
+            <!-- <div class="form-group mt-3">
                 <label for="vehicleId">Ambulance (Vehicle ID):</label>
                 <select id="vehicleId" name="vehicleId" class="form-select">
                     <?php
@@ -122,9 +124,9 @@ $conn->close();
                     }
                     ?>
                 </select>
-            </div>
+            </div> -->
 
-            <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
+            
         </form>
     </div>
 </body>
