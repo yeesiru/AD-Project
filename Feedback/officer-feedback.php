@@ -179,12 +179,13 @@ include("../database/db_conn.php"); // Include the database connection file
                         <th>Rating</th>
                         <th>Message</th>
                         <th>Status</th>
+                        <th>Response</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Fetch feedback from the database
-                    $sql = "SELECT id, serviceType, rating, feedbackText, status FROM feedback";
+                    $sql = "SELECT id, serviceType, rating, feedbackText, status, admin_response FROM feedback";
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -197,10 +198,11 @@ include("../database/db_conn.php"); // Include the database connection file
                             // Apply conditional styling to the status column
                             $statusClass = ($row['status'] === 'pending') ? 'status-pending' : 'status-responded';
                             echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['admin_response']) . "</td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='4' class='text-center'>No feedback found.</td></tr>";
+                        echo "<tr><td colspan='5' class='text-center'>No feedback found.</td></tr>";
                     }
                     ?>
                 </tbody>

@@ -148,10 +148,9 @@ include("../database/db_conn.php"); // Include the database connection file
                             echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
 
                             echo "<td class='table-actions'>
-                                    <a href='?reply=" . $row['id'] . "' class='btn btn-primary btn-sm'>
-                                        <i class='fas fa-reply'></i> Reply
-                                    </a>
-                                  </td>";
+                            <a href='replyFeedback.php?feedback_id=" . htmlspecialchars($row['id']) . "' class='btn btn-primary'>Reply</a>
+                            </td>";
+
                             echo "</tr>";
                         }
                     } else {
