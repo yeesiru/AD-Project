@@ -5,6 +5,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['userID'];
     $username = $_POST['username'];
     $password = $_POST['password'];
     $name = $_POST['name'];
@@ -67,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
         //Insert the new user entry into the database
-        $sql = "INSERT INTO user (username, password, name, gender, email, phone, school, role, image) VALUES ('$username', '$password', '$name','$gender', '$email', '$phone', '$school', '$role','$imagePath')";
+        $sql = "INSERT INTO user (userID, username, password, name, gender, email, phone, school, role, image) VALUES ('$userID', '$username', '$password', '$name','$gender', '$email', '$phone', '$school', '$role','$imagePath')";
         if ($conn->query($sql) === TRUE) {
             echo "<script>
                 document.addEventListener('DOMContentLoaded', function () {
@@ -113,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         *{
             font-size:15px;
         }
+
     </style>
 </head>
 
@@ -125,6 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="user-table justify-content-center">
                 <form id="addUserForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data"> 
+                    
+                    <div class="form-group user-input">
+                        <label for="userID" class="form-label">User ID: </label>
+                        <input type="text" id="userID" name="userID" placeholder="A001" required>
+                    </div>
+
                     <div class="form-group user-input">
                         <label for="username" class="form-label">Username: </label>
                         <input type="text" id="username" name="username" required>
@@ -148,16 +156,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-group user-input">
                         <label for="email">Email: </label>
-                        <input type="email" id="email" name="email" required></textarea>
+                        <input type="email" id="email" name="email" placeholder="xxx@example.com" required></textarea>
                     </div>
 
                     <div class="form-group user-input">
                         <label for="phone">Phone Number:</label>
-                        <input type="text" id="phone" name="phone" required>
+                        <input type="text" id="phone" name="phone" placeholder="0123456789" required>
                     </div>
                     <div class="form-group user-input">
                         <label for="school">Responsible school:</label>
-                        <input type="school" id="school" name="school" required></textarea>
+                        <input type="school" id="school" name="school"  placeholder="SMK example" required></textarea>
                     </div>
 
                     <div class="form-group user-input">

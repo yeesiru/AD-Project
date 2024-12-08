@@ -27,7 +27,7 @@ $sql = "DELETE FROM User WHERE id = $userId";
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = 'userManage.html';
+                window.location.href = 'userManage.php';
             }
         });
       </script>";

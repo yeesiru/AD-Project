@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 
 $userId = $_GET['id'];
 $sql = "SELECT * FROM User WHERE id = $userId";
-$result = $conn->query($sql);
+$result = $conn->query( $sql);
 if ($result->num_rows > 0) {
     $userData = $result->fetch_assoc();
 } else {
@@ -187,10 +187,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
 
-    <!-- <?php
+    <?php
  
     $conn->close();
-    ?> -->
+    ?>
 </body>
 
 </html>
