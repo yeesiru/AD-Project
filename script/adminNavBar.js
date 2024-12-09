@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <path
                             d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
                     </svg></a></li>
-            <li> <a href="#">Home</a></li>
+            <li> <a href="../adminHomepage.html">Home</a></li>
             <li> <a class="sub-btn">Manage &#x25BE;</a>
                 <ul class="sidebar-dropdown">
                     <li><a href="#" class="sub-item">Hall</a></li>
@@ -48,13 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     <li><a href="#" class="sub-item">Equipment</a></li>
                 </ul>
             </li>
-            <li> <a href="#">Feedback</a></li>
-            <li> <a href="#">User List</a></li>
-            <li> <a href="#">Logout</a></li>
+            <li> <a href="../Feedback/admin_viewfeedback.php">Feedback</a></li>
+            <li> <a href="../User/userManage.php">User List</a></li>
+            <li> <a href="../logout.php">Logout</a></li>
         </ul>
 
         <ul>
-            <li class="hideOnMobile"> <a href="#">Home</a></li>
+            <li class="hideOnMobile"> <a href="../adminHomepage.html">Home</a></li>
             <li class="hideOnMobile"  style="width: 149px;"> <a href="#">Manage &#x25BE;</a>
                 <ul class="dropdown">
                     <li><a href="#">Hall</a></li>
@@ -62,9 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <li><a href="#">Equipment</a></li>
                 </ul>
             </li>
-            <li class="hideOnMobile"> <a href="#">Feedback</a></li>
-            <li class="hideOnMobile"> <a href="#">User List</a></li>
-            <li class="hideOnMobile" style="text-align: right;"> <a href="#">Logout</a></li>
+            <li class="hideOnMobile"> <a href="../Feedback/admin_viewfeedback.php">Feedback</a></li>
+            <li class="hideOnMobile"> <a href="../User/userManage.php">User List</a></li>
+            <li class="hideOnMobile" style="text-align: right;"> <a href="../logout.php">Logout</a></li>
             <li class="menuButton" onclick=showSideBar()> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
                         height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
                         <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
