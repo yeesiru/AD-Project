@@ -1,3 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Account</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../css/addUser.css">
+
+</head>
+
+<body>
 <?php
 include("../database/db_conn.php");
 
@@ -5,9 +17,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$userId = $_GET['id'];
-$sql = "SELECT * FROM User WHERE id = $userId";
-$result = $conn->query( $sql);
+// Get the user ID securely
+$userId = intval($_GET['id']);
+$sql = "SELECT * FROM User WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+
 if ($result->num_rows > 0) {
     $userData = $result->fetch_assoc();
 } else {
@@ -15,15 +32,18 @@ if ($result->num_rows > 0) {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $name = $_POST['name'];
-    $gender = $_POST['gender'];
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $school = $_POST['school'];
-    $role = $_POST['role'];
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Sanitize and fetch inputs
+        $userID = $conn->real_escape_string($_POST['userID']);
+        $username = $conn->real_escape_string($_POST['username']);
+        $password = $conn->real_escape_string($_POST['password']);
+        $name = $conn->real_escape_string($_POST['name']);
+        $gender = $conn->real_escape_string($_POST['gender']);
+        $email = $conn->real_escape_string($_POST['email']);
+        $phone = $conn->real_escape_string($_POST['phone']);
+        $school = $conn->real_escape_string($_POST['school']);
+        $role = $conn->real_escape_string($_POST['role']);
+        $image = $userData['image'];
 
     $image = $userData['image']; 
     $target_dir = __DIR__ . "/uploads/";
@@ -71,48 +91,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Update the user listing in the database
-    $sql = "UPDATE User SET username = '$username', password = '$password', name = '$name', gender = '$gender', email = '$email', phone = '$phone', school = '$school', role = '$role', image = '$image' WHERE id = $userId";
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>
-                document.addEventListener('DOMContentLoaded', function() {
+    // Update user in the database
+        $updateSql = "UPDATE User SET userID = ?, username = ?, password = ?, name = ?, gender = ?, email = ?, phone = ?, school = ?, role = ?, image = ? WHERE id = ?";
+        $updateStmt = $conn->prepare($updateSql);
+        $updateStmt->bind_param("ssssssssssi", $userID, $username, $password, $name, $gender, $email, $phone, $school, $role, $image, $userId);
+
+        try {
+            if ($updateStmt->execute()) {
+                echo "<script>
                     Swal.fire({
                         title: 'Success!',
-                        text: 'User Entry updated successfully.',
+                        text: 'User updated successfully.',
                         icon: 'success',
                         confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'userManage.php';
-                        }
+                    }).then(() => {
+                        window.location.href = 'userManage.php';
                     });
-                });
-              </script>";
-    } else {
-        echo "<script>
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Error updating record: " . $conn->error . "',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-              </script>";
+                </script>";
+            }
+        } catch (Exception $e) {
+            if ($conn->errno == 1062) { // MySQL error code for duplicate entry
+                echo "<script>
+                    Swal.fire({
+                        title: 'Duplicate Entry!',
+                        text: 'The User ID or Username already exists. Please use unique values.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                </script>";
+            } else {
+                echo "<script>
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An unexpected error occurred: " . addslashes($e->getMessage()) . "',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                </script>";
+            }
+        }
     }
-}
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Edit Account</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="../css/addUser.css">
-
-</head>
-
-<body>
     <div class="container" style="width: 50vw;">
         <a href="userManage.php" style="text-decoration:none; color: black;"><svg xmlns="http://www.w3.org/2000/svg"
                 height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
@@ -124,6 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Form to edit the user entry -->
         <div class="user-table justify-content-center">
             <form method="POST" action=" " class="mb-4" enctype="multipart/form-data">
+
+                <div class="form-group user-input">
+                        <label for="userID" class="form-label">User ID: </label>
+                        <input type="text" id="userID" name="userID" class="form-control" value="<?php echo $userData['userID']; ?>" required>
+                </div>
 
                 <div class="mb-3 form-group user-input">
                     <label for="username" class="form-label">Username:</label>
@@ -165,10 +190,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="mb-3 form-group user-input">
                     <label for="role" class="form-label">Role:</label>
-                    <select class="form-select mb-3" name="role" aria-label="Default select example" id="role"
-                        name="role" required>
-                        <option value="admin">Admin</option>
-                        <option value="officer">School Officer</option>
+                    <select class="form-select mb-3" name="role" id="role" required>
+                        <option value="admin" <?php if ($userData['role'] == 'admin') echo 'selected'; ?>>Admin</option>
+                        <option value="officer" <?php if ($userData['role'] == 'officer') echo 'selected'; ?>>School Officer</option>
                     </select>
                 </div>
 

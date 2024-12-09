@@ -135,24 +135,28 @@ table tbody{
     font-size: 50px;
 }
 
-.popup-image img{
+.popup-image{
+    flex: 1;
+    padding: 20px;
+    width: 50%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.popup-details{
+    flex: 1;
+    padding: 20px;
+    position: relative;
+    width: 50%;
+}
+
+.popup-image img {
     flex: 1;
     padding: 20px;
     width: 100%;
     height: auto;
 }
 
-.popup-details{
-    flex: 1;
-    padding: 20px;
-    position: relative;
-}
-
-.popup-details{
-    flex: 1;
-    padding: 20px;
-    position: relative;
-}
 
 .popup-details-background{
     background-color: #FFF8EB;

@@ -94,6 +94,7 @@ $idRow = $offset + 1;
             margin-bottom: 10px;
         }
 
+        
     </style>
 
 <script>
@@ -321,4 +322,7 @@ function filterUser(value) {
     });
 }
 
+window.onload=()=>{
+filterUser("all");
+};
 </script>
