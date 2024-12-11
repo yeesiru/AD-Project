@@ -41,7 +41,7 @@ if (mysqli_query($conn, $sql2)) {
 // Create the Ambulance table
 $sql3 = "CREATE TABLE IF NOT EXISTS ambulance (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    vehicleId VARCHAR(11) NOT NULL UNIQUE, -- Ensure vehicleId is unique
+    vehicleId VARCHAR(11) NOT NULL UNIQUE,
     type ENUM('Basic Life Support', 'Advanced Life Support', 'Critical Care') NOT NULL,
     capacity INT(11) NOT NULL,
     availability ENUM('Available', 'Unavailable') NOT NULL
@@ -68,18 +68,21 @@ if (mysqli_query($conn, $sql4)) {
     echo "Error creating 'feedback' table: " . mysqli_error($conn) . "<br>";
 }
 
-// Create the Halls table
-$sql5 = "CREATE TABLE IF NOT EXISTS halls (
+
+//SQL to create hall table
+$sql5 = "CREATE TABLE IF NOT EXISTS hall (
+
     hall_id VARCHAR(10) PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     capacity INT NOT NULL,
     location VARCHAR(100),
     facility VARCHAR(100)
 )";
+
 if (mysqli_query($conn, $sql5)) {
-    echo "Table 'halls' created successfully.<br>";
+    echo "Table 'hall' created successfully.<br>";
 } else {
-    echo "Error creating 'halls' table: " . mysqli_error($conn) . "<br>";
+    echo "Error creating 'hall' table: " . mysqli_error($conn) . "<br>";
 }
 
 // Create the Equipment Booking table
@@ -98,6 +101,23 @@ if (mysqli_query($conn, $sql6)) {
     echo "Error creating 'equipment_booking' table: " . mysqli_error($conn) . "<br>";
 }
 
+//SQL to create hall booking table
+$sql8 = "CREATE TABLE IF NOT EXISTS hallBooking (
+    booking_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    hall_id VARCHAR(10) NOT NULL, 
+    booked_by VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    time_slot VARCHAR(50) NOT NULL,
+    FOREIGN KEY (hall_id) REFERENCES hall(hall_id)
+)";
+
+
+if (mysqli_query($conn, $sql8)) {
+  echo "Table hall booking created successfully<br>";
+} else {
+  echo "Error creating hall booking table: " . mysqli_error($conn) . "<br>";
+}
+
 // SQL to create ambulances booking table
 $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -106,18 +126,19 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   destination VARCHAR(255) NOT NULL,
   booking_time TIME NOT NULL,
   booking_date DATE NOT NULL,
-  vehicleId VARCHAR(11),
-  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE
+  vehicleId VARCHAR(11) NOT NULL,
+  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) 
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
 )";
-
 
 if (mysqli_query($conn, $sql7)) {
   echo "Table ambulances booking created successfully<br>";
 } else {
   echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
 }
+
+
 
 // Close the connection
 mysqli_close($conn);
