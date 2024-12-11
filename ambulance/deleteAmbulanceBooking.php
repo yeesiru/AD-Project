@@ -71,4 +71,6 @@ if (isset($_GET['vehicleId']) && !empty($_GET['vehicleId'])) {
     </script>";
 }
 
+echo "<script>window.location.href = 'manageAmbulanceBooking.php';</script>";
+
 $conn->close();
