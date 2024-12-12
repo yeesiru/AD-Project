@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 }
 
 // Fetch all ambulance booking records
-$sql = "SELECT * FROM ambulancebooking";
+$sql = "SELECT * FROM ambulanceBooking";
 $result = $conn->query($sql);
 ?>
 

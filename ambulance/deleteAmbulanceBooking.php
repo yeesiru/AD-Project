@@ -9,7 +9,7 @@ if (isset($_GET['vehicleId'])) {
     $vehicleId = $conn->real_escape_string($_GET['vehicleId']); 
 
     // Delete the booking record
-    $sql = "DELETE FROM ambulancebooking WHERE vehicleId = '$vehicleId'";
+    $sql = "DELETE FROM ambulanceBooking WHERE vehicleId = '$vehicleId'";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
