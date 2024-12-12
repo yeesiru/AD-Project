@@ -22,7 +22,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/manageAmbulance.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function confirmDelete(bookingId) {
+        function confirmDelete(vehicleId) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: 'You will not be able to recover this booking record!',
