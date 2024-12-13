@@ -51,7 +51,7 @@ $result = $conn->query($sql);
     <div class="container-xl" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">  
         <h1>Ambulance Management</h1>  
         <a href="../homepage.html" class="btn btn-secondary mb-3">Back to Home</a>  
-        <a href="addAmbulance.php" class="btn btn-primary mb-3">Add Ambulance</a>  
+        <a href="addAmbulance.php" class="btn btn-success mb-3">Add Ambulance</a>  
 
         <!-- Search and Filter Section -->  
         <form method="GET" class="d-flex mb-3">  
@@ -63,7 +63,7 @@ $result = $conn->query($sql);
                 <option value="capacity" <?php if ($sort == 'capacity') echo 'selected'; ?>>Capacity</option>  
                 <option value="availability" <?php if ($sort == 'availability') echo 'selected'; ?>>Availability</option>  
             </select>  
-            <button type="submit" class="btn btn-success">Search</button>  
+            <button type="submit" class="btn btn-primary">Search</button>  
         </form>  
 
         <table class="table table-bordered table-striped">  

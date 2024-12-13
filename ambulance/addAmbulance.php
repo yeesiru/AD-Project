@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="container" style="width: auto;">
-        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back to Home</a>
+        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back</a>
         <br>
         <h1 style="text-align: center;">Add New Ambulance</h1>
 
