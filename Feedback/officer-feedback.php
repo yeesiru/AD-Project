@@ -68,29 +68,60 @@ include("../database/db_conn.php"); // Include the database connection file
             background-color: #1D8348;
         }
 
-        /* Table Styling */
-        table.table {
-            background-color: white;
-            border-radius: 8px;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FFF8EB;
+            text-align: left;
+        }
+
+        table th,
+        table td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+        }
+
+        .table-responsive {
+            background-color: #F5F0DD;
+            padding: 20px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: auto;
         }
 
-        table.table th {
-            background-color: BLACK;
-            color: white;
-            text-align: center;
+        thead th {
+            background-color: #FFF8EB;
+            /* Slightly darker grey for header */
+            padding: 10px;
+            font-weight: bold;
+            border-bottom: 2px solid #ccc;
+            color: #F5F0DD;
         }
 
-        table.table td {
-            text-align: center;
-            vertical-align: middle;
+        tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: #1D5748;
         }
 
-        table.table td, table.table th {
-            padding: 12px;
-            font-size: 0.95rem;
+        tbody tr:nth-child(even) {
+            background-color: #fafafa;
+            /* Alternate row colors */
         }
 
+        table thead{
+            background-color: #1D5748;
+            color: #F5F0DD;
+        }
+
+        table tbody{
+            background-color: #f8f6f2b8;
+        }
 
         .table-actions a {
             margin-right: 8px;
