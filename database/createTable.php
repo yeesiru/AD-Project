@@ -10,14 +10,16 @@ if ($conn->connect_error) {
 // Create the User table
 $sql1 = "CREATE TABLE IF NOT EXISTS User (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    userID VARCHAR(255) UNIQUE,
+    username VARCHAR(255) UNIQUE,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'officer') NOT NULL,
     name VARCHAR(255) NOT NULL,
     gender ENUM('female', 'male') NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(255) NOT NULL,
-    school VARCHAR(255) NOT NULL
+    school VARCHAR(255) NOT NULL,
+    image VARCHAR(255)
 )";
 if (mysqli_query($conn, $sql1)) {
     echo "Table 'User' created successfully.<br>";
@@ -41,7 +43,7 @@ if (mysqli_query($conn, $sql2)) {
 // Create the Ambulance table
 $sql3 = "CREATE TABLE IF NOT EXISTS ambulance (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    vehicleId VARCHAR(11) NOT NULL,
+    vehicleId VARCHAR(11) NOT NULL UNIQUE,
     type ENUM('Basic Life Support', 'Advanced Life Support', 'Critical Care') NOT NULL,
     capacity INT(11) NOT NULL,
     availability ENUM('Available', 'Unavailable') NOT NULL
@@ -127,9 +129,7 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   booking_time TIME NOT NULL,
   booking_date DATE NOT NULL,
   vehicleId VARCHAR(11) NOT NULL,
-  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) 
-  ON DELETE CASCADE
-  ON UPDATE CASCADE
+  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId)
 )";
 
 if (mysqli_query($conn, $sql7)) {
@@ -137,8 +137,6 @@ if (mysqli_query($conn, $sql7)) {
 } else {
   echo "Error creating ambulances table: " . mysqli_error($conn) . "<br>";
 }
-
-
 
 // Close the connection
 mysqli_close($conn);
