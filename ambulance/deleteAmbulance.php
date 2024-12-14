@@ -1,5 +1,4 @@
 <?php
-ob_start();
 include("../database/db_conn.php");
 
 if ($conn->connect_error) {
@@ -60,6 +59,7 @@ if (isset($_GET['vehicleId'])) {
     </script>";
 }
 
+echo "<script>window.location.href = 'manageAmbulance.php';</script>";
+
 $conn->close();
-ob_end_flush();
 ?>

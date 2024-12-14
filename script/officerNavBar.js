@@ -23,6 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
     const navbarHTML = `
+        <div class="top">
+            <div class="container">
+                <div class="logo">
+                    <img src="../img/SJAM-logo.png"/>
+                    <p>SJAM Connect</p>
+                </div>
+            </div>
+        </div>
+        
         <nav>
         <ul class="sidebar">
             <li onclick=hideSidebar()> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -30,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <path
                             d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
                     </svg></a></li>
-            <li> <a href="#">Home</a></li>
+            <li> <a href="../mainPage/officerHomepage.html">Home</a></li>
             <li> <a class="sub-btn">Our Services &#x25BE;</a>
                 <ul class="sidebar-dropdown">
                     <li><a href="#" class="sub-item">Hall Booking</a></li>
@@ -38,23 +47,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     <li><a href="#" class="sub-item">Equipment Booking</a></li>
                 </ul>
             </li>
-            <li> <a href="#">Feedback</a></li>
+            <li> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
             <li> <a href="#">Contact Us</a></li>
-            <li> <a href="#">Logout</a></li>
+            <li> <a href="../mainPage/logout.php">Logout</a></li>
         </ul>
 
         <ul>
-            <li class="hideOnMobile"> <a href="#">Home</a></li>
-            <li class="hideOnMobile"> <a href="#">Our Services &#x25BE;</a>
+            <li class="hideOnMobile"> <a href="../mainPage/officerHomepage.html">Home</a></li>
+            <li class="hideOnMobile"> <a href="#"> Our Services &#x25BE;</a>
                 <ul class="dropdown">
                     <li><a href="#">Hall Booking</a></li>
                     <li><a href="#">Ambulance Booking</a></li>
                     <li><a href="#">Equipment Booking</a></li>
                 </ul>
             </li>
-            <li class="hideOnMobile"> <a href="#">Feedback</a></li>
+            <li class="hideOnMobile"> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
             <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
-            <li class="hideOnMobile"> <a href="#">Logout</a></li>
+            <li class="hideOnMobile"> <a href="../mainPage/logout.php">Logout</a></li>
             <li class="menuButton" onclick=showSideBar()> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
                         height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
                         <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
