@@ -10,9 +10,11 @@ include("../database/db_conn.php"); // Include the database connection file
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/navigation.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <script src="../script/officerNavBar.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
@@ -21,6 +23,11 @@ include("../database/db_conn.php"); // Include the database connection file
         background-color: #f8f9fa;
         font-family: 'Poppins', Arial, sans-serif;
         color: #343a40;
+        }
+
+        h2 {
+            color: #343a40;
+            font-weight: bold;
         }
 
         nav li:first-child {
@@ -136,38 +143,12 @@ include("../database/db_conn.php"); // Include the database connection file
 
 <body>
     <!-- Navigation bar -->
-    <nav>
-        <ul class="sidebar">
-            <li onclick="hideSidebar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                        viewBox="0 -960 960 960" width="24px" fill="black">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg></a></li>
-            <li> <a href="#">Home</a></li>
-            <li> <a href="#">Our Services</a></li>
-            <li> <a href="#">User list</a></li>
-            <li> <a href="#">Contact Us</a></li>
-            <li> <a href="#">Logout</a></li>
-        </ul>
-
-        <ul style="justify-content: flex-end;">
-            <li class="logo navbar-brand"> <a href="homepage.html">SJAM Connect</a></li>
-            <li class="hideOnMobile"> <a href="#">Home</a></li>
-            <li class="hideOnMobile"> <a href="#">Our Services</a></li>
-            <li class="hideOnMobile"> <a href="#">User list</a></li>
-            <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
-            <li class="hideOnMobile"> <a href="#">Logout</a></li>
-            <li class="menuButton" onclick="showSideBar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
-                        height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
-                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-                    </svg></a></li>
-        </ul>
-    </nav>
+    <div id="navbar"></div>
 
     <div class="container mt-4">
         <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Feedback Listings</h2>
+            <h2>Feedback</h2>
         </div>
 
         <!-- Feedback Table -->

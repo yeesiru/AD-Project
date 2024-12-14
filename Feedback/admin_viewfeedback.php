@@ -10,6 +10,8 @@ include("../database/db_conn.php"); // Include the database connection file
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <script src="../script/adminNavBar.js" defer></script>
 
     <style>
         /* General Styling */
@@ -81,33 +83,7 @@ include("../database/db_conn.php"); // Include the database connection file
 </head>
 <body>
     <!-- Navigation bar -->
-    <nav>
-        <ul class="sidebar">
-            <li onclick="hideSidebar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                        viewBox="0 -960 960 960" width="24px" fill="black">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg></a></li>
-            <li> <a href="#">Home</a></li>
-            <li> <a href="#">Our Services</a></li>
-            <li> <a href="#">User list</a></li>
-            <li> <a href="#">Contact Us</a></li>
-            <li> <a href="#">Logout</a></li>
-        </ul>
-
-        <ul style="justify-content: flex-end;">
-            <li class="logo navbar-brand"> <a href="homepage.html">SJAM Connect</a></li>
-            <li class="hideOnMobile"> <a href="#">Home</a></li>
-            <li class="hideOnMobile"> <a href="#">Our Services</a></li>
-            <li class="hideOnMobile"> <a href="#">User list</a></li>
-            <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
-            <li class="hideOnMobile"> <a href="#">Logout</a></li>
-            <li class="menuButton" onclick="showSideBar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
-                        height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
-                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-                    </svg></a></li>
-        </ul>
-    </nav>
+    <div id="navbar"></div>
 
     <div class="container mt-4">
         <!-- Page Header -->
