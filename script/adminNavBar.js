@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <ul class="dropdown">
                     <li><a href="#">Hall</a></li>
                     <li><a href="#">Ambulance</a></li>
-                    <li><a href="#">Equipment</a></li>
+                    <li><a href="../Equipment/equipmmentList.php">Equipment</a></li>
                 </ul>
             </li>
             <li class="hideOnMobile"> <a href="../Feedback/admin_viewfeedback.php">Feedback</a></li>
