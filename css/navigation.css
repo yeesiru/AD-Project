@@ -1,45 +1,79 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    font-family: monospace;
 }
 
-body{
-    min-height: 100vh;
-}
-
-nav{
+nav {
     background-color: #017b56;
-    box-shadow: 3px 3px 5px rgba(0,0,0,0.1);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
     padding-right: 2rem;
+    width: 100vw;
 }
 
-nav ul{
-    width: 100%;
+ul {
     list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 
-nav li{
-    height: 70px;  
+ul li {
+    display: inline-block;
+    position: relative;
 }
 
-nav a{
-    height: 100%;
-    padding: 0 30px;
+ul li a {
+    display: block;
+    padding: 20px 25px;
+    color: white;
     text-decoration: none;
-    display: flex;
-    align-items: center;
+    text-align: center;
+    font-size: 20px;
+}
+
+ul li ul.dropdown li {
+    display: block;
+    border-top: solid white;
+}
+
+ul li ul.dropdown {
+    width: auto;
+    background: #017b56;
+    position: absolute;
+    z-index: 999;
+    display: none;
+    padding-left: 0px;
+}
+
+ul li a:hover {
+    background-color: #f0f0f0;
     color: black;
 }
 
-nav a:hover{
-    background-color: #f0f0f0;
+ul li:hover ul.dropdown {
+    display: block;
 }
 
+/* ul li:hover ul.sidebar-dropdown {
+    display: block;
+} */
 
-.sidebar{
+
+ul li ul.sidebar-dropdown {
+    display: none; 
+    background: #e9ecef;
+    position: relative; 
+    padding: 10px 0;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out; 
+}
+
+ul li ul.sidebar-dropdown{
+    background: #e9ecef3f;
+    display: none;
+
+}
+
+.sidebar {
     position: fixed;
     top: 0;
     right: 0;
@@ -48,47 +82,51 @@ nav a:hover{
     z-index: 999;
     background-color: white;
     backdrop-filter: blur(10px);
-    box-shadow: -10px 0 10px rgba(0,0,0,0.1);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     padding-left: 0%;
+    overflow-x: scroll;
 }
 
-.sidebar li{
+.sidebar li {
     width: 100%;
 }
 
-.sidebar a{
+.sidebar a {
     width: 100%;
+    color: black;
+
 }
 
-.menuButton{
+.menuButton {
     display: none;
 }
 
-@media(min-width: 800px){
-    .sidebar{
+@media(min-width: 800px) {
+    .sidebar {
         display: none;
     }
 }
 
-@media(max-width: 800px){
-    .hideOnMobile{
+@media(max-width: 800px) {
+    .hideOnMobile {
         display: none;
     }
-    .menuButton{
+
+    .menuButton {
         display: block;
     }
 
-    .sidebar{
+    .sidebar {
         display: none;
     }
 }
 
-@media(max-width: 400px){
-    .sidebar{
+@media(max-width: 400px) {
+    .sidebar {
         width: 100%;
     }
 }

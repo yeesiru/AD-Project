@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 }
 
 if (isset($_GET['vehicleId'])) {
-    $vehicleId = $conn->real_escape_string($_GET['vehicleId']); // Sanitize the input to prevent SQL injection
+    $vehicleId = $conn->real_escape_string($_GET['vehicleId']); // Sanitize input
 
     // Delete the ambulance record
     $sql = "DELETE FROM ambulance WHERE vehicleId = '$vehicleId'";
@@ -20,9 +20,9 @@ if (isset($_GET['vehicleId'])) {
                     icon: 'success',
                     confirmButtonText: 'OK'
                 }).then((result) => {
-                    if (result.isConfirmed) {
+                    setTimeout(() => {
                         window.location.href = 'manageAmbulance.php';
-                    }
+                    }, 100);
                 });
             });
         </script>";
@@ -35,9 +35,9 @@ if (isset($_GET['vehicleId'])) {
                     icon: 'error',
                     confirmButtonText: 'OK'
                 }).then((result) => {
-                    if (result.isConfirmed) {
+                    setTimeout(() => {
                         window.location.href = 'manageAmbulance.php';
-                    }
+                    }, 100);
                 });
             });
         </script>";
@@ -51,13 +51,15 @@ if (isset($_GET['vehicleId'])) {
                 icon: 'error',
                 confirmButtonText: 'OK'
             }).then((result) => {
-                if (result.isConfirmed) {
+                setTimeout(() => {
                     window.location.href = 'manageAmbulance.php';
-                }
+                }, 100);
             });
         });
     </script>";
 }
+
+echo "<script>window.location.href = 'manageAmbulance.php';</script>";
 
 $conn->close();
 ?>

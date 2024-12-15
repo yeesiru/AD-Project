@@ -14,46 +14,70 @@ $result = $conn->query($sql);
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/navigation.css"> <!-- Custom Navigation -->
+    <link rel="stylesheet" href="../css/equipmentList.css"> <!-- Custom CSS -->
 </head>
 
 <body>
+    <!-- Navigation Bar -->
+    <div id="navbar"></div>
+
     <div class="container my-5">
         <h1 class="text-center">Equipment List</h1>
 
-        <!-- Table to display equipment -->
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Equipment Name</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row['type'] . "</td>";
-                        echo "<td>" . $row['equipment'] . "</td>";
-                        echo "<td>" . $row['quantity'] . "</td>";
-                        echo "<td>
-                                <a href='editEquipment.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'>Edit</a>
-                                <a href='deleteEquipment.php?id=" . $row['id'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this item?\")'>Delete</a>
-                              </td>";
-                        echo "</tr>";
+        <!-- Search and Filter Section -->
+        <div class="search-bar mb-4">
+            <input type="text" class="form-control d-inline-block me-2" style="width: 55%;" placeholder="Search Equipment">
+            <select class="form-select d-inline-block me-2" style="width: 15%;">
+                <option value="" disabled selected>Type</option>
+                <option value="medical">Medical</option>
+                <option value="general">General</option>
+            </select>
+            <button class="btn btn-outline-primary" style="width: 15%;">Search</button>
+        </div>
+
+        <!-- Add Equipment Button -->
+        <div class="mb-3 text-end">
+            <a href="addEquipment.php" class="btn btn-success">Add Equipment</a>
+        </div>
+
+        <!-- Equipment Table -->
+        <div class="table-container">
+            <table class="table table-bordered table-striped">
+                <thead class="table-success">
+                    <tr>
+                        <th>Type</th>
+                        <th>Equipment Name</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['type']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['equipment']) . "</td>";
+                            echo "<td>" . intval($row['quantity']) . "</td>";
+                            echo "<td>
+                                    <a href='editEquipment.php?id=" . intval($row['id']) . "' class='btn btn-primary btn-sm me-2'>Edit</a>
+                                    <a href='deleteEquipment.php?id=" . intval($row['id']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this equipment?\")'>Delete</a>
+                                  </td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='4' class='text-center'>No equipment found.</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='4' class='text-center'>No equipment found</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <?php $conn->close(); ?>
