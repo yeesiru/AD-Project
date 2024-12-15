@@ -128,8 +128,6 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   booking_date DATE NOT NULL,
   vehicleId VARCHAR(11) NOT NULL,
   FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) 
-  ON DELETE CASCADE
-  ON UPDATE CASCADE
 )";
 
 if (mysqli_query($conn, $sql7)) {
