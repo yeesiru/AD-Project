@@ -19,12 +19,14 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/navigation.css"> <!-- Custom Navigation -->
-    <link rel="stylesheet" href="../css/equipmentList.css"> <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../script/adminNavBar.js" defer></script>
 </head>
 
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation bar -->
     <div id="navbar"></div>
 
     <div class="container my-5">
@@ -33,11 +35,6 @@ $result = $conn->query($sql);
         <!-- Search and Filter Section -->
         <div class="search-bar mb-4">
             <input type="text" class="form-control d-inline-block me-2" style="width: 55%;" placeholder="Search Equipment">
-            <select class="form-select d-inline-block me-2" style="width: 15%;">
-                <option value="" disabled selected>Type</option>
-                <option value="medical">Medical</option>
-                <option value="general">General</option>
-            </select>
             <button class="btn btn-outline-primary" style="width: 15%;">Search</button>
         </div>
 

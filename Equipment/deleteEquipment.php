@@ -25,5 +25,4 @@ if (isset($_GET['id'])) {
 $conn->close();
 ?>
 
-//hihi
 
