@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../script/adminNavBar.js" defer></script>
+    <script src="../script/officerNavBar.js" defer></script>
     <style>
         .search-filter {
             display: flex;
@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
             background-color: #014520;
         }
 
+        /* Table styling */
         .table-container {
             background-color: #F5F0DD;
             padding: 20px;
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
         .table {
             width: 100%;
             border-collapse: collapse;
-            background-color: #FFF8EB;
+            background-color: #FFF8EB; /* Light cream table background */
             text-align: left;
         }
 
@@ -104,38 +105,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
             border: 1px solid #ddd;
         }
 
-        .thead th {
-            background-color: #1D5748; /* Green header background */
+        .table-success th {
+            background-color: #1D5748; /* Dark green header */
             color: #FFFFFF; /* White text */
-            padding: 12px; /* Slightly larger padding */
+            padding: 12px;
             font-weight: bold;
-            border-bottom: 2px solid #ccc;
             text-align: center;
         }
 
-        .tbody td {
-            color: #1D5748; /* Dark green text */
+        .table tbody td {
+            color: black; 
             border-bottom: 1px solid #ddd;
-            text-align: left; /* Align text left */
+            text-align: left;
         }
 
-        .tbody tr:nth-child(even) {
+        .table tbody tr:nth-child(even) {
             background-color: #fafafa; /* Light alternate row */
         }
 
-        .action-icons a {
-            display: inline-block;
-            background-color: #1D5748; /* Green buttons */
-            color: #FFFFFF; /* White text */
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-right: 5px;
-            text-align: center;
-            text-decoration: none;
+        .table thead th {
+            background-color: #1D5748 !important; /* Dark green */
+            color: #FFFFFF !important; /* White font */
         }
 
-        .action-icons a:hover {
-            background-color: #014520; /* Darker green hover */
+        /* Action button styling */
+        .btn-primary {
+            background-color: #1D5748; /* Dark green for Edit button */
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #014520; /* Darker green */
+        }
+
+        .btn-danger {
+            background-color: #B22222; /* Red for Delete button */
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .btn-danger:hover {
+            background-color: #8B0000; /* Darker red */
+        }
+
+        /* Icon alignment */
+        .fas {
+            font-size: 16px; /* Adjust size for better visibility */
+            line-height: 20px; /* Centers icon vertically */
         }
 
         .add-button-container {
@@ -174,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
 
         <!-- Add Equipment Button -->
         <div class="add-button-container">
-            <a href="userAddEquipment.php" class="add-button">Add Equipment</a>
+            <a href="userAddEquipment.php" class="add-button">Equipment Booking</a>
         </div>
 
         <!-- Booking Table -->
@@ -217,13 +234,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
                                 <!-- Actions -->
                                 <td>
                                     <!-- Edit Icon -->
-                                    <a href="userEditEquipment.php?date=<?= urlencode($row['booking_date']) ?>" class="action-icons edit-btn" title="Edit">
-                                        <i class="fas fa-edit"></i>
+                                    <a href="userEditEquipment.php?date=<?= urlencode($row['booking_date']) ?>" class='btn btn-primary btn-sm me-2'>Edit
                                     </a>
 
                                     <!-- Delete Icon -->
-                                    <a href="userDeleteEquipment.php?date=<?= urlencode($row['booking_date']) ?>" class="action-icons delete-btn" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
+                                    <a href="userDeleteEquipment.php?date=<?= urlencode($row['booking_date']) ?>" class='btn btn-danger btn-sm'>Delete
                                     </a>
                                 </td>
                             </tr>
