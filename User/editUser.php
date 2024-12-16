@@ -18,10 +18,10 @@ if ($conn->connect_error) {
 }
 
 // Get the user ID securely
-$userId = intval($_GET['id']);
-$sql = "SELECT * FROM User WHERE id = ?";
+$userID = $_GET['userID'];
+$sql = "SELECT * FROM User WHERE userID = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
+$stmt->bind_param("s", $userID);  // Use 's' for string type
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -45,7 +45,26 @@ if ($result->num_rows > 0) {
         $role = $conn->real_escape_string($_POST['role']);
         $image = $userData['image'];
 
-    $image = $userData['image']; 
+         // Only check for duplicates if the username or userID is modified
+        if ($username != $userData['username'] || $userID != $userData['userID']) {
+            $checkSql = "SELECT * FROM User WHERE username = ? OR userID = ?";
+            $checkStmt = $conn->prepare($checkSql);
+            $checkStmt->bind_param("ss", $username, $userID);
+            $checkStmt->execute();
+            $checkResult = $checkStmt->get_result();
+
+            if ($checkResult->num_rows > 0) {
+                echo "<script>
+                    Swal.fire({
+                        title: 'Duplicate Entry!',
+                        text: 'The username or userID already exists. Please use unique values.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                </script>";
+            }
+        }
+
     $target_dir = __DIR__ . "/uploads/";
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0755, true);
@@ -89,13 +108,13 @@ if ($result->num_rows > 0) {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
-    }
+    } 
 
     // Update user in the database
-        $updateSql = "UPDATE User SET userID = ?, username = ?, password = ?, name = ?, gender = ?, email = ?, phone = ?, school = ?, role = ?, image = ? WHERE id = ?";
-        $updateStmt = $conn->prepare($updateSql);
-        $updateStmt->bind_param("ssssssssssi", $userID, $username, $password, $name, $gender, $email, $phone, $school, $role, $image, $userId);
-
+    $updateSql = "UPDATE User SET username = ?, password = ?, name = ?, gender = ?, email = ?, phone = ?, school = ?, role = ?, image = ? WHERE userID = ?";
+    $updateStmt = $conn->prepare($updateSql);
+    $updateStmt->bind_param("ssssssssss", $username, $password, $name, $gender, $email, $phone, $school, $role, $image, $userID);
+    
         try {
             if ($updateStmt->execute()) {
                 echo "<script>
@@ -110,16 +129,6 @@ if ($result->num_rows > 0) {
                 </script>";
             }
         } catch (Exception $e) {
-            if ($conn->errno == 1062) { // MySQL error code for duplicate entry
-                echo "<script>
-                    Swal.fire({
-                        title: 'Duplicate Entry!',
-                        text: 'The User ID or Username already exists. Please use unique values.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                </script>";
-            } else {
                 echo "<script>
                     Swal.fire({
                         title: 'Error!',
@@ -130,7 +139,6 @@ if ($result->num_rows > 0) {
                 </script>";
             }
         }
-    }
 ?>
 
     <div class="container" style="width: 50vw;">
@@ -147,7 +155,7 @@ if ($result->num_rows > 0) {
 
                 <div class="form-group user-input">
                         <label for="userID" class="form-label">User ID: </label>
-                        <input type="text" id="userID" name="userID" class="form-control" value="<?php echo $userData['userID']; ?>" required>
+                        <input style="opacity:0.5;" type="text" id="userID" name="userID" class="form-control" value="<?php echo $userData['userID']; ?>" readonly>
                 </div>
 
                 <div class="mb-3 form-group user-input">
