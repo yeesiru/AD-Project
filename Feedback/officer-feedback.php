@@ -14,147 +14,10 @@ include("../database/db_conn.php"); // Include the database connection file
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/officer-feedback.css">
     <script src="../script/officerNavBar.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        body {
-        background-color: #f8f9fa;
-        font-family: 'Poppins', Arial, sans-serif;
-        color: #343a40;
-        }
-
-        h2 {
-            color: #343a40;
-            font-weight: bold;
-        }
-
-        nav li:first-child {
-            margin-right: auto;
-        }
-
-        .message-container {
-            display: flex;
-            justify-content: center; /* Centers the message horizontally */
-            align-items: center;
-            height: 100px;
-            margin-top: 20px;
-        }
-        .message {
-            font-size: 1.1rem;
-            color: #555;
-            text-align: center;
-        }
-        #addFeedbackButton {
-            display: flex;
-            justify-content: center; /* Aligns the button to the right */
-            margin-top: 20px;
-        }
-    
-        button {
-            background-color: #0B6623;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #1D8348;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #FFF8EB;
-            text-align: left;
-        }
-
-        table th,
-        table td {
-            text-align: left;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f4f4f4;
-        }
-
-        .table-responsive {
-            background-color: #F5F0DD;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: auto;
-        }
-
-        thead th {
-            background-color: #FFF8EB;
-            /* Slightly darker grey for header */
-            padding: 10px;
-            font-weight: bold;
-            border-bottom: 2px solid #ccc;
-            color: #F5F0DD;
-        }
-
-        tbody td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            color: #1D5748;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fafafa;
-            /* Alternate row colors */
-        }
-
-        table thead{
-            background-color: #1D5748;
-            color: #F5F0DD;
-        }
-
-        table tbody{
-            background-color: #f8f6f2b8;
-        }
-
-        .table-actions a {
-            margin-right: 8px;
-        }
-
-        /* Status Styling */
-        .status-pending {
-            color: red;
-            font-weight: bold;
-        }
-
-        .status-responded {
-            color: green;
-            font-weight: bold;
-        }
-
-        tbody tr:nth-child(odd) {
-        background-color: #f9f9f9;
-        }
-
-        tbody tr:nth-child(even) {
-        background-color: #ffffff;
-        }
-
-        @media (max-width: 768px) {
-        table.table {
-            font-size: 0.8rem;
-        }
-
-    }
-
-    </style>
-
     <script>
         function showSideBar() {
             const sidebar = document.querySelector('.sidebar')
@@ -180,6 +43,10 @@ include("../database/db_conn.php"); // Include the database connection file
         <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Feedback</h2>
+            <!-- Button aligned to the right side of the screen -->
+            <div id="addFeedbackButton">
+                <button onclick="redirectToAddFeedback()">Add Feedback</button>
+            </div>
         </div>
 
         <!-- Feedback Table -->
@@ -220,11 +87,6 @@ include("../database/db_conn.php"); // Include the database connection file
                 </tbody>
             </table>
         </div>
-    </div>
-    
-    <!-- Button aligned to the right side of the screen -->
-    <div id="addFeedbackButton">
-        <button onclick="redirectToAddFeedback()">Add Feedback</button>
     </div>
     
     <?php
