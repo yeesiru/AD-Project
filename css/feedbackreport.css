@@ -1,0 +1,22 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+h1, h2, h3 {
+    color: #343a40;
+}
+.chart-container {
+    margin: 30px auto;
+    width: 80%;
+}
+.stat-card {
+    background-color: #FFF8EB;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.stat-card h3 {
+    font-weight: bold;
+    color: #1D5748;
+}
