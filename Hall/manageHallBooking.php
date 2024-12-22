@@ -70,7 +70,6 @@ $result = $conn->query($sql);
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-success">Apply</button>
-                <a href="manageHallBooking.php" class="btn btn-secondary">Reset</a>
             </div>
         </div>
     </form>

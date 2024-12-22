@@ -96,26 +96,6 @@ $conn->close();
                 <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
             </div>
 
-            <div class="form-group mt-3">
-                <label for="hallId">Hall (Hall ID):</label>
-                <select id="hallId" name="hallId" class="form-select">
-                    <?php
-                    // Fetch available halls
-                    $hallSql = "SELECT hall_id, name FROM hall WHERE status = 'Available' OR hall_id = '{$row['hall_id']}'";
-                    $hallResult = $conn->query($hallSql);
-
-                    if ($hallResult->num_rows > 0) {
-                        while ($hall = $hallResult->fetch_assoc()) {
-                            $selected = ($hall['hall_id'] === $row['hall_id']) ? 'selected' : '';
-                            echo "<option value='{$hall['hall_id']}' $selected>{$hall['name']} (ID: {$hall['hall_id']})</option>";
-                        }
-                    } else {
-                        echo "<option value='' disabled>No halls available</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
         </form>
     </div>
