@@ -32,7 +32,7 @@ include("../database/db_conn.php"); // Include the database connection file
                 <button type="submit" class="btn-search">Search</button>
             </form>
 
-            <a href="feedbackreport.php" class="btn btn-success">Generate Feedback Report</a>
+            <a href="feedbackreport.php" class="btn btn-search">Generate Feedback Report</a>
         </div>
 
         
