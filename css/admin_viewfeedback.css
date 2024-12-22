@@ -117,14 +117,3 @@ tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-.btn-success {
-    color: white;
-    background-color: #28a745;
-    transition: all 0.3s ease-in-out;
-    border-radius: 5px;
-    margin-left: 10px;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-}

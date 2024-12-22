@@ -43,6 +43,16 @@ include("../database/db_conn.php"); // Include the database connection file
         <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Feedback</h2>
+            <form method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search by rating" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <select name="filter" class="form-select me-2">
+                    <option value="">All Services</option>
+                    <option value="hall" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'hall' ? 'selected' : ''; ?>>Hall</option>
+                    <option value="ambulance" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'ambulance' ? 'selected' : ''; ?>>Ambulance</option>
+                    <option value="equipment" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'equipment' ? 'selected' : ''; ?>>Equipment</option>
+                </select>
+                <button type="submit" class="btn-search">Search</button>
+            </form>
             <!-- Button aligned to the right side of the screen -->
             <div id="addFeedbackButton">
                 <button onclick="redirectToAddFeedback()">Add Feedback</button>
@@ -64,7 +74,20 @@ include("../database/db_conn.php"); // Include the database connection file
                 <tbody>
                     <?php
                     // Fetch feedback from the database
-                    $sql = "SELECT id, serviceType, rating, feedbackText, status, admin_response FROM feedback";
+                    $sql = "SELECT id, serviceType, rating, feedbackText, admin_response, status FROM feedback WHERE 1=1";
+                    
+                    // Search by Rating
+                    if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
+                        $search = $conn->real_escape_string(trim($_GET['search']));
+                        $sql .= " AND rating LIKE '%$search%'";
+                    }
+
+                    // Filter by Service Type
+                    if (isset($_GET['filter']) && !empty($_GET['filter'])) {
+                        $filter = $conn->real_escape_string($_GET['filter']);
+                        $sql .= " AND serviceType = '$filter'";
+                    }
+
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
