@@ -9,9 +9,8 @@ if ($conn->connect_error) {
 
 // Create the User table
 $sql1 = "CREATE TABLE IF NOT EXISTS User (
-    id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    userID VARCHAR(255) UNIQUE,
-    username VARCHAR(255) UNIQUE,
+    userID VARCHAR(255) PRIMARY KEY,
+    username VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('admin', 'officer') NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -91,11 +90,11 @@ if (mysqli_query($conn, $sql5)) {
 $sql6 = "CREATE TABLE IF NOT EXISTS equipment_booking (
     id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     equipment_id INT(11) UNSIGNED NOT NULL,
-    user_id INT(11) UNSIGNED NULL,
+    user_id VARCHAR(255) NULL,
     quantity INT(11) NOT NULL,
     booking_date DATE NOT NULL,
     FOREIGN KEY (equipment_id) REFERENCES equipment(id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES User(userID) ON DELETE CASCADE
 )";
 if (mysqli_query($conn, $sql6)) {
     echo "Table 'equipment_booking' created successfully.<br>";
@@ -129,7 +128,8 @@ $sql7 = "CREATE TABLE IF NOT EXISTS ambulanceBooking (
   booking_time TIME NOT NULL,
   booking_date DATE NOT NULL,
   vehicleId VARCHAR(11) NOT NULL,
-  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId)
+  FOREIGN KEY (vehicleId) REFERENCES ambulance(vehicleId) 
+
 )";
 
 if (mysqli_query($conn, $sql7)) {

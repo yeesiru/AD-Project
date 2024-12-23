@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <ul class="sidebar-dropdown">
                     <li><a href="#" class="sub-item">Hall Booking</a></li>
                     <li><a href="#" class="sub-item">Ambulance Booking</a></li>
-                    <li><a href="#" class="sub-item">Equipment Booking</a></li>
+                    <li><a href="../Equipment_user/manageEquipmentBooking.php" class="sub-item">Equipment Booking</a></li>
                 </ul>
             </li>
             <li> <a href="../Feedback/officer-feedback.php">Feedback</a></li>

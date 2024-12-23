@@ -5,12 +5,25 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all hall bookings
+// Initialize variables for search and filter
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$filter_date = isset($_GET['filter_date']) ? $_GET['filter_date'] : '';
+
+// Build the SQL query with search and filter
 $sql = "SELECT b.booking_id, b.hall_id, h.name AS hall_name, b.booked_by, b.date, b.time_slot 
         FROM hallBooking b 
-        INNER JOIN hall h ON b.hall_id = h.hall_id";
-$result = $conn->query($sql);
+        INNER JOIN hall h ON b.hall_id = h.hall_id 
+        WHERE 1=1";
 
+if (!empty($search)) {
+    $sql .= " AND (h.name LIKE '%" . $conn->real_escape_string($search) . "%' OR b.booked_by LIKE '%" . $conn->real_escape_string($search) . "%')";
+}
+
+if (!empty($filter_date)) {
+    $sql .= " AND b.date = '" . $conn->real_escape_string($filter_date) . "'";
+}
+
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +58,21 @@ $result = $conn->query($sql);
     <h1>Manage Hall Bookings</h1>
     <a href="../homepage.html" class="btn btn-secondary mb-3" style="background-color: #777; color: white; border: none;">Back to Home</a>
     <a href="addHallBooking.php" class="btn btn-primary mb-3" style="background-color: #006d47; color: white; border: none;">Add Booking</a>
+
+    <!-- Search and Filter Form -->
+    <form method="GET" class="mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" placeholder="Search by hall name or booked by" value="<?php echo htmlspecialchars($search); ?>">
+            </div>
+            <div class="col-md-4">
+                <input type="date" name="filter_date" class="form-control" value="<?php echo htmlspecialchars($filter_date); ?>">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success">Apply</button>
+            </div>
+        </div>
+    </form>
 
     <table class="table table-bordered table-striped">
         <thead>
