@@ -19,26 +19,132 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../css/navigation.css"> <!-- Custom Navigation -->
-    <link rel="stylesheet" href="../css/equipmentList.css"> <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../script/adminNavBar.js" defer></script>
+    <style>
+        /* General styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            color: #1D5748; /* Dark green text */
+        }
+
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .search-filter input,
+        .search-filter button {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #DDD;
+            border-radius: 5px;
+        }
+
+        .search-filter button {
+            background-color: #1D5748;
+            color: #FFFFFF;
+        }
+
+        .search-filter button:hover {
+            background-color: #014520;
+        }
+
+        /* Add Equipment button styling */
+        .mb-3 a.btn-success {
+            background-color: #1D5748; 
+            color: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .mb-3 a.btn-success:hover {
+            background-color: #014520; /* Darker green */
+        }
+
+        /* Table styling */
+        .table-container {
+            background-color: #F5F0DD;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #FFF8EB; /* Light cream table background */
+            text-align: left;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .table-success th {
+            background-color: #1D5748; /* Dark green header */
+            color: #FFFFFF; /* White text */
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .table tbody td {
+            color: black; 
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #fafafa; /* Light alternate row */
+        }
+
+        /* Action button styling */
+        .btn-primary {
+            background-color: #1D5748; /* Dark green for Edit button */
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #014520; /* Darker green */
+        }
+
+        .btn-danger {
+            background-color: #B22222; /* Red for Delete button */
+            border: none;
+            color: #FFFFFF;
+        }
+
+        .btn-danger:hover {
+            background-color: #8B0000; /* Darker red */
+        }
+
+    </style>
 </head>
 
 <body>
-    <!-- Navigation Bar -->
+    <!-- Navigation bar -->
     <div id="navbar"></div>
 
     <div class="container my-5">
-        <h1 class="text-center">Equipment List</h1>
 
-        <!-- Search and Filter Section -->
-        <div class="search-bar mb-4">
-            <input type="text" class="form-control d-inline-block me-2" style="width: 55%;" placeholder="Search Equipment">
-            <select class="form-select d-inline-block me-2" style="width: 15%;">
-                <option value="" disabled selected>Type</option>
-                <option value="medical">Medical</option>
-                <option value="general">General</option>
-            </select>
-            <button class="btn btn-outline-primary" style="width: 15%;">Search</button>
+        <!-- Search Bar Section -->
+        <div class="search-filter">
+            <input style="width: 70%;" type="text" placeholder="Search Booking">
+            <button class="filter-button" style="width: 20%;">Search</button>
         </div>
 
         <!-- Add Equipment Button -->

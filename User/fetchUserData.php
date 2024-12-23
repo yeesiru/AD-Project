@@ -1,9 +1,9 @@
 <?php
 include("../database/db_conn.php");
-if (isset($_GET['id'])) {
-    $userId = intval($_GET['id']);
-    $stmt = $conn->prepare("SELECT * FROM User WHERE id = ?");
-    $stmt->bind_param("i", $userId);
+if (isset($_GET['userID'])) {
+    $userId = $_GET['userID'];
+    $stmt = $conn->prepare("SELECT * FROM User WHERE userID = ?");
+    $stmt->bind_param("s", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {

@@ -8,15 +8,15 @@ if ($conn->connect_error) {
 
 
 if (isset($_GET['edit'])) {
-    $id = $_GET['edit'];
-    header("Location:editUser.php?id=$id");
+    $userID = $_GET['edit'];
+    header("Location:editUser.php?userID=$userID");
     exit;
 }
 
 if (isset($_GET['view'])) {
     $userId = intval($_GET['view']); // Ensure ID is an integer
-    $stmt = $conn->prepare("SELECT * FROM User WHERE id = ?");
-    $stmt->bind_param("i", $userId);
+    $stmt = $conn->prepare("SELECT * FROM User WHERE userID = ?");
+    $stmt->bind_param("s", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
@@ -49,7 +49,7 @@ $sql = "SELECT * FROM User $whereClause LIMIT $offset, $rowsPerPage";
 $result = $conn->query($sql);
 
 // Query to get the total number of users for calculating total pages
-$totalRowsQuery = "SELECT COUNT(*) AS total FROM User";
+$totalRowsQuery = "SELECT COUNT(*) AS total FROM User $whereClause";
 $totalRowsResult = $conn->query($totalRowsQuery);
 $totalRows = $totalRowsResult->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $rowsPerPage);
@@ -96,24 +96,6 @@ $idRow = $offset + 1;
 
         
     </style>
-
-<script>
-        function confirmDelete(userId) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You will not be able to recover this user record!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Delete'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = `deleteUser.php?id=${userId}`;
-                }
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -165,7 +147,8 @@ $idRow = $offset + 1;
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
+                        <th>UserID</th>
                         <th>Username</th>
                         <th>Name</th>
                         <th>Email</th>
@@ -181,17 +164,18 @@ $idRow = $offset + 1;
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td>" . $idRow . "</td>";
+                                echo "<td>" . htmlspecialchars($row['userID']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['username']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['email']) . "</td>";
                                 echo "<td>" . htmlspecialchars($row['school']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['role']) . "</td>";
+                                echo "<td>" . htmlspecialchars($row['role']) . "</td>";  
                                 
                                 echo "<td> 
-                                        <button class='btn btn-success btn-sm me-2 view-data' data-user-id='" . $row['id'] . "'>View</button>
-                                        <a href='?edit=" . $row['id'] . "' class='btn btn-primary btn-sm me-2'>Edit</a>
-                                        <button class='btn btn-danger btn-sm' onclick=\"confirmDelete(" . $row['id'] . ")\">Delete</button>
-                                    </td>";
+                                        <button class='btn btn-success btn-sm me-2 view-data' data-user-id='" . $row['userID'] . "'>View</button>
+                                        <a href='?edit=" . $row['userID'] . "' class='btn btn-primary btn-sm me-2'>Edit</a>
+                                        <button class='btn btn-danger btn-sm' onclick=\"confirmDelete('" . htmlspecialchars($row['userID'], ENT_QUOTES) . "')\">Delete</button>
+                                        </td>";
                                 echo "</tr>";
 
                                 $idRow++; // Increment row number for the current page
@@ -227,14 +211,14 @@ $idRow = $offset + 1;
 
 </html>
 
-<!--Script for pop up details-->
 <script>
+    //Script for pop up details
     document.querySelectorAll('.view-data').forEach((button) => {
     button.addEventListener('click', () => {
         const userId = button.getAttribute('data-user-id');
 
         // Fetch user data from the server
-        fetch(`fetchUserData.php?id=${userId}`)
+        fetch(`fetchUserData.php?userID=${userId}`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error("User not found");
@@ -313,7 +297,7 @@ function filterUser(value) {
 
     rows.forEach((row, index) => {
         if (index === 0) return; // Skip the header row
-        const roleCell = row.querySelector('td:nth-child(6)'); // Adjust column index as needed
+        const roleCell = row.querySelector('td:nth-child(7)'); // Adjust column index as needed
         if (value === 'all' || (roleCell && roleCell.textContent.toLowerCase().includes(value.toLowerCase()))) {
             row.style.display = '';
         } else {
@@ -325,4 +309,21 @@ function filterUser(value) {
 window.onload=()=>{
 filterUser("all");
 };
+
+//Delete user
+function confirmDelete(userID) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will not be able to recover this user record!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Delete'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `deleteUser.php?userID=${userID}`;
+                }
+            });
+        }
 </script>
