@@ -50,11 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
             <li> <a href="../Feedback/admin_viewfeedback.php">Feedback</a></li>
             <li> <a href="../User/userManage.php">User List</a></li>
+            <li> <a href="../User/ownProfile.php">Profile</a></li>
             <li> <a href="../mainPage/logout.php">Logout</a></li>
         </ul>
 
         <ul>
             <li class="hideOnMobile"> <a href="../mainPage/adminHomepage.html">Home</a></li>
+            <li class="hideOnMobile"> <a href="../User/ownProfile.php">Profile</a></li>
             <li class="hideOnMobile"  style="width: 149px;"> <a href="#">Manage &#x25BE;</a>
                 <ul class="dropdown">
                     <li><a href="#">Hall</a></li>
