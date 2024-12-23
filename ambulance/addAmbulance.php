@@ -66,12 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form id="addAmbulanceForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data">
                 
                 <div class="form-group ambulance-input">
-                    <label for="vehicleId" class="form-label">Vehicle ID: </label>
+                    <label for="vehicleId" class="form-label">Vehicle ID<span class="text-danger">*</span></label>
                     <input type="text" id="vehicleId" name="vehicleId" required>
                 </div>
 
                 <div class="form-group ambulance-input">
-                    <label for="type">Type</label>
+                    <label for="type">Type<span class="text-danger">*</span></label>
                     <div class="custom-select-wrapper">
                         <select class="form-select custom-select" aria-label="Default select example" id="type"
                             name="type" required>
@@ -84,12 +84,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>    
 
                 <div class="form-group ambulance-input">
-                    <label for="capacity" class="form-label">Capacity: </label>
-                    <input type="number" id="capacity" name="capacity" required>
+                    <label for="capacity" class="form-label">Capacity<span class="text-danger">*</span></label>
+                    <input type="number" id="capacity" name="capacity" min="1" max="12" required>
                 </div>
 
                 <div class="form-group ambulance-input">
-                    <label for="availability" class="form-label">Availability: </label>
+                    <label for="availability" class="form-label">Availability<span class="text-danger">*</span></label>
                     <select class="form-select" id="availability" name="availability" required>
                         <option value="" disabled selected>Select availability</option>
                         <option value="Available">Available</option>
