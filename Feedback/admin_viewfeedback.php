@@ -11,129 +11,9 @@ include("../database/db_conn.php"); // Include the database connection file
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/admin_viewfeedback.css">
     <script src="../script/adminNavBar.js" defer></script>
 
-    <style>
-        /* General Styling */
-        body {
-        background-color: #f8f9fa;
-        font-family: 'Poppins', Arial, sans-serif;
-        color: #343a40;
-        }
-
-        h2 {
-            color: #343a40;
-            font-weight: bold;
-        }
-
-        nav li:first-child {
-            margin-right: auto;
-        }
-
-        /* Table Styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #FFF8EB;
-            text-align: left;
-        }
-
-        table th,
-        table td {
-            text-align: left;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f4f4f4;
-        }
-
-        .table-responsive {
-            background-color: #F5F0DD;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: auto;
-        }
-
-        thead th {
-            background-color: #FFF8EB;
-            /* Slightly darker grey for header */
-            padding: 10px;
-            font-weight: bold;
-            border-bottom: 2px solid #ccc;
-            color: #F5F0DD;
-        }
-
-        tbody td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            color: #1D5748;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #fafafa;
-            /* Alternate row colors */
-        }
-
-        table thead{
-            background-color: #1D5748;
-            color: #F5F0DD;
-        }
-
-        table tbody{
-            background-color: #f8f6f2b8;
-        }
-
-        .table-actions a {
-            margin-right: 8px;
-        }
-
-        /* Status Styling */
-        .status-pending {
-            color: red;
-            font-weight: bold;
-        }
-
-        .status-responded {
-            color: green;
-            font-weight: bold;
-        }
-
-        /* Button Styling */
-        .btn-search {
-            color: white;
-            background-color: #017b56;
-            transition: all 0.3s ease-in-out;
-            width: 200px;
-            border-radius: 5px;
-        }
-
-        .btn-search:hover {
-            color: white;
-            background-color: #1D5748;
-            transition: all 0.3s ease-in-out;
-            width: 200px;
-            border-radius: 5px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-        }
-
-        /* Hover Effects */
-        tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
 </head>
 <body>
     <div id="navbar"></div>
@@ -151,6 +31,8 @@ include("../database/db_conn.php"); // Include the database connection file
                 </select>
                 <button type="submit" class="btn-search">Search</button>
             </form>
+
+            <a href="feedbackreport.php" class="btn btn-search">Generate Feedback Report</a>
         </div>
 
         
