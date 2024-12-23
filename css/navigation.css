@@ -1,7 +1,30 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: monospace;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.top{
+    width: 100vw;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.top img{
+    width: 80px;
+    height: 80px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo p{
+    margin: 0;
+    padding-left: 10px;
+    font-weight: 1000;
+    font-size: large;
 }
 
 nav {
@@ -52,11 +75,6 @@ ul li a:hover {
 ul li:hover ul.dropdown {
     display: block;
 }
-
-/* ul li:hover ul.sidebar-dropdown {
-    display: block;
-} */
-
 
 ul li ul.sidebar-dropdown {
     display: none; 
