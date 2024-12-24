@@ -79,32 +79,32 @@ $ambulanceResult = $conn->query($ambulanceQuery);
             <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 
                 <div class="form-group">
-                    <label for="name" class="form-label">Name:</label>
+                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                     <input type="text" id="name" name="name" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="contact" class="form-label">Contact No:</label>
+                    <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
                     <input type="text" id="contact" name="contact" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="destination" class="form-label">Destination:</label>
+                    <label for="destination" class="form-label">Destination<span class="text-danger">*</span></label>
                     <input type="text" id="destination" name="destination" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="date" class="form-label">Date:</label>
+                    <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
                     <input type="date" id="date" name="date" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="time" class="form-label">Time:</label>
+                    <label for="time" class="form-label">Time<span class="text-danger">*</span></label>
                     <input type="time" id="time" name="time" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="vehicleId" class="form-label">Select Ambulance:</label>
+                    <label for="vehicleId" class="form-label">Select Ambulance<span class="text-danger">*</span></label>
                     <select id="vehicleId" name="vehicleId" class="form-select" required>
                         <option value="" disabled selected>Select an available ambulance</option>
                         <?php

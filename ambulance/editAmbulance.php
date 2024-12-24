@@ -73,12 +73,12 @@ $conn->close();
 
         <form action="" method="POST">
             <div class="form-group ambulance-input">
-                <label for="vehicleId">Vehicle ID: </label>
+                <label for="vehicleId">Vehicle ID<span class="text-danger">*</span></label>
                 <input type="text" id="vehicleId" name="vehicleId" value="<?php echo $row['vehicleId']; ?>" readonly>
             </div>
 
             <div class="form-group ambulance-input">
-                <label for="type">Type</label>
+                <label for="type">Type<span class="text-danger">*</span></label>
                 <select class="form-select" id="type" name="type">
                     <option value="Basic Life Support" <?php if($row['type'] == 'Basic Life Support') echo 'selected'; ?>>Basic Life Support</option>
                     <option value="Advanced Life Support" <?php if($row['type'] == 'Advanced Life Support') echo 'selected'; ?>>Advanced Life Support</option>
@@ -87,12 +87,12 @@ $conn->close();
             </div>
 
             <div class="form-group ambulance-input">
-                <label for="capacity">Capacity: </label>
-                <input type="number" id="capacity" name="capacity" value="<?php echo $row['capacity']; ?>" required>
+                <label for="capacity">Capacity<span class="text-danger">*</span></label>
+                <input type="number" id="capacity" name="capacity" min="1" max="12" value="<?php echo $row['capacity']; ?>" required>
             </div>
 
             <div class="form-group ambulance-input">
-                <label for="availability">Availability: </label>
+                <label for="availability">Availability<span class="text-danger">*</span></label>
                 <select class="form-select" id="availability" name="availability">
                     <option value="Available" <?php if($row['availability'] == 'Available') echo 'selected'; ?>>Available</option>
                     <option value="Unavailable" <?php if($row['availability'] == 'Unavailable') echo 'selected'; ?>>Unavailable</option>
