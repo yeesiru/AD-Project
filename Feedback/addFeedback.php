@@ -30,6 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../css/addFeedback.css">
+    <style>
+        .required {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -55,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Feedback form -->
     <div id="feedbackForm">
         <form action="addFeedback.php" method="POST">
-            <label for="serviceType">Service Type:</label>
+            <label for="serviceType"><span class="required">*</span>Service Type:</label>
             <select name="serviceType" id="serviceType" required>
                 <option value="">Select Service</option>
                 <option value="hall">Hall Condition</option>
@@ -63,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="ambulance">Ambulance Service</option>
             </select>
 
-            <label for="rating">Rating:</label>
+            <label for="rating"><span class="required">*</span>Rating:</label>
             <div class="rating">
                 <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
                 <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
@@ -72,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
             </div>
 
-            <label for="feedbackText">Feedback:</label>
+            <label for="feedbackText"><span class="required">*</span>Feedback:</label>
             <textarea id="feedbackText" name="feedbackText" rows="5" required></textarea>
 
             <button type="submit">Submit Feedback</button>
