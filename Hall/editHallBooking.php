@@ -75,28 +75,29 @@ $conn->close();
 
 <body>
     <div class="container bg-white p-4 rounded shadow">
-        <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
+        
         <h1>Edit Hall Booking Details</h1>
 
         <form action="" method="POST">
             <input type="hidden" name="bookingId" value="<?php echo htmlspecialchars($row['booking_id']); ?>">
 
             <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="name">Name<span class="text-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="date">Date:</label>
+                <label for="date">Date<span class="text-danger">*</span></label>
                 <input type="date" id="date" name="date" class="form-control" value="<?php echo htmlspecialchars($row['date']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="timeSlot">Time:</label>
+                <label for="timeSlot">Time<span class="text-danger">*</span></label>
                 <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
             </div>
 
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
+            <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
         </form>
     </div>
 </body>

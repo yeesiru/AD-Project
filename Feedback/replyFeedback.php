@@ -50,6 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../css/replyFeedback.css">
+    <style>
+        .required {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 
 </head>
 
@@ -83,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <form action="replyFeedback.php?feedback_id=<?php echo $feedback_id; ?>" method="POST">
         <input type="hidden" name="feedback_id" value="<?php echo $feedback_id; ?>">
-        <label for="admin_response">Response:</label>
+        <label for="admin_response"><span class="required">*</span>Response:</label>
         <textarea name="admin_response" id="admin_response" rows="5" required></textarea>
         <button type="submit">Submit Response</button>
         </form>

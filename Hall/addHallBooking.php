@@ -56,6 +56,7 @@ $hallResult = $conn->query($hallQuery);
     <title>Add Hall Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -132,17 +133,17 @@ $hallResult = $conn->query($hallQuery);
             <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 
                 <div class="form-group">
-                    <label for="name" class="form-label">Name:</label>
+                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                     <input type="text" id="name" name="name" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="contact" class="form-label">Contact No:</label>
+                    <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
                     <input type="text" id="contact" name="contact" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="hallId" class="form-label">Select Hall:</label>
+                    <label for="hallId" class="form-label">Select Hall<span class="text-danger">*</span></label>
                     <select id="hallId" name="hallId" class="form-select" required>
                         <option value="" disabled selected>Select a hall</option>
                         <?php
@@ -158,12 +159,12 @@ $hallResult = $conn->query($hallQuery);
                 </div>
 
                 <div class="form-group">
-                    <label for="date" class="form-label">Date:</label>
+                    <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
                     <input type="date" id="date" name="date" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="timeSlot" class="form-label">Time:</label>
+                    <label for="timeSlot" class="form-label">Time<span class="text-danger">*</span></label>
                     <input type="time" id="timeSlot" name="timeSlot" class="form-control" required>
                 </div>
 

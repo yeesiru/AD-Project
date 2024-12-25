@@ -33,6 +33,8 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/hall.css">
     <link rel="stylesheet" href="../css/navigation.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../script/adminNavBar.js" defer></script>
+
     <script>
         function confirmDelete(hall_id) {
             Swal.fire({
@@ -49,8 +51,12 @@ $result = $conn->query($sql);
             });
         }
     </script>
+
 </head>
 <body>
+
+
+
 <div class="container">
     <h1>Hall Management</h1>
     <a href="../homepage.html" class="btn btn-secondary mb-3" style="background-color: #777; color: white; border: none;">Back to Home</a>
