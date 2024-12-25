@@ -5,66 +5,29 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
-if (isset($_GET['vehicleId']) && !empty($_GET['vehicleId'])) {
-    $vehicleId = $conn->real_escape_string($_GET['vehicleId']);
-
-    // Delete the booking record
-    $deleteSql = "DELETE FROM ambulanceBooking WHERE vehicleId = '$vehicleId'";
-
-    if ($conn->query($deleteSql) === TRUE) {
-        // Update the ambulance availability to 'Available'
-        $updateSql = "UPDATE ambulance SET availability = 'Available' WHERE vehicleId = '$vehicleId'";
-        
-        if ($conn->query($updateSql) === TRUE) {
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: 'Ambulance booking record has been deleted, and the ambulance is now available.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href = 'manageAmbulanceBooking.php';
-                    });
-                });
-            </script>";
-        } else {
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    Swal.fire({
-                        title: 'Warning!',
-                        text: 'Booking deleted, but failed to update ambulance availability: " . $conn->error . "',
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        window.location.href = 'manageAmbulanceBooking.php';
-                    });
-                });
-            </script>";
-        }
-    } else {
-
 if (isset($_GET['vehicleId'])) {
-    $vehicleId = $conn->real_escape_string($_GET['vehicleId']);
+    $vehicleId = $conn->real_escape_string($_GET['vehicleId']); 
 
-    // Begin transaction
+    // Begin transaction to ensure consistency
     $conn->begin_transaction();
 
     try {
-        // Delete the booking record from ambulanceBooking table
-        $sqlDeleteBooking = "DELETE FROM ambulanceBooking WHERE vehicleId = '$vehicleId'";
-        if ($conn->query($sqlDeleteBooking) === TRUE) {
-            // Update the availability status in the ambulance table
-            $sqlUpdateAvailability = "UPDATE ambulance SET availability = 'available' WHERE vehicleId = '$vehicleId'";
-            if ($conn->query($sqlUpdateAvailability) === TRUE) {
-                // Commit transaction if both queries are successful
+        // Delete the booking record
+        $deleteBookingSql = "DELETE FROM ambulanceBooking WHERE vehicleId = '$vehicleId'";
+        if ($conn->query($deleteBookingSql) === TRUE) {
+            
+            // Update ambulance availability to 'Available'
+            $updateAmbulanceSql = "UPDATE ambulance SET availability = 'Available' WHERE vehicleId = '$vehicleId'";
+            if ($conn->query($updateAmbulanceSql) === TRUE) {
+                
+                // Commit transaction
                 $conn->commit();
+
                 echo "<script>
                     document.addEventListener('DOMContentLoaded', function () {
                         Swal.fire({
-                            title: 'Deleted and Updated!',
-                            text: 'Ambulance booking has been deleted and availability has been updated.',
+                            title: 'Deleted!',
+                            text: 'Ambulance booking record has been deleted and availability updated successfully.',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then((result) => {
@@ -75,50 +38,20 @@ if (isset($_GET['vehicleId'])) {
                     });
                 </script>";
             } else {
-                // If updating the availability fails, roll back the transaction
-                $conn->rollback();
-                echo "<script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Failed to update availability: " . $conn->error . "',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = 'manageAmbulanceBooking.php';
-                            }
-                        });
-                    });
-                </script>";
+                throw new Exception("Failed to update ambulance availability: " . $conn->error);
             }
         } else {
-            // If deleting the booking fails, roll back the transaction
-            $conn->rollback();
-            echo "<script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Failed to delete booking: " . $conn->error . "',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'manageAmbulanceBooking.php';
-                        }
-                    });
-                });
-            </script>";
+            throw new Exception("Failed to delete ambulance booking record: " . $conn->error);
         }
     } catch (Exception $e) {
-        // If any exception occurs, rollback the transaction
+        // Rollback transaction if an error occurs
         $conn->rollback();
 
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'An error occurred: " . $e->getMessage() . "',
+                    text: '" . addslashes($e->getMessage()) . "',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 }).then(() => {
@@ -128,6 +61,7 @@ if (isset($_GET['vehicleId'])) {
         </script>";
     }
 } else {
+    // Handle missing vehicleId
     echo "<script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
@@ -143,6 +77,6 @@ if (isset($_GET['vehicleId'])) {
 }
 
 echo "<script>window.location.href = 'manageAmbulanceBooking.php';</script>";
-
+// Close database connection
 $conn->close();
 ?>
