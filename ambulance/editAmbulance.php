@@ -67,7 +67,7 @@ $conn->close();
 
 <body>
     <div class="container">
-        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back to Home</a>
+        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back</a>
         <br>
         <h1>Edit Ambulance Details</h1>
 

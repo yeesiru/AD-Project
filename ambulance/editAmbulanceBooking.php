@@ -105,7 +105,6 @@ $conn->close();
             </div>
 
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
-
             
         </form>
     </div>
