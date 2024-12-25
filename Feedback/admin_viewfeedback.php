@@ -6,23 +6,26 @@ include("../database/db_conn.php"); // Include the database connection file
 <html>
 <head>
     <title>Admin Feedback Listing</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/navigation.css">
 
     <style>
         /* General Styling */
         body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        font-family: 'Poppins', Arial, sans-serif;
+        color: #343a40;
         }
 
         h2 {
             color: #343a40;
             font-weight: bold;
+        }
+
+        nav li:first-child {
+            margin-right: auto;
         }
 
         /* Table Styling */
@@ -33,7 +36,7 @@ include("../database/db_conn.php"); // Include the database connection file
         }
 
         table.table th {
-            background-color: #0B6623;
+            background-color: black;
             color: white;
             text-align: center;
         }
@@ -77,10 +80,40 @@ include("../database/db_conn.php"); // Include the database connection file
     </style>
 </head>
 <body>
+    <!-- Navigation bar -->
+    <nav>
+        <ul class="sidebar">
+            <li onclick="hideSidebar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
+                        viewBox="0 -960 960 960" width="24px" fill="black">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                    </svg></a></li>
+            <li> <a href="#">Home</a></li>
+            <li> <a href="#">Our Services</a></li>
+            <li> <a href="#">User list</a></li>
+            <li> <a href="#">Contact Us</a></li>
+            <li> <a href="#">Logout</a></li>
+        </ul>
+
+        <ul style="justify-content: flex-end;">
+            <li class="logo navbar-brand"> <a href="homepage.html">SJAM Connect</a></li>
+            <li class="hideOnMobile"> <a href="#">Home</a></li>
+            <li class="hideOnMobile"> <a href="#">Our Services</a></li>
+            <li class="hideOnMobile"> <a href="#">User list</a></li>
+            <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
+            <li class="hideOnMobile"> <a href="#">Logout</a></li>
+            <li class="menuButton" onclick="showSideBar()"> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
+                        height="24px" viewBox="0 -960 960 960" width="24px" fill="black">
+                        <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+                    </svg></a></li>
+        </ul>
+    </nav>
+
     <div class="container mt-4">
         <!-- Page Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Feedback Listings</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4" style="text-align: center;">
+            <h2>Feedback</h2>
+            <p>rating graph</p>
         </div>
 
         <!-- Feedback Table -->
@@ -115,10 +148,9 @@ include("../database/db_conn.php"); // Include the database connection file
                             echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
 
                             echo "<td class='table-actions'>
-                                    <a href='?reply=" . $row['id'] . "' class='btn btn-primary btn-sm'>
-                                        <i class='fas fa-reply'></i> Reply
-                                    </a>
-                                  </td>";
+                            <a href='replyFeedback.php?feedback_id=" . htmlspecialchars($row['id']) . "' class='btn btn-primary'>Reply</a>
+                            </td>";
+
                             echo "</tr>";
                         }
                     } else {

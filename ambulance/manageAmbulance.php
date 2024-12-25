@@ -44,7 +44,11 @@ $result = $conn->query($sql);
     <div class="container-xl" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <h1>Ambulance Management</h1>
         <a href="../homepage.html" class="btn btn-secondary mb-3">Back to Home</a>
+
         <a href="addAmbulance.php" class="btn btn-primary mb-3">Add New Ambulance</a>
+
+        <a href="addAmbulance.php" class="btn btn-primary mb-3">Add Ambulance</a>
+
 
         <table class="table table-bordered table-striped">
             <thead>

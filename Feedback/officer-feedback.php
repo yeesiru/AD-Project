@@ -44,27 +44,7 @@ include("../database/db_conn.php"); // Include the database connection file
             justify-content: center; /* Aligns the button to the right */
             margin-top: 20px;
         }
-        #feedbackForm {
-            display: none;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        label {
-            font-weight: bold;
-        }
-        select, input[type="number"], textarea {
-            padding: 8px;
-            font-size: 1rem;
-            width: 100%;
-            margin-top: 5px;
-        }
+    
         button {
             background-color: #0B6623;
             color: white;
@@ -81,34 +61,6 @@ include("../database/db_conn.php"); // Include the database connection file
             background-color: #1D8348;
         }
 
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: left; /* Centers the stars */
-            margin-top: 10px;
-        }
-        .rating input {
-            display: none;
-        }
-        .rating label {
-            font-size: 2rem;
-            color: #ddd;
-            cursor: pointer;
-            padding: 0 0.2rem;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .rating input:checked ~ label,
-        .rating label:hover,
-        .rating label:hover ~ label  {
-            transform: scale(1.1);
-            color: #FFD700;
-        }
-
-        h2 {
-            color: #343a40;
-            font-weight: bold;
-        }
-
         /* Table Styling */
         table.table {
             background-color: white;
@@ -117,7 +69,7 @@ include("../database/db_conn.php"); // Include the database connection file
         }
 
         table.table th {
-            background-color: #0B6623;
+            background-color: BLACK;
             color: white;
             text-align: center;
         }
@@ -157,15 +109,11 @@ include("../database/db_conn.php"); // Include the database connection file
         }
 
         @media (max-width: 768px) {
-    table.table {
-        font-size: 0.8rem;
-    }
+        table.table {
+            font-size: 0.8rem;
+        }
 
-    #feedbackForm {
-        margin-left: 10px;
-        margin-right: 10px;
     }
-}
 
     </style>
 
@@ -180,10 +128,9 @@ include("../database/db_conn.php"); // Include the database connection file
             sidebar.style.display = 'none'
         }
 
-        function toggleForm() {
-            var form = document.getElementById('feedbackForm');
-            form.style.display = form.style.display === 'block' ? 'none' : 'block';
-        }
+        function redirectToAddFeedback() {
+        window.location.href = 'addFeedback.php';
+    }
     </script>
 </head>
 
@@ -217,22 +164,28 @@ include("../database/db_conn.php"); // Include the database connection file
         </ul>
     </nav>
 
-    <!-- Feedback Table -->
-    <h2>Feedback Listings</h2>
-    <div class="table-responsive">
+    <div class="container mt-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Feedback Listings</h2>
+        </div>
+
+        <!-- Feedback Table -->
+        <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
-                    <tr>
+                <tr>
                         <th>Service Type</th>
                         <th>Rating</th>
                         <th>Message</th>
                         <th>Status</th>
+                        <th>Response</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Fetch feedback from the database
-                    $sql = "SELECT id, serviceType, rating, feedbackText, status FROM feedback";
+                    $sql = "SELECT id, serviceType, rating, feedbackText, status, admin_response FROM feedback";
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -245,47 +198,26 @@ include("../database/db_conn.php"); // Include the database connection file
                             // Apply conditional styling to the status column
                             $statusClass = ($row['status'] === 'pending') ? 'status-pending' : 'status-responded';
                             echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['admin_response']) . "</td>";
                             echo "</tr>";
                         }
                     } else {
-                        echo "<tr><td colspan='4' class='text-center'>No feedback found.</td></tr>";
+                        echo "<tr><td colspan='5' class='text-center'>No feedback found.</td></tr>";
                     }
                     ?>
                 </tbody>
             </table>
         </div>
+    </div>
     
     <!-- Button aligned to the right side of the screen -->
     <div id="addFeedbackButton">
-        <button onclick="toggleForm()">Add Feedback</button>
+        <button onclick="redirectToAddFeedback()">Add Feedback</button>
     </div>
-
-    <!-- Feedback form initially hidden -->
-    <div id="feedbackForm">
-        <h3>Submit Your Feedback</h3>
-        <form action="addfeedback.php" method="POST">
-            <label for="serviceType">Service Type:</label>
-            <select name="serviceType" id="serviceType" required>
-                <option value="">Select Service</option>
-                <option value="hall">Hall Condition</option>
-                <option value="equipment">Equipment Functionality</option>
-                <option value="ambulance">Ambulance Service</option>
-            </select>
-
-            <label for="rating">Rating:</label>
-            <div class="rating">
-                <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
-                <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
-                <input type="radio" name="rating" id="star3" value="3"><label for="star3">★</label>
-                <input type="radio" name="rating" id="star2" value="2"><label for="star2">★</label>
-                <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
-            </div>
-
-            <label for="feedbackText">Feedback:</label>
-            <textarea id="feedbackText" name="feedbackText" rows="5" required></textarea>
-
-            <button type="submit">Submit Feedback</button>
-        </form>
-    </div>
+    
+    <?php
+    $conn->close();
+    ?>
+    
 </body>
 </html>
