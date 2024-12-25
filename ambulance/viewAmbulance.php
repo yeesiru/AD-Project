@@ -19,7 +19,7 @@ $result = $conn->query($sql);
 ?>  
 
 <!DOCTYPE html>  
-<html>  
+<html lang="en">  
 
 <head>  
     <title>Manage Ambulances</title>  
@@ -27,9 +27,9 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1">  
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">  
     <link rel="stylesheet" href="../css/navigation.css">  
-    <link rel="stylesheet" href="../css/manageAmbulance.css">  
+    <!-- <link rel="stylesheet" href="../css/viewAmbulance.css">   -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
-    <script src="../script/adminNavBar.js" defer></script>
+    <script src="../script/officerNavBar.js" defer></script>
     <script>  
         function confirmDelete(vehicleId) {  
             Swal.fire({  
@@ -53,13 +53,15 @@ $result = $conn->query($sql);
     <!-- Navigation bar -->
     <div id="navbar"></div>
 
-    <div class="container-xl" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">  
-        <h1>Ambulance Management</h1>  
-        <a href="../homepage.html" class="btn btn-secondary mb-3">Back to Home</a>  
-        <a href="addAmbulance.php" class="btn btn-success mb-3">Add Ambulance</a>  
+    <div class="container-xl py-4 px-5 rounded shadow" style="background-color: #F5F0DD;">  
+        <h1 class="mb-4">Manage Ambulance</h1>  
+        <div class="mb-3 d-flex justify-content-between align-items-center">  
+            <a href="../homepage.html" class="btn btn-secondary" style="background-color: #1D5748; border-color: #1D5748;">Back to Home</a>  
+            <a href="addAmbulance.php" class="btn btn-success" style="background-color: #1D5748; border-color: #1D5748;">Add Ambulance</a>  
+        </div>  
 
         <!-- Search and Filter Section -->  
-        <form method="GET" class="d-flex mb-3">  
+        <form method="GET" class="d-flex mb-4" >  
             <input type="text" name="search" class="form-control me-2" placeholder="Search by ID, type, capacity, or availability" value="<?php echo htmlspecialchars($search); ?>">  
             <select name="sort" class="form-select me-2">  
                 <option value="" disabled selected>Sort by</option>  
@@ -68,11 +70,11 @@ $result = $conn->query($sql);
                 <option value="capacity" <?php if ($sort == 'capacity') echo 'selected'; ?>>Capacity</option>  
                 <option value="availability" <?php if ($sort == 'availability') echo 'selected'; ?>>Availability</option>  
             </select>  
-            <button type="submit" class="btn btn-primary">Search</button>  
+            <button type="submit" class="btn btn-primary" style="background-color: #1D5748; border-color: #1D5748;">Search</button>  
         </form>  
 
-        <table class="table table-bordered table-striped">  
-            <thead>  
+        <table class="table table-bordered table-striped" >  
+            <thead class="table-light" >  
                 <tr>  
                     <th>Vehicle ID</th>  
                     <th>Type</th>  
@@ -89,9 +91,9 @@ $result = $conn->query($sql);
                             <td><?php echo htmlspecialchars($row['type']); ?></td>  
                             <td><?php echo htmlspecialchars($row['capacity']); ?></td>  
                             <td><?php echo htmlspecialchars($row['availability']); ?></td>  
-                            <td>  
-                                <a href="editAmbulance.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm">Edit</a>  
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')">Delete</button>  
+                            <td class="text-center">  
+                                <a href="editAmbulance.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm" style="background-color: #1D5748; border-color: #1D5748;" >Edit</a>  
+                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')" style="background-color: #B22222; border-color: #B22222;">Delete</button>  
                             </td>  
                         </tr>  
                     <?php endwhile; ?>  
@@ -107,4 +109,4 @@ $result = $conn->query($sql);
     <?php $conn->close(); ?>  
 </body>  
 
-</html>  
+</html>

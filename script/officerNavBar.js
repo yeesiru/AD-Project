@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <li class="hideOnMobile"> <a href="#"> Our Services &#x25BE;</a>
                 <ul class="dropdown">
                     <li><a href="#">Hall Booking</a></li>
-                    <li><a href="#">Ambulance Booking</a></li>
+                    <li><a href="../ambulance/manageAmbulanceBooking.php">Ambulance Booking</a></li>
                     <li><a href="#">Equipment Booking</a></li>
                 </ul>
             </li>
