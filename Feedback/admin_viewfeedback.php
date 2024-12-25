@@ -6,84 +6,36 @@ include("../database/db_conn.php"); // Include the database connection file
 <html>
 <head>
     <title>Admin Feedback Listing</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/homepage.css">
+    <link rel="stylesheet" href="../css/admin_viewfeedback.css">
+    <script src="../script/adminNavBar.js" defer></script>
 
-    <style>
-        /* General Styling */
-        body {
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-        }
-
-        h2 {
-            color: #343a40;
-            font-weight: bold;
-        }
-
-        /* Table Styling */
-        table.table {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        table.table th {
-            background-color: #0B6623;
-            color: white;
-            text-align: center;
-        }
-
-        table.table td {
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .table-actions a {
-            margin-right: 8px;
-        }
-
-        /* Status Styling */
-        .status-pending {
-            color: red;
-            font-weight: bold;
-        }
-
-        .status-responded {
-            color: green;
-            font-weight: bold;
-        }
-
-        /* Button Styling */
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-        }
-
-        /* Hover Effects */
-        tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-    </style>
 </head>
 <body>
+    <div id="navbar"></div>
+
     <div class="container mt-4">
-        <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Feedback Listings</h2>
+            <h2>Feedback</h2>
+            <form method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control me-2" placeholder="Search by rating" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <select name="filter" class="form-select me-2">
+                    <option value="">All Services</option>
+                    <option value="hall" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'hall' ? 'selected' : ''; ?>>Hall</option>
+                    <option value="ambulance" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'ambulance' ? 'selected' : ''; ?>>Ambulance</option>
+                    <option value="equipment" <?php echo isset($_GET['filter']) && $_GET['filter'] === 'equipment' ? 'selected' : ''; ?>>Equipment</option>
+                </select>
+                <button type="submit" class="btn-search">Search</button>
+            </form>
+
+            <a href="feedbackreport.php" class="btn btn-search">Generate Feedback Report</a>
         </div>
 
-        <!-- Feedback Table -->
+        
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead>
@@ -98,8 +50,20 @@ include("../database/db_conn.php"); // Include the database connection file
                 </thead>
                 <tbody>
                     <?php
-                    // Fetch feedback from the database
-                    $sql = "SELECT id, serviceType, rating, feedbackText, submitted_at, status FROM feedback";
+                    $sql = "SELECT id, serviceType, rating, feedbackText, submitted_at, status FROM feedback WHERE 1=1";
+                    
+                    // Search by Rating
+                    if (isset($_GET['search']) && !empty(trim($_GET['search']))) {
+                        $search = $conn->real_escape_string(trim($_GET['search']));
+                        $sql .= " AND rating LIKE '%$search%'";
+                    }
+
+                    // Filter by Service Type
+                    if (isset($_GET['filter']) && !empty($_GET['filter'])) {
+                        $filter = $conn->real_escape_string($_GET['filter']);
+                        $sql .= " AND serviceType = '$filter'";
+                    }
+
                     $result = $conn->query($sql);
 
                     if ($result && $result->num_rows > 0) {
@@ -109,16 +73,11 @@ include("../database/db_conn.php"); // Include the database connection file
                             echo "<td>" . htmlspecialchars($row['rating']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['feedbackText']) . "</td>";
                             echo "<td>" . htmlspecialchars($row['submitted_at']) . "</td>";
-
-                            // Apply conditional styling to the status column
                             $statusClass = ($row['status'] === 'pending') ? 'status-pending' : 'status-responded';
                             echo "<td class='$statusClass'>" . htmlspecialchars(strtoupper($row['status'])) . "</td>";
-
                             echo "<td class='table-actions'>
-                                    <a href='?reply=" . $row['id'] . "' class='btn btn-primary btn-sm'>
-                                        <i class='fas fa-reply'></i> Reply
-                                    </a>
-                                  </td>";
+                            <a href='replyFeedback.php?feedback_id=" . htmlspecialchars($row['id']) . "' class='btn btn-primary'>Reply</a>
+                            </td>";
                             echo "</tr>";
                         }
                     } else {
@@ -130,8 +89,6 @@ include("../database/db_conn.php"); // Include the database connection file
         </div>
     </div>
 
-    <?php
-    $conn->close(); // Close the database connection after all operations
-    ?>
+    <?php $conn->close(); ?>
 </body>
 </html>

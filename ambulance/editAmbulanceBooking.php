@@ -80,53 +80,31 @@ $conn->close();
 
         <form action="" method="POST">
             <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="name">Name<span class="text-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['name']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="contact">Contact:</label>
+                <label for="contact">Contact<span class="text-danger">*</span></label>
                 <input type="text" id="contact" name="contact" class="form-control" value="<?php echo htmlspecialchars($row['contact']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="destination">Destination:</label>
+                <label for="destination">Destination<span class="text-danger">*</span></label>
                 <input type="text" id="destination" name="destination" class="form-control" value="<?php echo htmlspecialchars($row['destination']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="booking_time">Booking Time:</label>
+                <label for="booking_time">Booking Time<span class="text-danger">*</span></label>
                 <input type="time" id="booking_time" name="booking_time" class="form-control" value="<?php echo htmlspecialchars($row['booking_time'] ?? ''); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="booking_date">Booking Date:</label>
+                <label for="booking_date">Booking Date<span class="text-danger">*</span></label>
                 <input type="date" id="booking_date" name="booking_date" class="form-control" value="<?php echo htmlspecialchars($row['booking_date'] ?? ''); ?>" required>
             </div>
 
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
-
-            <!-- <div class="form-group mt-3">
-                <label for="vehicleId">Ambulance (Vehicle ID):</label>
-                <select id="vehicleId" name="vehicleId" class="form-select">
-                    <?php
-                    // Fetch available ambulances
-                    $ambulanceSql = "SELECT vehicleId FROM ambulance WHERE availability = 'Available' OR vehicleId = '{$row['vehicleId']}'";
-                    $ambulanceResult = $conn->query($ambulanceSql);
-
-                    if ($ambulanceResult && $ambulanceResult->num_rows > 0) {
-                        while ($ambulance = $ambulanceResult->fetch_assoc()) {
-                            $vehicleId = htmlspecialchars($ambulance['vehicleId']);
-                            $selected = ($vehicleId === $row['vehicleId']) ? 'selected' : '';
-                            echo "<option value='$vehicleId' $selected>$vehicleId</option>";
-                        }
-                    } else {
-                        echo "<option value='' disabled>No ambulances available</option>";
-                    }
-                    ?>
-                </select>
-            </div> -->
-
             
         </form>
     </div>

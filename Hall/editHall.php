@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 }
 
 $hall_id = $_GET['hall_id'];
-$sql = "SELECT * FROM halls WHERE hall_id = '$hall_id'";
+$sql = "SELECT * FROM hall WHERE hall_id = '$hall_id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $location = $_POST['location'];
     $facility = $_POST['facility'];
 
-    $updateSql = "UPDATE halls SET name='$name', capacity='$capacity', location='$location', facility='$facility' WHERE hall_id='$hall_id'";
+    $updateSql = "UPDATE hall SET name='$name', capacity='$capacity', location='$location', facility='$facility' WHERE hall_id='$hall_id'";
     
     if ($conn->query($updateSql) === TRUE) {
         echo "<script>
@@ -134,27 +134,27 @@ $conn->close();
 
         <form action="" method="POST">
             <div class="form-group hall-input">
-                <label for="hall_id">Hall ID: </label>
+                <label for="hall_id">Hall ID<span class="text-danger">*</span></label>
                 <input type="text" id="hall_id" name="hall_id" value="<?php echo $row['hall_id']; ?>" readonly>
             </div>
 
             <div class="form-group hall-input">
-                <label for="name">Name:</label>
+                <label for="name">Name<span class="text-danger">*</span></label>
                 <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>" required>
             </div>
 
             <div class="form-group hall-input">
-                <label for="capacity">Capacity: </label>
+                <label for="capacity">Capacity<span class="text-danger">*</span></label>
                 <input type="number" id="capacity" name="capacity" value="<?php echo $row['capacity']; ?>" required min="1">
             </div>
 
             <div class="form-group hall-input">
-                <label for="location">Location: </label>
+                <label for="location">Location<span class="text-danger">*</span></label>
                 <input type="text" id="location" name="location" value="<?php echo $row['location']; ?>" required>
             </div>
 
             <div class="form-group hall-input">
-                <label for="facility">Facility:</label>
+                <label for="facility">Facility<span class="text-danger">*</span></label>
                 <input type="text" id="facility" name="facility" value="<?php echo $row['facility']; ?>" required>
             </div>
 

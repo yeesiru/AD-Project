@@ -41,28 +41,27 @@ if (isset($_GET['vehicleId'])) {
                 throw new Exception("Failed to update ambulance availability: " . $conn->error);
             }
         } else {
-            throw new Exception("Failed to delete ambulance booking: " . $conn->error);
+            throw new Exception("Failed to delete ambulance booking record: " . $conn->error);
         }
     } catch (Exception $e) {
-        // Rollback transaction on failure
+        // Rollback transaction if an error occurs
         $conn->rollback();
 
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
                 Swal.fire({
                     title: 'Error!',
-                    text: '" . $e->getMessage() . "',
+                    text: '" . addslashes($e->getMessage()) . "',
                     icon: 'error',
                     confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'manageAmbulanceBooking.php';
-                    }
+                }).then(() => {
+                    window.location.href = 'manageAmbulanceBooking.php';
                 });
             });
         </script>";
     }
 } else {
+    // Handle missing vehicleId
     echo "<script>
         document.addEventListener('DOMContentLoaded', function () {
             Swal.fire({
@@ -70,16 +69,13 @@ if (isset($_GET['vehicleId'])) {
                 text: 'Invalid request: Vehicle ID missing.',
                 icon: 'error',
                 confirmButtonText: 'OK'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    window.location.href = 'manageAmbulanceBooking.php';
-                }
+            }).then(() => {
+                window.location.href = 'manageAmbulanceBooking.php';
             });
         });
     </script>";
 }
 
-echo "<script>window.location.href = 'manageAmbulanceBooking.php';</script>";
-
+// Close database connection
 $conn->close();
 ?>

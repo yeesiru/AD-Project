@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $facility = $_POST['facility'];
 
     // Insert the new hall entry into the database
-    $sql = "INSERT INTO halls (hall_id, name, capacity, location, facility) VALUES ('$hall_id', '$name', '$capacity', '$location', '$facility')";
+    $sql = "INSERT INTO hall (hall_id, name, capacity, location, facility) VALUES ('$hall_id', '$name', '$capacity', '$location', '$facility')";
     
     if ($conn->query($sql) === TRUE) {
         echo "<script>
@@ -123,27 +123,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form id="addHallForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                 
                 <div class="form-group hall-input">
-                    <label for="hall_id" class="form-label">Hall ID: </label>
+                    <label for="hall_id" class="form-label">Hall ID<span class="text-danger">*</span></label>
                     <input type="text" id="hall_id" name="hall_id" placeholder="H123" required>
                 </div>
 
                 <div class="form-group hall-input">
-                    <label for="name" class="form-label">Name:</label>
+                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                     <input type="text" id="name" name="name" placeholder="Main Hall" required>
                 </div>
 
                 <div class="form-group hall-input">
-                    <label for="capacity" class="form-label">Capacity: </label>
+                    <label for="capacity" class="form-label">Capacity<span class="text-danger">*</span></label>
                     <input type="number" id="capacity" name="capacity" placeholder="0"required min="1" max="500">
                 </div>
 
                 <div class="form-group hall-input">
-                    <label for="location" class="form-label">Location: </label>
+                    <label for="location" class="form-label">Location<span class="text-danger">*</span></label>
                     <input type="text" id="location" name="location" placeholder="Level 2" required>
                 </div>
 
                 <div class="form-group hall-input">
-                    <label for="facility" class="form-label">Facility:</label>
+                    <label for="facility" class="form-label">Facility<span class="text-danger">*</span></label>
                     <input type="text" id="facility" name="facility" placeholder="Audio Equipment" required>
                 </div>
 

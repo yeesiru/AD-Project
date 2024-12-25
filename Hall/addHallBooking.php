@@ -6,16 +6,17 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $hall_id = $_POST['hall_id'];
-    $school_name = $_POST['school_name'];
-    $booking_date = $_POST['booking_date'];
-    $start_time = $_POST['start_time'];
-    $end_time = $_POST['end_time'];
+    $name = $_POST['name'];
+    $contact = $_POST['contact'];
+    $hallId = $_POST['hallId'];
+    $date = $_POST['date'];
+    $timeSlot = $_POST['timeSlot'];
 
-    // Insert the new booking entry into the database
-    $sql = "INSERT INTO bookings (hall_id, school_name, booking_date, start_time, end_time) 
-            VALUES ('$hall_id', '$school_name', '$booking_date', '$start_time', '$end_time')";
+    // Insert the hall booking entry into the database
+    $sql = "INSERT INTO hallBooking (hall_id, booked_by, date, time_slot) 
+            VALUES ('$hallId', '$name', '$date', '$timeSlot')";
 
+    // Check for success or error
     if ($conn->query($sql) === TRUE) {
         echo "<script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageBookings.php';
+                        window.location.href = 'manageHallBooking.php';
                     }
                 });
             });
@@ -35,121 +36,139 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>
             Swal.fire({
                 title: 'Error!',
-                text: 'Error adding booking record: " . $conn->error . "',
+                text: 'Error: Hall booking unsuccessful: " . $conn->error . "',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         </script>";
     }
 }
+
+// Fetch available halls
+$hallQuery = "SELECT hall_id, name, capacity FROM hall";
+$hallResult = $conn->query($hallQuery);
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Hall Booking</title>
+    <title>Add Hall Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">   
-    <link rel="stylesheet" href="../css/navigation.css"> 
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        /* Additional styles */
-        .modal-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.5);
+        .container {
+            margin-top: 50px;
         }
 
-        .modal-form {
+        .booking-form {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
+            margin: 0 auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .modal-form h1 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .booking-form h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
             color: #333;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-            color: #333;
+            color: #555;
         }
 
-        .form-group input {
-            width: 100%;
+        .form-control {
             padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
         }
 
-        .btn-primary, .btn-secondary {
+        .btn-primary {
+            background-color: #006d47;
+            color: white;
+            border: none;
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
-            background-color: #006d47;
-            border: none;
-            color: #fff;
+            font-size: 18px;
             font-weight: bold;
-            text-align: center;
             border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #004f36;
         }
 
         .btn-secondary {
             background-color: #777;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 
 <body>
-    <div class="modal-container">
-        <div class="modal-form">
-            <h1>Book Hall</h1>
-            <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
+    <div class="container">
+        <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
+        <h1 style="text-align: center;">Add Hall Booking</h1>
 
+        <div class="booking-form">
+            <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                
                 <div class="form-group">
-                    <label for="hall_id">Hall ID:</label>
-                    <input type="text" id="hall_id" name="hall_id" placeholder="H123" required>
+                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                    <input type="text" id="name" name="name" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="school_name">School Name:</label>
-                    <input type="text" id="school_name" name="school_name" placeholder="ABC School" required>
+                    <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
+                    <input type="text" id="contact" name="contact" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="booking_date">Booking Date:</label>
-                    <input type="date" id="booking_date" name="booking_date" required>
+                    <label for="hallId" class="form-label">Select Hall<span class="text-danger">*</span></label>
+                    <select id="hallId" name="hallId" class="form-select" required>
+                        <option value="" disabled selected>Select a hall</option>
+                        <?php
+                        if ($hallResult->num_rows > 0) {
+                            while ($row = $hallResult->fetch_assoc()) {
+                                echo "<option value='" . $row['hall_id'] . "'>" . $row['name'] . " (Capacity: " . $row['capacity'] . ")</option>";
+                            }
+                        } else {
+                            echo "<option value='' disabled>No halls available</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="start_time">Start Time:</label>
-                    <input type="time" id="start_time" name="start_time" required>
+                    <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                    <input type="date" id="date" name="date" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="end_time">End Time:</label>
-                    <input type="time" id="end_time" name="end_time" required>
+                    <label for="timeSlot" class="form-label">Time<span class="text-danger">*</span></label>
+                    <input type="time" id="timeSlot" name="timeSlot" class="form-control" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Book</button>
-                <a href="manageBookings.php" class="btn btn-secondary mt-2">Cancel</a>
+                <button type="submit" class="btn btn-primary mt-3">Book Hall</button>
             </form>
         </div>
     </div>

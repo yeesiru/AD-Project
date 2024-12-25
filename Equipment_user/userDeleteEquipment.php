@@ -17,7 +17,7 @@
 
     // Fetch bookings if a date is provided
     if ($selectedDate) {
-        $sql = "SELECT eb.id AS booking_id, e.type, e.equipment, eb.quantity, e.quantity AS available_quantity
+        $sql = "SELECT eb.id AS booking_id, e.type, e.equipment, eb.quantity
                 FROM equipment_booking eb
                 JOIN equipment e ON eb.equipment_id = e.id
                 WHERE eb.booking_date = '$selectedDate'";
@@ -25,7 +25,19 @@
     } else {
         $result = null;
     }
-    
+
+    // Handle deletion of selected bookings
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_selected'])) {
+        if (isset($_POST['booking_ids'])) {
+            $bookingIds = $_POST['booking_ids'];
+            $bookingIds = implode(",", array_map('intval', $bookingIds));
+
+            $deleteSql = "DELETE FROM equipment_booking WHERE id IN ($bookingIds)";
+            $conn->query($deleteSql);
+        }
+        header("Location: userDeleteEquipment.php?date=" . urlencode($selectedDate));
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +46,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Equipment Booking</title>
+    <title>Delete Equipment Booking</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <style>
         body {
@@ -79,11 +91,11 @@
             background-color: #fafafa;
         }
 
-        .btn-primary {
+        .btn-primary, .btn-danger {
             background-color: #1D5748;
             border: none;
             color: #F5F0DD;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 5px;
             font-size: 14px;
             transition: background-color 0.3s ease;
@@ -93,16 +105,17 @@
             background-color: #014520;
         }
 
-        input[type="date"],
-        input[type="number"] {
-            border: 1px solid #ddd;
-            padding: 8px;
-            border-radius: 5px;
-            width: 100%;
+        .btn-danger {
+            background-color: #C82333;
         }
 
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
+        .btn-danger:hover {
+            background-color: #A71D2A;
+        }
+
+        input[type="date"],
+        input[type="checkbox"] {
+            margin-right: 10px;
         }
 
         label {
@@ -113,52 +126,51 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center">Edit Equipment Booking</h1>
+        <h1 class="text-center">Delete Equipment Booking</h1>
 
         <!-- Display Bookings -->
         <?php if ($selectedDate): ?>
             <h3 class="text-center">Bookings for <?= htmlspecialchars($selectedDate) ?></h3>
             <?php if ($result && $result->num_rows > 0): ?>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Equipment Name</th>
-                            <th>Booked Quantity</th>
-                            <th>Available Quantity</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($row = $result->fetch_assoc()): ?>
+                <form method="POST" action="">
+                    <input type="hidden" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td><?= htmlspecialchars($row['type']) ?></td>
-                                <td><?= htmlspecialchars($row['equipment']) ?></td>
-                                <td><?= intval($row['quantity']) ?></td>
-                                <td><?= intval($row['available_quantity']) ?></td>
-                                <td>
-                                    <form method="POST" action="manageEquipmentBooking.php">
-                                        <input type="hidden" name="booking_id" value="<?= intval($row['booking_id']) ?>">
-                                        <input type="hidden" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
-                                        <input type="number" name="quantity" min="1" max="<?= intval($row['available_quantity']) ?>" value="<?= intval($row['quantity']) ?>" required>
-                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                    </form>
-                                </td>
+                                <th>Select</th>
+                                <th>Type</th>
+                                <th>Equipment Name</th>
+                                <th>Booked Quantity</th>
                             </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="booking_ids[]" value="<?= intval($row['booking_id']) ?>">
+                                    </td>
+                                    <td><?= htmlspecialchars($row['type']) ?></td>
+                                    <td><?= htmlspecialchars($row['equipment']) ?></td>
+                                    <td><?= intval($row['quantity']) ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" name="delete_selected" class="btn btn-danger">Delete Selected Bookings</button>
+                    </div>
+                </form>
             <?php else: ?>
                 <p class="text-center text-danger">No bookings found for the selected date.</p>
             <?php endif; ?>
         <?php else: ?>
             <!-- Date Selection -->
-            <form method="POST" action="">
+            <form method="GET" action="">
                 <div class="mb-4">
                     <label for="date" class="form-label">Select Booking Date:</label>
                     <input type="date" id="date" name="date" required>
                 </div>
-                <div class="d-flex justify-content-center mb-4">
+                <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary">View Bookings</button>
                 </div>
             </form>
