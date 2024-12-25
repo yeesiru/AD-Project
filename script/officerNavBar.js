@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <li> <a class="sub-btn">Our Services &#x25BE;</a>
                 <ul class="sidebar-dropdown">
                     <li><a href="#" class="sub-item">Hall Booking</a></li>
-                    <li><a href="#" class="sub-item">Ambulance Booking</a></li>
+                    <li><a href="../ambulance/manageAmbulanceBooking.php" class="sub-item">Ambulance Booking</a></li>
                     <li><a href="../Equipment_user/manageEquipmentBooking.php" class="sub-item">Equipment Booking</a></li>
                 </ul>
             </li>
