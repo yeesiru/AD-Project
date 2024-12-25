@@ -40,11 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
                     </svg></a></li>
             <li> <a href="../mainPage/officerHomepage.html">Home</a></li>
+            <li> <a href="../User/ownProfile.php">Profile</a></li>
+
             <li> <a class="sub-btn">Our Services &#x25BE;</a>
                 <ul class="sidebar-dropdown">
-                    <li><a href="#" class="sub-item">Hall Booking</a></li>
-                    <li><a href="#" class="sub-item">Ambulance Booking</a></li>
-                    <li><a href="#" class="sub-item">Equipment Booking</a></li>
+                    <li><a href="../Hall/manageHallBooking.php" class="sub-item">Hall Booking</a></li>
+                    <li><a href="../ambulance/manageAmbulanceBooking.php" class="sub-item">Ambulance Booking</a></li>
+                    <li><a href="../Equipment_user/manageEquipmentBooking.php" class="sub-item">Equipment Booking</a></li>
                 </ul>
             </li>
             <li> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
@@ -63,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </li>
             <li class="hideOnMobile"> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
             <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
+            <li class="hideOnMobile"> <a href="../User/ownProfile.php">Profile</a></li>
             <li class="hideOnMobile"> <a href="../mainPage/logout.php">Logout</a></li>
             <li class="menuButton" onclick=showSideBar()> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
                         height="24px" viewBox="0 -960 960 960" width="24px" fill="black">

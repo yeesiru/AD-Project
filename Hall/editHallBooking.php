@@ -75,48 +75,29 @@ $conn->close();
 
 <body>
     <div class="container bg-white p-4 rounded shadow">
-        <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
+        
         <h1>Edit Hall Booking Details</h1>
 
         <form action="" method="POST">
             <input type="hidden" name="bookingId" value="<?php echo htmlspecialchars($row['booking_id']); ?>">
 
             <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="name">Name<span class="text-danger">*</span></label>
                 <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="date">Date:</label>
+                <label for="date">Date<span class="text-danger">*</span></label>
                 <input type="date" id="date" name="date" class="form-control" value="<?php echo htmlspecialchars($row['date']); ?>" required>
             </div>
 
             <div class="form-group mt-3">
-                <label for="timeSlot">Time:</label>
+                <label for="timeSlot">Time<span class="text-danger">*</span></label>
                 <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
             </div>
 
-            <div class="form-group mt-3">
-                <label for="hallId">Hall (Hall ID):</label>
-                <select id="hallId" name="hallId" class="form-select">
-                    <?php
-                    // Fetch available halls
-                    $hallSql = "SELECT hall_id, name FROM hall WHERE status = 'Available' OR hall_id = '{$row['hall_id']}'";
-                    $hallResult = $conn->query($hallSql);
-
-                    if ($hallResult->num_rows > 0) {
-                        while ($hall = $hallResult->fetch_assoc()) {
-                            $selected = ($hall['hall_id'] === $row['hall_id']) ? 'selected' : '';
-                            echo "<option value='{$hall['hall_id']}' $selected>{$hall['name']} (ID: {$hall['hall_id']})</option>";
-                        }
-                    } else {
-                        echo "<option value='' disabled>No halls available</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
+            <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
         </form>
     </div>
 </body>

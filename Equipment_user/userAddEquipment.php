@@ -75,58 +75,134 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Equipment</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F0DD;
+            color: #1D5748;
+        }
+
+        h1 {
+            color: #1D5748;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #FFF8EB;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .table {
+            background-color: #FFF8EB;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #1D5748;
+            color: #FFF;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .btn-primary {
+            background-color: #1D5748;
+            border: none;
+            color: #F5F0DD;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #014520;
+        }
+
+        input[type="date"],
+        input[type="number"] {
+            border: 1px solid #ddd;
+            padding: 8px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container my-5">
+    <div class="container">
         <h1 class="text-center">Book Equipment</h1>
 
         <!-- Date Selection -->
-        <div class="my-4">
-            <label for="date" class="form-label">Select Booking Date:</label>
-            <form method="POST" action="" onsubmit="return validateDate()">
-                <input type="date" id="date" name="date" class="form-control mb-3" required>
-                
-                <!-- Equipment Table -->
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Equipment Name</th>
-                            <th>Available Quantity</th>
-                            <th>Quantity to Book</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['type']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['equipment']) . "</td>";
-                                echo "<td>" . intval($row['quantity']) . "</td>";
-                                echo "<td>
-                                        <input type='number' name='booking[" . $row['id'] . "]' 
-                                        min='0' max='" . intval($row['quantity']) . "' 
-                                        class='form-control' value='0'>
-                                      </td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='4' class='text-center'>No equipment available</td></tr>";
+        <form method="POST" action="" onsubmit="return validateDate()">
+            <div class="mb-4">
+                <label for="date" class="form-label">Select Booking Date:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <!-- Equipment Table -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Equipment Name</th>
+                        <th>Available Quantity</th>
+                        <th>Quantity to Book</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['type']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['equipment']) . "</td>";
+                            echo "<td>" . intval($row['quantity']) . "</td>";
+                            echo "<td>
+                                    <input type='number' name='booking[" . $row['id'] . "]' 
+                                    min='0' max='" . intval($row['quantity']) . "' 
+                                    value='0'>
+                                  </td>";
+                            echo "</tr>";
                         }
-                        ?>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary">Book Equipment</button>
-                </div>
-            </form>
-        </div>
+                    } else {
+                        echo "<tr><td colspan='4' class='text-center'>No equipment available</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-center mt-4">
+                <button type="submit" class="btn btn-primary">Book Equipment</button>
+            </div>
+        </form>
     </div>
 
     <script>
@@ -142,4 +218,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php $conn->close(); ?>
 </body>
+
 </html>

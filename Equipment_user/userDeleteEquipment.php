@@ -1,144 +1,181 @@
 <?php
-include("../database/db_conn.php");
+    include("../database/db_conn.php");
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-// Handle selected equipment deletion
-if (isset($_POST['deleteSelected'])) {
-    if (!empty($_POST['equipmentToDelete'])) {
-        $selectedEquipment = $_POST['equipmentToDelete'];
-        foreach ($selectedEquipment as $bookingId) {
-            $bookingId = intval($bookingId);
-
-            // Retrieve the quantity and equipment_id before deletion
-            $fetchQuery = "SELECT equipment_id, quantity FROM equipment_booking WHERE id = $bookingId";
-            $fetchResult = $conn->query($fetchQuery);
-
-            if ($fetchResult->num_rows > 0) {
-                $row = $fetchResult->fetch_assoc();
-                $equipmentId = intval($row['equipment_id']);
-                $quantity = intval($row['quantity']);
-
-                // Update the equipment table
-                $updateEquipmentQuery = "UPDATE equipment SET quantity = quantity + $quantity WHERE id = $equipmentId";
-                $conn->query($updateEquipmentQuery);
-
-                // Delete the booking
-                $deleteQuery = "DELETE FROM equipment_booking WHERE id = $bookingId";
-                $conn->query($deleteQuery);
-            }
-        }
-        echo "<script>alert('Selected equipment bookings deleted successfully.'); window.location.reload();</script>";
+    // Handle GET or POST date
+    if (isset($_GET['date'])) {
+        $selectedDate = $conn->real_escape_string($_GET['date']);
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $selectedDate = $conn->real_escape_string($_POST['date']);
     } else {
-        echo "<script>alert('No equipment selected for deletion.');</script>";
+        $selectedDate = null;
     }
-}
 
-// Handle all bookings deletion for a date
-if (isset($_POST['deleteAllBookings'])) {
-    $selectedDate = $conn->real_escape_string($_POST['deleteAllBookings']);
-
-    // Retrieve all equipment_id and quantity for the selected date
-    $fetchAllQuery = "SELECT equipment_id, quantity FROM equipment_booking WHERE booking_date = '$selectedDate'";
-    $fetchAllResult = $conn->query($fetchAllQuery);
-
-    if ($fetchAllResult->num_rows > 0) {
-        while ($row = $fetchAllResult->fetch_assoc()) {
-            $equipmentId = intval($row['equipment_id']);
-            $quantity = intval($row['quantity']);
-
-            // Update the equipment table
-            $updateEquipmentQuery = "UPDATE equipment SET quantity = quantity + $quantity WHERE id = $equipmentId";
-            $conn->query($updateEquipmentQuery);
-        }
-
-        // Delete all bookings for the selected date
-        $deleteAllQuery = "DELETE FROM equipment_booking WHERE booking_date = '$selectedDate'";
-        if ($conn->query($deleteAllQuery)) {
-            echo "<script>alert('All bookings for the selected date have been deleted successfully.'); window.location.reload();</script>";
-        } else {
-            echo "<script>alert('Error deleting bookings for the selected date: " . $conn->error . "');</script>";
-        }
+    // Fetch bookings if a date is provided
+    if ($selectedDate) {
+        $sql = "SELECT eb.id AS booking_id, e.type, e.equipment, eb.quantity
+                FROM equipment_booking eb
+                JOIN equipment e ON eb.equipment_id = e.id
+                WHERE eb.booking_date = '$selectedDate'";
+        $result = $conn->query($sql);
     } else {
-        echo "<script>alert('No bookings found for the selected date.');</script>";
+        $result = null;
     }
-}
 
-// Fetch all bookings grouped by date
-$sql = "SELECT eb.id AS booking_id, e.equipment, eb.quantity, eb.booking_date 
-        FROM equipment_booking eb 
-        JOIN equipment e ON eb.equipment_id = e.id 
-        ORDER BY eb.booking_date";
-$result = $conn->query($sql);
+    // Handle deletion of selected bookings
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_selected'])) {
+        if (isset($_POST['booking_ids'])) {
+            $bookingIds = $_POST['booking_ids'];
+            $bookingIds = implode(",", array_map('intval', $bookingIds));
 
-$bookingsByDate = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $bookingsByDate[$row['booking_date']][] = $row;
+            $deleteSql = "DELETE FROM equipment_booking WHERE id IN ($bookingIds)";
+            $conn->query($deleteSql);
+        }
+        header("Location: userDeleteEquipment.php?date=" . urlencode($selectedDate));
+        exit();
     }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Booked Equipment</title>
+    <title>Delete Equipment Booking</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F0DD;
+            color: #1D5748;
+        }
+
+        h1 {
+            color: #1D5748;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background-color: #FFF8EB;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 40px auto;
+        }
+
+        .table {
+            background-color: #FFF8EB;
+            border: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #1D5748;
+            color: #FFF;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .table td {
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .btn-primary, .btn-danger {
+            background-color: #1D5748;
+            border: none;
+            color: #F5F0DD;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #014520;
+        }
+
+        .btn-danger {
+            background-color: #C82333;
+        }
+
+        .btn-danger:hover {
+            background-color: #A71D2A;
+        }
+
+        input[type="date"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container my-5">
-        <h1 class="text-center">Delete Booked Equipment</h1>
+    <div class="container">
+        <h1 class="text-center">Delete Equipment Booking</h1>
 
-        <form method="POST">
-            <?php if (!empty($bookingsByDate)): ?>
-                <?php foreach ($bookingsByDate as $date => $bookings): ?>
-                    <div class="mb-4 border p-3 rounded">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5>
-                                Booking Date: <strong><?= htmlspecialchars($date) ?></strong>
-                            </h5>
-                            <!-- Delete all bookings for this date -->
-                            <button type="submit" name="deleteAllBookings" value="<?= htmlspecialchars($date) ?>" class="btn btn-danger">
-                                Delete All Bookings
-                            </button>
-                        </div>
-                        <table class="table table-bordered mt-3">
-                            <thead>
+        <!-- Display Bookings -->
+        <?php if ($selectedDate): ?>
+            <h3 class="text-center">Bookings for <?= htmlspecialchars($selectedDate) ?></h3>
+            <?php if ($result && $result->num_rows > 0): ?>
+                <form method="POST" action="">
+                    <input type="hidden" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Type</th>
+                                <th>Equipment Name</th>
+                                <th>Booked Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
-                                    <th>Select</th>
-                                    <th>Equipment Name</th>
-                                    <th>Booked Quantity</th>
+                                    <td>
+                                        <input type="checkbox" name="booking_ids[]" value="<?= intval($row['booking_id']) ?>">
+                                    </td>
+                                    <td><?= htmlspecialchars($row['type']) ?></td>
+                                    <td><?= htmlspecialchars($row['equipment']) ?></td>
+                                    <td><?= intval($row['quantity']) ?></td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($bookings as $booking): ?>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox" name="equipmentToDelete[]" value="<?= intval($booking['booking_id']) ?>">
-                                        </td>
-                                        <td><?= htmlspecialchars($booking['equipment']) ?></td>
-                                        <td><?= intval($booking['quantity']) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        <!-- Delete selected equipment -->
-                        <button type="submit" name="deleteSelected" class="btn btn-primary w-100">
-                            Delete Selected Equipment
-                        </button>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" name="delete_selected" class="btn btn-danger">Delete Selected Bookings</button>
                     </div>
-                <?php endforeach; ?>
+                </form>
             <?php else: ?>
-                <p class="text-center">No bookings found.</p>
+                <p class="text-center text-danger">No bookings found for the selected date.</p>
             <?php endif; ?>
-        </form>
+        <?php else: ?>
+            <!-- Date Selection -->
+            <form method="GET" action="">
+                <div class="mb-4">
+                    <label for="date" class="form-label">Select Booking Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">View Bookings</button>
+                </div>
+            </form>
+        <?php endif; ?>
     </div>
-
-    <?php $conn->close(); ?>
 </body>
+
 </html>

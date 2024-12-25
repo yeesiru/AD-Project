@@ -29,104 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <link rel="stylesheet" href="../css/addFeedback.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .page{
-            height: 100vh;
-        }
-
-        .container{
-            padding: 20px;
-            border-radius: 8px;
-            width: 100%;
-            margin: auto;
-            box-sizing: border-box;
-        }
-
-        #feedbackForm {
-            position: relative;
-            border: 2px solid black;
-            border-radius: 20px;
-            background-color: #dbeae6;
-            padding: 40px;
-            width: 100%; 
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        select, input[type="number"], textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #41a072;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        button:hover {
-            background-color: #3d9366;
-        }
-
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: left; /* Centers the stars */
-            margin-top: 10px;
-        }
-        .rating input {
-            display: none;
-        }
-        .rating label {
-            font-size: 2rem;
-            color: #fff;
-            cursor: pointer;
-            padding: 0 0.2rem;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-        .rating input:checked ~ label,
-        .rating label:hover,
-        .rating label:hover ~ label  {
-            transform: scale(1.1);
-            color: #FFD700;
-        }
-
-        h2 {
-            color: #343a40;
+        .required {
+            color: red;
             font-weight: bold;
         }
-
-        @media (max-width: 768px) {
-        #feedbackForm {
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-    
-    }
     </style>
-
 </head>
 
 <body>
@@ -152,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Feedback form -->
     <div id="feedbackForm">
         <form action="addFeedback.php" method="POST">
-            <label for="serviceType">Service Type:</label>
+            <label for="serviceType"><span class="required">*</span>Service Type:</label>
             <select name="serviceType" id="serviceType" required>
                 <option value="">Select Service</option>
                 <option value="hall">Hall Condition</option>
@@ -160,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="ambulance">Ambulance Service</option>
             </select>
 
-            <label for="rating">Rating:</label>
+            <label for="rating"><span class="required">*</span>Rating:</label>
             <div class="rating">
                 <input type="radio" name="rating" id="star5" value="5"><label for="star5">★</label>
                 <input type="radio" name="rating" id="star4" value="4"><label for="star4">★</label>
@@ -169,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="radio" name="rating" id="star1" value="1"><label for="star1">★</label>
             </div>
 
-            <label for="feedbackText">Feedback:</label>
+            <label for="feedbackText"><span class="required">*</span>Feedback:</label>
             <textarea id="feedbackText" name="feedbackText" rows="5" required></textarea>
 
             <button type="submit">Submit Feedback</button>
