@@ -56,6 +56,15 @@ $result = $conn->query($sql);
             background-color: #1D5748 !important; 
             color: white !important; 
         }
+        
+        .table tbody tr:nth-child(odd) {
+            background-color:rgb(255, 250, 233); /* Nude color */
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #FFFFFF; /* White color */
+        }
+
 
     </style>
 
@@ -85,14 +94,14 @@ $result = $conn->query($sql);
     <div id="navbar"></div>
 
     <div class="container-xl py-4 px-5 rounded shadow" style="background-color: #F5F0DD;">  
-        <h1>Manage Ambulance Booking</h1>  
+        <h1 class="mb-4">Manage Ambulance Booking</h1>  
         <div class="mb-3 d-flex justify-content-between align-items-center">  
-            <a href="../homepage.html" class="btn btn-secondary mb-3 btn-warning-custom">Back to Home</a>  
-            <a href="addAmbulanceBooking.php" class="btn btn-success mb-3 btn-warning-custom">Add Booking</a>  
+            <a href="../homepage.html" class="btn btn-secondary btn-warning-custom">Back to Home</a>  
+            <a href="addAmbulanceBooking.php" class="btn btn-success btn-warning-custom">Add Booking</a>  
         </div>
 
         <!-- Search and Filter Section -->  
-        <form method="GET" class="d-flex mb-3">  
+        <form method="GET" class="d-flex mb-4">  
             <input type="text" name="search" class="form-control me-2" placeholder="Search by Name, Contact, Destination, or Vehicle ID" value="<?php echo htmlspecialchars($search); ?>">  
             <select name="sort" class="form-select me-2">  
                 <option value="" disabled selected>Sort by</option>  
@@ -108,7 +117,7 @@ $result = $conn->query($sql);
 
         <div class="table-responsive">  
             <table class="table table-bordered table-striped">  
-                <thead>  
+                <thead class="table-light">  
                     <tr>  
                         <th>Name</th>  
                         <th>Contact</th>  
@@ -129,7 +138,7 @@ $result = $conn->query($sql);
                                 <td><?php echo htmlspecialchars($row['booking_time']); ?></td>  
                                 <td><?php echo htmlspecialchars($row['booking_date']); ?></td>  
                                 <td><?php echo htmlspecialchars($row['vehicleId']); ?></td>  
-                                <td>  
+                                <td class="text-center">  
                                     <a href="editAmbulanceBooking.php?vehicleId=<?php echo $row['vehicleId']; ?>" class="btn btn-warning btn-sm btn-warning-custom">Edit</a>  
                                     <button class="btn btn-danger btn-sm btn-danger-custom" onclick="confirmDelete('<?php echo $row['vehicleId']; ?>')">Delete</button>  
                                 </td>  

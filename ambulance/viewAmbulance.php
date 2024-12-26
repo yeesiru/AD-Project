@@ -56,6 +56,14 @@ $result = $conn->query($sql);
         color: white !important; 
     }
 
+    .table tbody tr:nth-child(odd) {
+        background-color:rgb(255, 250, 233); /* Nude color */
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #FFFFFF; /* White color */
+    }
+
 </style>
 
 
