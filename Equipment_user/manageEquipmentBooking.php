@@ -39,28 +39,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
     <style>
         .search-filter {
             display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
             justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
         }
 
-        .search-filter input,
-        .search-filter button {
-            padding: 8px;
+        .search-form {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 10px;
             font-size: 14px;
-            border: 1px solid #DDD;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
 
-        .search-filter button {
+        .search-form button {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
             background-color: #1D5748;
-            color: #FFFFFF;
+            color: #fff;
         }
 
-        .search-filter button:hover {
+        .search-form button:hover {
             background-color: #014520;
         }
-
+        
         .add-booking {
             display: flex;
             justify-content: flex-end;
@@ -185,8 +198,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
 
         <!-- Search Bar Section -->
         <div class="search-filter">
-            <input style="width: 70%;" type="text" placeholder="Search Booking">
-            <button class="filter-button" style="width: 20%;">Search</button>
+            <form class="search-form" method="GET" action="">
+                <input style="width: 70%;" type="text" name="search_date" placeholder="Search by Date (YYYY-MM-DD)">
+                <button type="submit" style="width: 20%;" class="filter-button" >Search</button>
+            </form>
         </div>
 
         <!-- Add Equipment Button -->
@@ -207,16 +222,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
                 </thead>
                 <tbody>
                     <?php
+                    // Fetch search date from query parameters
+                    $search_date = isset($_GET['search_date']) ? $_GET['search_date'] : '';
+
                     // SQL to fetch booking dates and corresponding equipment names
                     $sql = "
                         SELECT eb.booking_date, GROUP_CONCAT(e.equipment SEPARATOR ', ') AS equipment_names 
                         FROM equipment_booking eb 
                         JOIN equipment e ON eb.equipment_id = e.id 
-                        GROUP BY eb.booking_date 
-                        ORDER BY eb.booking_date
                     ";
 
-                    $result = $conn->query($sql);
+                    // Add filter condition if search date is provided
+                    if (!empty($search_date)) {
+                        $sql .= " WHERE eb.booking_date = ? ";
+                    }
+
+                    $sql .= " GROUP BY eb.booking_date ORDER BY eb.booking_date ";
+
+                    $stmt = $conn->prepare($sql);
+
+                    if (!empty($search_date)) {
+                        $stmt->bind_param('s', $search_date);
+                    }
+
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+
                     $counter = 1;
 
                     if ($result && $result->num_rows > 0):
@@ -248,9 +279,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
                             <td colspan="4" class="text-center">No bookings available.</td>
                         </tr>
                     <?php endif; ?>
+
+                    <?php
+                    // Close statement
+                    $stmt->close();
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
 </html>
+
