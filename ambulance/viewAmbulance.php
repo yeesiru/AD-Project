@@ -95,7 +95,7 @@ $result = $conn->query($sql);
     <div class="container-xl py-4 px-5 rounded shadow" style="background-color: #F5F0DD;">  
         <h1 class="mb-4">Manage Ambulance</h1>  
         <div class="mb-3 d-flex justify-content-between align-items-center">  
-            <a href="../homepage.html" class="btn btn-secondary btn-warning-custom">Back to Home</a>  
+            <a href="../mainPage/adminHomepage.html" class="btn btn-secondary btn-warning-custom">Back to Home</a>  
             <a href="addAmbulance.php" class="btn btn-success btn-warning-custom">Add Ambulance</a>  
         </div>  
 
