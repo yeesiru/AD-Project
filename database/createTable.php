@@ -70,7 +70,6 @@ if (mysqli_query($conn, $sql4)) {
 }
 
 
-
 //SQL to create hall table
 $sql5 = "CREATE TABLE IF NOT EXISTS hall (
     hall_id VARCHAR(10) PRIMARY KEY,

@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageAmbulanceBooking.php';
+                        window.location.href = 'viewAmbulanceBooking.php';
                     }
                 });
             });
@@ -75,7 +75,7 @@ $conn->close();
 
 <body>
     <div class="container bg-white p-4 rounded shadow">
-        <a href="./manageAmbulanceBooking.php" class="btn btn-secondary mb-3">Back</a>
+        <a href="./viewAmbulanceBooking.php" class="btn btn-secondary mb-3">Back</a>
         <h1>Edit Booking Details</h1>
 
         <form action="" method="POST">
@@ -105,7 +105,6 @@ $conn->close();
             </div>
 
             <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
-
             
         </form>
     </div>

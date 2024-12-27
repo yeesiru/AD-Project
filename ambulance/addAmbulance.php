@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageAmbulance.php';
+                        window.location.href = 'viewAmbulance.php';
                     }
                 });
             });
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="container" style="width: auto;">
-        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back</a>
+        <a href="./viewAmbulance.php" class="btn btn-secondary mb-3">Back</a>
         <br>
         <h1 style="text-align: center;">Add New Ambulance</h1>
 
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <div class="form-group ambulance-input">
                     <label for="vehicleId" class="form-label">Vehicle ID<span class="text-danger">*</span></label>
-                    <input type="text" id="vehicleId" name="vehicleId" required>
+                    <input type="text" id="vehicleId" name="vehicleId" pattern="[A-Za-z]{1}\d{3}" title="Vehicle ID must be one letter followed by three digits (e.g., S123)" required>
                 </div>
 
                 <div class="form-group ambulance-input">

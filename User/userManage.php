@@ -68,7 +68,6 @@ $idRow = $offset + 1;
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/navigation.css">
-    <link rel="stylesheet" href="../css/homepage.css">
     <link rel="stylesheet" href="../css/manageUser.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/adminNavBar.js" defer></script>
@@ -78,7 +77,7 @@ $idRow = $offset + 1;
         .addUser {
             margin-bottom: 10px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
         }
 
         .add-button {
@@ -94,7 +93,17 @@ $idRow = $offset + 1;
             margin-bottom: 10px;
         }
 
-        
+        .title{
+            text-align: left;
+            margin-left: 10px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1D5748;
+            font-weight: bold;        
+        }
+
     </style>
 </head>
 
@@ -142,7 +151,12 @@ $idRow = $offset + 1;
 
     <!--User list table-->
     <div class="container">
-        <div class="addUser"><a href="addUser.php" class="add-button">Add User</a></div>
+        <div class="addUser">
+            <div class="title">
+                        User List
+            </div>
+            <a href="addUser.php" class="add-button">Add User</a>
+        </div>
         <div class="table-container">
             <table class="table">
                 <thead>

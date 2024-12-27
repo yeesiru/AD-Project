@@ -59,7 +59,7 @@ if (isset($_GET['vehicleId'])) {
     </script>";
 }
 
-echo "<script>window.location.href = 'manageAmbulance.php';</script>";
+echo "<script>window.location.href = 'viewAmbulance.php';</script>";
 
 $conn->close();
 ?>

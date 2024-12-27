@@ -5,9 +5,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all equipment records
-$sql = "SELECT * FROM equipment";
-$result = $conn->query($sql);
+// Fetch search term if set
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+// Prepare SQL query with a search filter
+if (!empty($search)) {
+    $sql = "SELECT * FROM equipment WHERE type LIKE ? OR equipment LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $searchParam = "%$search%";
+    $stmt->bind_param("ss", $searchParam, $searchParam);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $sql = "SELECT * FROM equipment";
+    $result = $conn->query($sql);
+}
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +144,7 @@ $result = $conn->query($sql);
             background-color: #8B0000; /* Darker red */
         }
 
-    </style>
+        </style>
 </head>
 
 <body>
@@ -142,10 +154,10 @@ $result = $conn->query($sql);
     <div class="container my-5">
 
         <!-- Search Bar Section -->
-        <div class="search-filter">
-            <input style="width: 70%;" type="text" placeholder="Search Booking">
-            <button class="filter-button" style="width: 20%;">Search</button>
-        </div>
+        <form method="get" action="" class="search-filter">
+            <input style="width: 70%;" type="text" name="search" placeholder="Search Equipment" value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit" class="filter-button" style="width: 20%;">Search</button>
+        </form>
 
         <!-- Add Equipment Button -->
         <div class="mb-3 text-end">
@@ -165,7 +177,7 @@ $result = $conn->query($sql);
                 </thead>
                 <tbody>
                     <?php
-                    if ($result->num_rows > 0) {
+                    if ($result && $result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['type']) . "</td>";
@@ -174,6 +186,7 @@ $result = $conn->query($sql);
                             echo "<td>
                                     <a href='editEquipment.php?id=" . intval($row['id']) . "' class='btn btn-primary btn-sm me-2'>Edit</a>
                                     <a href='deleteEquipment.php?id=" . intval($row['id']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this equipment?\")'>Delete</a>
+                                    <button class='btn btn-danger btn-sm' onclick=\"confirmDelete('" . htmlspecialchars($row['id'], ENT_QUOTES) . "')\">Delete</button>
                                   </td>";
                             echo "</tr>";
                         }
@@ -186,7 +199,60 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <?php $conn->close(); ?>
+    <?php
+    if (!empty($search)) {
+        $stmt->close();
+    }
+    $conn->close();
+    ?>
 </body>
 
 </html>
+
+<script>
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to recover this equipment record!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the AJAX request
+            fetch(`deleteEquipment.php?id=${id}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Refresh the equipment list page
+                            window.location.href = 'equipmmentList.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+    });
+}
+</script>

@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
         // Sanitize and fetch inputs
         $userID = $conn->real_escape_string($_POST['userID']);
         $username = $conn->real_escape_string($_POST['username']);
-        $password = $conn->real_escape_string($_POST['password']);
+        $password = $conn->real_escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT));
         $name = $conn->real_escape_string($_POST['name']);
         $gender = $conn->real_escape_string($_POST['gender']);
         $email = $conn->real_escape_string($_POST['email']);
@@ -151,7 +151,7 @@ if ($result->num_rows > 0) {
 
         <!-- Form to edit the user entry -->
         <div class="user-table justify-content-center">
-            <form method="POST" action=" " class="mb-4" enctype="multipart/form-data">
+            <form method="POST" action=" " class="mb-4" enctype="multipart/form-data" id="editUserForm">
 
                 <div class="form-group user-input">
                         <label for="userID" class="form-label">User ID: </label>
@@ -166,6 +166,8 @@ if ($result->num_rows > 0) {
                 <div class="mb-3 form-group user-input">
                     <label for="password" class="form-label">Password:</label>
                     <input type="password" id="password" name="password" class="form-control" value="<?php echo $userData['password']; ?>" required>
+                    <span style="color:grey">At least 8 characters with 1 uppercase, 1 lowercase and number</span>
+                    <small id="passwordError" style="color: red; display: none;">Password must be at least 8 characters long and include at least 1 uppercase letter, 1 lowercase letter, and 1 number.</small>
                 </div>
 
                 <div class="mb-3 form-group user-input">
@@ -202,6 +204,7 @@ if ($result->num_rows > 0) {
                         <option value="admin" <?php if ($userData['role'] == 'admin') echo 'selected'; ?>>Admin</option>
                         <option value="officer" <?php if ($userData['role'] == 'officer') echo 'selected'; ?>>School Officer</option>
                     </select>
+                    <small id="roleError" style="color: red; display: none;">User ID must match the selected role: 'A' for Admin, 'F' for Officer.</small>
                 </div>
 
                 <div class="mb-3">
@@ -217,6 +220,41 @@ if ($result->num_rows > 0) {
             </form>
         </div>
     </div>
+
+    <script>
+            document.getElementById("editUserForm").addEventListener("submit", function(event) {
+                const userID = document.getElementById("userID").value; // Fetch the value
+                const password = document.getElementById("password").value;
+                const role = document.getElementById("role").value;
+                const userIDPattern = /^[AF]\d{3}$/;
+                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+                let isValid = true;
+                let errorMessage = "";
+
+                // Reset error messages
+                document.getElementById("roleError").style.display = "none";
+                document.getElementById("passwordError").style.display = "none";
+
+                // Validate userID matches the role
+                if ((role === "admin" && !userID.startsWith("A")) || (role === "officer" && !userID.startsWith("F"))) {
+                    isValid = false;
+                    document.getElementById("roleError").style.display = "block";
+                }
+
+                // Validate password pattern
+                if (!passwordPattern.test(password)) {
+                    isValid = false;
+                    document.getElementById("passwordError").style.display = "block";
+                }
+
+                // Prevent form submission if invalid
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+
+        </script>
 
 
     <?php
