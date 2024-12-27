@@ -1,0 +1,44 @@
+footer {
+    background-color: #017b56;
+}
+
+.footerContainer {
+    width: 100%;
+}
+
+.socialIcon {
+    display: flex;
+}
+
+.socialIcon a {
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.socialIcon a i {
+    font-size: 1.5em;
+    color: #F5F0DD;
+    opacity: 0.9;
+}
+
+.socialIcon a:hover {
+    background-color: #F5F0DD;
+    transition: 0.5s;
+}
+
+.socialIcon a:hover i {
+    color: #017b56;
+    transition: 0.5s;
+}
+
+.footer-content {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    color: #F5F0DD;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    align-items: center;
+}
