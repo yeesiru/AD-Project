@@ -6,6 +6,72 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $selectedDate = $conn->real_escape_string($_POST['date']);
+    $bookingDetails = $_POST['booking'];
+
+    $errors = [];
+    $success = [];
+
+    foreach ($bookingDetails as $equipmentId => $quantity) {
+        $equipmentId = intval($equipmentId);
+        $quantity = intval($quantity);
+
+        // Skip if the quantity is 0
+        if ($quantity == 0) {
+            continue;
+        }
+
+        // Fetch current equipment quantity
+        $availabilityCheck = "SELECT quantity FROM equipment WHERE id = $equipmentId";
+        $availabilityResult = $conn->query($availabilityCheck);
+        $row = $availabilityResult->fetch_assoc();
+
+        if ($row) {
+            $availableQuantity = $row['quantity'];
+
+            // Check availability
+            if ($quantity > $availableQuantity) {
+                $errors[] = "Requested quantity for equipment ID $equipmentId exceeds availability.";
+            } else {
+                // Reduce available quantity
+                $newQuantity = $availableQuantity - $quantity;
+                $updateQuery = "UPDATE equipment SET quantity = $newQuantity WHERE id = $equipmentId";
+
+                if ($conn->query($updateQuery)) {
+                    // Insert into equipment_booking table
+                    $userId = 1; // Temporary hardcoded user ID for testing
+                    $logBooking = "INSERT INTO equipment_booking (equipment_id, user_id, quantity, booking_date) 
+                                   VALUES ($equipmentId, $userId, $quantity, '$selectedDate')";
+
+                    if ($conn->query($logBooking)) {
+                        $success[] = "Equipment ID $equipmentId booked successfully.";
+                    } else {
+                        $errors[] = "Error booking equipment ID $equipmentId: " . $conn->error;
+                    }
+                } else {
+                    $errors[] = "Error updating quantity for equipment ID $equipmentId: " . $conn->error;
+                }
+            }
+        } else {
+            $errors[] = "Equipment ID $equipmentId updated successfully.";
+        }
+    }
+
+    // Display success or error messages
+    if (!empty($success)) {
+        echo "<script>alert('" . implode("\\n", $success) . "');</script>";
+    }
+    if (!empty($errors)) {
+        echo "<script>alert('" . implode("\\n", $errors) . "');</script>";
+    }
+}
+
+// Fetch all bookings
+$fetchBookingsQuery = "SELECT * FROM equipment_booking";
+$bookingResults = $conn->query($fetchBookingsQuery);
+
 // Handle deletion of all bookings for a specific date
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
     $deleteDate = $conn->real_escape_string($_POST['delete_date']);
@@ -141,23 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
             color: #FFFFFF !important; /* White font */
         }
 
-        /* Action button styling */
-        .btn-primary {
-            background-color: #1D5748; /* Dark green for Edit button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-primary:hover {
-            background-color: #014520; /* Darker green */
-        }
-
-        .btn-danger {
-            background-color: #B22222; /* Red for Delete button */
-            border: none;
-            color: #FFFFFF;
-        }
-
         .btn-danger:hover {
             background-color: #8B0000; /* Darker red */
         }
@@ -206,7 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
 
         <!-- Add Equipment Button -->
         <div class="add-button-container">
-            <a href="userAddEquipment.php" class="add-button">Equipment Booking</a>
+            <a href="userAddEquipment.php" class="add-button">Book Equipment</a>
         </div>
 
         <!-- Booking Table -->

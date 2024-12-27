@@ -123,27 +123,6 @@ if (!empty($search)) {
             background-color: #fafafa; /* Light alternate row */
         }
 
-        /* Action button styling */
-        .btn-primary {
-            background-color: #1D5748; /* Dark green for Edit button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-primary:hover {
-            background-color: #014520; /* Darker green */
-        }
-
-        .btn-danger {
-            background-color: #B22222; /* Red for Delete button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-danger:hover {
-            background-color: #8B0000; /* Darker red */
-        }
-
         </style>
 </head>
 
@@ -185,7 +164,6 @@ if (!empty($search)) {
                             echo "<td>" . intval($row['quantity']) . "</td>";
                             echo "<td>
                                     <a href='editEquipment.php?id=" . intval($row['id']) . "' class='btn btn-primary btn-sm me-2'>Edit</a>
-                                    <a href='deleteEquipment.php?id=" . intval($row['id']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this equipment?\")'>Delete</a>
                                     <button class='btn btn-danger btn-sm' onclick=\"confirmDelete('" . htmlspecialchars($row['id'], ENT_QUOTES) . "')\">Delete</button>
                                   </td>";
                             echo "</tr>";

@@ -9,68 +9,6 @@ if ($conn->connect_error) {
 // Fetch all equipment
 $sql = "SELECT * FROM equipment";
 $result = $conn->query($sql);
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $selectedDate = $conn->real_escape_string($_POST['date']);
-    $bookingDetails = $_POST['booking'];
-
-    $errors = [];
-    $success = [];
-
-    foreach ($bookingDetails as $equipmentId => $quantity) {
-        $equipmentId = intval($equipmentId);
-        $quantity = intval($quantity);
-
-        // Skip if the quantity is 0
-        if ($quantity == 0) {
-            continue;
-        }
-
-        // Fetch current equipment quantity
-        $availabilityCheck = "SELECT quantity FROM equipment WHERE id = $equipmentId";
-        $availabilityResult = $conn->query($availabilityCheck);
-        $row = $availabilityResult->fetch_assoc();
-
-        if ($row) {
-            $availableQuantity = $row['quantity'];
-
-            // Check availability
-            if ($quantity > $availableQuantity) {
-                $errors[] = "Requested quantity for equipment ID $equipmentId exceeds availability.";
-            } else {
-                // Reduce available quantity
-                $newQuantity = $availableQuantity - $quantity;
-                $updateQuery = "UPDATE equipment SET quantity = $newQuantity WHERE id = $equipmentId";
-
-                if ($conn->query($updateQuery)) {
-                    // Insert into equipment_booking table
-                    $userId = 1; // Temporary hardcoded user ID for testing
-                    $logBooking = "INSERT INTO equipment_booking (equipment_id, user_id, quantity, booking_date) 
-                                   VALUES ($equipmentId, $userId, $quantity, '$selectedDate')";
-
-                    if ($conn->query($logBooking)) {
-                        $success[] = "Equipment ID $equipmentId booked successfully.";
-                    } else {
-                        $errors[] = "Error booking equipment ID $equipmentId: " . $conn->error;
-                    }
-                } else {
-                    $errors[] = "Error updating quantity for equipment ID $equipmentId: " . $conn->error;
-                }
-            }
-        } else {
-            $errors[] = "Equipment ID $equipmentId not found.";
-        }
-    }
-
-    // Display messages
-    if (!empty($success)) {
-        echo "<script>alert('" . implode("\\n", $success) . "');</script>";
-    }
-    if (!empty($errors)) {
-        echo "<script>alert('" . implode("\\n", $errors) . "');</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -161,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="text-center">Book Equipment</h1>
 
         <!-- Date Selection -->
-        <form method="POST" action="" onsubmit="return validateDate()">
+        <form method="POST" action="manageEquipmentBooking.php" onsubmit="return validateDate()">
             <div class="mb-4">
                 <label for="date" class="form-label">Select Booking Date:</label>
                 <input type="date" id="date" name="date" required>
