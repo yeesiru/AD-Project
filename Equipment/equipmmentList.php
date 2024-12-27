@@ -186,6 +186,7 @@ if (!empty($search)) {
                             echo "<td>
                                     <a href='editEquipment.php?id=" . intval($row['id']) . "' class='btn btn-primary btn-sm me-2'>Edit</a>
                                     <a href='deleteEquipment.php?id=" . intval($row['id']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this equipment?\")'>Delete</a>
+                                    <button class='btn btn-danger btn-sm' onclick=\"confirmDelete('" . htmlspecialchars($row['id'], ENT_QUOTES) . "')\">Delete</button>
                                   </td>";
                             echo "</tr>";
                         }
@@ -207,3 +208,51 @@ if (!empty($search)) {
 </body>
 
 </html>
+
+<script>
+function confirmDelete(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to recover this equipment record!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Delete'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Perform the AJAX request
+            fetch(`deleteEquipment.php?id=${id}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: data.message,
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Refresh the equipment list page
+                            window.location.href = 'equipmmentList.php';
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: data.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+    });
+}
+</script>
