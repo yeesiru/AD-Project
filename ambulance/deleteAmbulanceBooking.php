@@ -76,7 +76,7 @@ if (isset($_GET['vehicleId'])) {
     </script>";
 }
 
-echo "<script>window.location.href = 'manageAmbulanceBooking.php';</script>";
+echo "<script>window.location.href = 'viewAmbulanceBooking.php';</script>";
 // Close database connection
 $conn->close();
 ?>

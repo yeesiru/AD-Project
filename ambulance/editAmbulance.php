@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageAmbulance.php';
+                        window.location.href = 'viewAmbulance.php';
                     }
                 });
             });
@@ -67,7 +67,7 @@ $conn->close();
 
 <body>
     <div class="container">
-        <a href="./manageAmbulance.php" class="btn btn-secondary mb-3">Back</a>
+        <a href="./viewAmbulance.php" class="btn btn-secondary mb-3">Back</a>
         <br>
         <h1>Edit Ambulance Details</h1>
 

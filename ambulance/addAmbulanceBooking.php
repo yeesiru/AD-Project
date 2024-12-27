@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageAmbulanceBooking.php';
+                        window.location.href = 'viewAmbulanceBooking.php';
                     }
                 });
             });
@@ -72,7 +72,7 @@ $ambulanceResult = $conn->query($ambulanceQuery);
 
 <body>
     <div class="container">
-        <a href="./manageAmbulanceBooking.php" class="btn btn-secondary mb-3">Back</a>
+        <a href="./viewAmbulanceBooking.php" class="btn btn-secondary mb-3">Back</a>
         <h1 style="text-align: center;">Add Ambulance Booking</h1>
 
         <div class="booking-form">
@@ -85,7 +85,7 @@ $ambulanceResult = $conn->query($ambulanceQuery);
 
                 <div class="form-group">
                     <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
-                    <input type="text" id="contact" name="contact" class="form-control" required>
+                    <input type="text" id="contact" name="contact" class="form-control" pattern="\d{10,11}" title="Contact number must be 10 or 11 digits" required>
                 </div>
 
                 <div class="form-group">
