@@ -113,6 +113,7 @@
 
 <body>
     <div class="container">
+    <a href="manageEquipmentBooking.php" style="text-decoration:none; color: black;"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>Back</a>
         <h1 class="text-center">Edit Equipment Booking</h1>
 
         <!-- Display Bookings -->
@@ -137,12 +138,14 @@
                                 <td><?= intval($row['quantity']) ?></td>
                                 <td><?= intval($row['available_quantity']) ?></td>
                                 <td>
-                                    <form method="POST" action="manageEquipmentBooking.php">
-                                        <input type="hidden" name="booking_id" value="<?= intval($row['booking_id']) ?>">
-                                        <input type="hidden" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
-                                        <input type="number" name="quantity" min="1" max="<?= intval($row['available_quantity']) ?>" value="<?= intval($row['quantity']) ?>" required>
-                                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                    </form>
+                                <form method="POST" action="manageEquipmentBooking.php">
+                                    <input type="hidden" name="date" value="<?= htmlspecialchars($selectedDate) ?>">
+                                    <input type="hidden" name="booking[<?= intval($row['booking_id']) ?>][equipment_id]" value="<?= intval($row['booking_id']) ?>">
+                                    <label for="quantity">Update Quantity:</label>
+                                    <input type="number" id="quantity" name="booking[<?= intval($row['booking_id']) ?>][quantity]" 
+                                        min="1" max="<?= intval($row['available_quantity']) ?>" value="<?= intval($row['quantity']) ?>" required>
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                                </form>
                                 </td>
                             </tr>
                         <?php endwhile; ?>

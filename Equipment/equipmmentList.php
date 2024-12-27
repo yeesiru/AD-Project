@@ -185,7 +185,6 @@ if (!empty($search)) {
                             echo "<td>" . intval($row['quantity']) . "</td>";
                             echo "<td>
                                     <a href='editEquipment.php?id=" . intval($row['id']) . "' class='btn btn-primary btn-sm me-2'>Edit</a>
-                                    <a href='deleteEquipment.php?id=" . intval($row['id']) . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure you want to delete this equipment?\")'>Delete</a>
                                     <button class='btn btn-danger btn-sm' onclick=\"confirmDelete('" . htmlspecialchars($row['id'], ENT_QUOTES) . "')\">Delete</button>
                                   </td>";
                             echo "</tr>";
