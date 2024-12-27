@@ -207,23 +207,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_date'])) {
             color: #FFFFFF !important; /* White font */
         }
 
-        /* Action button styling */
-        .btn-primary {
-            background-color: #1D5748; /* Dark green for Edit button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-primary:hover {
-            background-color: #014520; /* Darker green */
-        }
-
-        .btn-danger {
-            background-color: #B22222; /* Red for Delete button */
-            border: none;
-            color: #FFFFFF;
-        }
-
         .btn-danger:hover {
             background-color: #8B0000; /* Darker red */
         }
