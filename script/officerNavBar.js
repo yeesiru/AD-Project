@@ -1,11 +1,19 @@
 function showSideBar() {
-    const sidebar = document.querySelector('.sidebar')
-    sidebar.style.display = 'flex'
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.style.display = 'flex';
+    } else {
+        console.error("Sidebar element not found.");
+    }
 }
 
 function hideSidebar() {
-    const sidebar = document.querySelector('.sidebar')
-    sidebar.style.display = 'none'
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) {
+        sidebar.style.display = 'none';
+    } else {
+        console.error("Sidebar element not found.");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     const navbarHTML = `
         <div class="top">
             <div class="container">
@@ -50,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </ul>
             </li>
             <li> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
-            <li> <a href="#">Contact Us</a></li>
+            <li> <a href="../mainPage/officerHomepage.html#contactUs">Contact Us</a></li>
             <li> <a href="../mainPage/logout.php">Logout</a></li>
         </ul>
 
@@ -58,13 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
             <li class="hideOnMobile"> <a href="../mainPage/officerHomepage.html">Home</a></li>
             <li class="hideOnMobile"> <a href="#"> Our Services &#x25BE;</a>
                 <ul class="dropdown">
-                    <li><a href="#">Hall Booking</a></li>
+                    <li><a href="../Hall/manageHallBooking.php">Hall Booking</a></li>
                     <li><a href="../ambulance/manageAmbulanceBooking.php">Ambulance Booking</a></li>
-                    <li><a href="#">Equipment Booking</a></li>
+                    <li><a href="../Equipment_user/manageEquipmentBooking.php">Equipment Booking</a></li>
                 </ul>
             </li>
             <li class="hideOnMobile"> <a href="../Feedback/officer-feedback.php">Feedback</a></li>
-            <li class="hideOnMobile"> <a href="#">Contact Us</a></li>
+            <li class="hideOnMobile"> <a href="../mainPage/officerHomepage.html#contactUs">Contact Us</a></li>
             <li class="hideOnMobile"> <a href="../User/ownProfile.php">Profile</a></li>
             <li class="hideOnMobile"> <a href="../mainPage/logout.php">Logout</a></li>
             <li class="menuButton" onclick=showSideBar()> <a href="#"><svg xmlns="http://www.w3.org/2000/svg"
@@ -75,13 +83,23 @@ document.addEventListener("DOMContentLoaded", () => {
     </nav>
     `;
 
-    // Insert the navbar into an element with the ID 'navbar'
-    document.getElementById('navbar').innerHTML = navbarHTML;
+    // Insert the navbar into the DOM
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        navbar.innerHTML = navbarHTML;
 
-    const subBtn = document.querySelector('.sub-btn');
-    const dropdown = document.querySelector('.sidebar-dropdown');
+        // Query and add event listeners after the HTML is inserted
+        const subBtn = document.querySelector('.sub-btn');
+        const dropdown = document.querySelector('.sidebar-dropdown');
 
-    subBtn.addEventListener('click', () => {
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    });
+        if (subBtn && dropdown) {
+            subBtn.addEventListener('click', () => {
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        } else {
+            console.error("Sub-btn or sidebar-dropdown not found.");
+        }
+    } else {
+        console.error("Navbar container not found.");
+    }
 });
