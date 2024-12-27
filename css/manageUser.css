@@ -1,3 +1,7 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .search-filter {
     display: flex;
     gap: 15px;
@@ -10,6 +14,13 @@
 .search-filter button {
     padding: 8px;
     font-size: 14px;
+}
+
+.search-filter button {
+    padding: 8px;
+    font-size: 14px;
+    background-color: #1D5748;
+    color: white;
 }
 
 .filter-button{
@@ -141,6 +152,7 @@ table tbody{
     width: 50%;
     height: auto;
     box-sizing: border-box;
+    margin: auto;
 }
 
 .popup-details{
@@ -148,6 +160,7 @@ table tbody{
     padding: 20px;
     position: relative;
     width: 50%;
+    align-self: center;
 }
 
 .popup-image img {
