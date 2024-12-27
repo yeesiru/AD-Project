@@ -123,27 +123,6 @@ if (!empty($search)) {
             background-color: #fafafa; /* Light alternate row */
         }
 
-        /* Action button styling */
-        .btn-primary {
-            background-color: #1D5748; /* Dark green for Edit button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-primary:hover {
-            background-color: #014520; /* Darker green */
-        }
-
-        .btn-danger {
-            background-color: #B22222; /* Red for Delete button */
-            border: none;
-            color: #FFFFFF;
-        }
-
-        .btn-danger:hover {
-            background-color: #8B0000; /* Darker red */
-        }
-
         </style>
 </head>
 
