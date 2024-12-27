@@ -16,6 +16,9 @@
             font-size:15px;
         }
 
+        span{
+            color:red;
+        }
     </style>
 </head>
 
@@ -44,7 +47,7 @@
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0755, true);
             }
-            $upload_dir = "uploads/"; 
+            $upload_dir = "../uploads/"; 
             $target_file = $upload_dir . basename($_FILES["image"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -150,47 +153,50 @@
                 <form id="addUserForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data"> 
                     
                     <div class="form-group user-input">
-                        <label for="userID" class="form-label">User ID: </label>
+                        <label for="userID" class="form-label"><span>*</span> User ID: </label>
                         <input type="text" id="userID" name="userID" placeholder="A001" required>
+                        <small id="userIDError" style="color: red; display: none;">User ID must start with 'A' or 'F' followed by 3 digits (e.g., A001, F123).</small>
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="username" class="form-label">Username: </label>
+                        <label for="username" class="form-label"><span>*</span> Username: </label>
                         <input type="text" id="username" name="username" required>
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="password" class="form-label">Password: </label>
+                        <label for="password" class="form-label"><span>*</span> Password: </label>
                         <input type="password" id="password" name="password" required>
+                        <span style="color:grey">At least 8 characters with 1 uppercase, 1 lowercase and number</span>
+                        <small id="passwordError" style="color: red; display: none;">Password must be at least 8 characters long and include at least 1 uppercase letter, 1 lowercase letter, and 1 number.</small>
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="name">Name: </label>
+                        <label for="name"><span>*</span> Name: </label>
                         <input type="text" id="name" name="name" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="gender">Gender: </label>
+                        <label for="gender"><span>*</span> Gender: </label>
                         <input type="radio" name="gender" <?php if (isset($gender) && $gender=="female" ) echo "checked";?> value="female">Female
                         <input type="radio" name="gender" <?php if (isset($gender) && $gender=="male" ) echo "checked";?> value="male">Male
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="email">Email: </label>
+                        <label for="email"><span>*</span> Email: </label>
                         <input type="email" id="email" name="email" placeholder="xxx@example.com" required></textarea>
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="phone">Phone Number:</label>
+                        <label for="phone"><span>*</span> Phone Number:</label>
                         <input type="text" id="phone" name="phone" placeholder="0123456789" required>
                     </div>
                     <div class="form-group user-input">
-                        <label for="school">Responsible school:</label>
+                        <label for="school"><span>*</span> Responsible school:</label>
                         <input type="school" id="school" name="school"  placeholder="SMK example" required></textarea>
                     </div>
 
                     <div class="form-group user-input">
-                        <label for="role">Role</label>
+                        <label for="role"><span>*</span> Role</label>
                         <div class="custom-select-wrapper">
                             <select class="form-select custom-select" aria-label="Default select example" id="role"
                                 name="role" required>
@@ -199,6 +205,7 @@
                                 <option value="officer">School Officer</option>
                             </select>
                         </div>
+                        <small id="roleError" style="color: red; display: none;">User ID must match the selected role: 'A' for Admin, 'F' for Officer.</small>
                     </div>
 
                     <div class="mb-3">
@@ -211,6 +218,48 @@
                 </form>
             </div>
         </div>
+
+        <script>
+            document.getElementById("addUserForm").addEventListener("submit", function(event) {
+                const userID = document.getElementById("userID").value;
+                const password = document.getElementById("password").value;
+                const role = document.getElementById("role").value;
+                const userIDPattern = /^[AF]\d{3}$/;
+                const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+
+                let isValid = true;
+
+                // Reset error messages
+                document.getElementById("userIDError").style.display = "none";
+                document.getElementById("passwordError").style.display = "none";
+
+                // Validate userID
+                if (!userIDPattern.test(userID)) {
+                    isValid = false;
+                    document.getElementById("userIDError").style.display = "block";
+                }
+
+                // Validate password
+                if (!passwordPattern.test(password)) {
+                    isValid = false;
+                    document.getElementById("passwordError").style.display = "block";
+                }
+
+                // Validate userID matches role
+                if ((role === "admin" && !userID.startsWith("A")) || (role === "officer" && !userID.startsWith("F"))) {
+                    isValid = false;
+                    document.getElementById("roleError").style.display = "block";
+                } else {
+                    document.getElementById("roleError").style.display = "none";
+                }
+
+                // Prevent submission if invalid
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
+
 
     <?php
     $conn->close();
