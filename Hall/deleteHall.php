@@ -59,7 +59,7 @@ if (isset($_GET['hall_id'])) {
     </script>";
 }
 
-echo "<script>window.location.href = 'manageHall.php';</script>";
+echo "<script>window.location.href = 'viewHallList.php';</script>";
 
 $conn->close();
 ?>

@@ -192,7 +192,7 @@ $result = $conn->query($sql);
                             <td><?php echo htmlspecialchars($row['date']); ?></td>
                             <td><?php echo htmlspecialchars($row['time_slot']); ?></td>
                             <td>
-                                <a href="editHallBooking.php?booking_id=<?php echo $row['booking_id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="editHallBooking.php?booking_id=<?php echo $row['booking_id']; ?>" class="btn btn-primary btn-sm me-2">Edit</a>
                                 <button class="btn btn-danger btn-sm" onclick="confirmDeleteBooking('<?php echo $row['booking_id']; ?>')">Delete</button>
                             </td>   
                         </tr>
