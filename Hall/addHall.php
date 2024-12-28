@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <div class="form-group hall-input">
                     <label for="hall_id" class="form-label">Hall ID<span class="text-danger">*</span></label>
-                    <input type="text" id="hall_id" name="hall_id" placeholder="H123" required>
+                    <input type="text" id="hall_id" name="hall_id" placeholder="H432" required>
                 </div>
 
                 <div class="form-group hall-input">
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-3">Save</button>
-                <a href="manageHall.php" class="btn btn-secondary mt-2">Cancel</a>
+                <a href="viewHallList.php" class="btn btn-secondary mt-2">Cancel</a>
             </form>
         </div>
     </div>

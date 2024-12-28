@@ -12,10 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = $_POST['date'];
     $timeSlot = $_POST['timeSlot'];
 
-    // Insert the hall booking entry into the database
-    $sql = "INSERT INTO hallBooking (hall_id, booked_by, date, time_slot) 
-            VALUES ('$hallId', '$name', '$date', '$timeSlot')";
-
     // Check for success or error
     if ($conn->query($sql) === TRUE) {
         echo "<script>
@@ -56,90 +52,86 @@ $hallResult = $conn->query($hallQuery);
     <title>Add Hall Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../css/navigation.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="../css/navigation.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        .container {
-            margin-top: 50px;
+        /* Add the additional styles here */
+        .modal-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
-        .booking-form {
+        .modal-form {
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 400px;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .booking-form h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
+        .modal-form h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
             color: #333;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 1rem;
         }
 
         .form-group label {
             font-weight: bold;
-            color: #555;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #333;
         }
 
-        .form-control {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .btn-primary {
-            background-color: #006d47;
-            color: white;
-            border: none;
+        .form-group input {
             width: 100%;
             padding: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            cursor: pointer;
+            font-size: 1rem;
         }
 
-        .btn-primary:hover {
-            background-color: #004f36;
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #006d47;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
         }
 
         .btn-secondary {
             background-color: #777;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
-        <h1 style="text-align: center;">Add Hall Booking</h1>
-
-        <div class="booking-form">
-            <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <div class="modal-container">
+        <div class="modal-form">
+            <h1>Add Hall Booking</h1>
+            <form id="addHallForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
                 
-                <div class="form-group">
+            <div class="form-group">
                     <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                    <input type="text" id="name" name="name" class="form-control" required>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
                 </div>
 
                 <div class="form-group">
                     <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
-                    <input type="text" id="contact" name="contact" class="form-control" required>
+                    <input type="text" id="contact" name="contact" class="form-control" placeholder="0123456789" required>
                 </div>
 
                 <div class="form-group">
@@ -169,6 +161,7 @@ $hallResult = $conn->query($hallQuery);
                 </div>
 
                 <button type="submit" class="btn btn-primary mt-3">Book Hall</button>
+                <a href="viewHallBooking.php" class="btn btn-secondary mt-2">Cancel</a>
             </form>
         </div>
     </div>
