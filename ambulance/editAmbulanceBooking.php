@@ -70,6 +70,7 @@ $conn->close();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navigation.css">    
     <link rel="stylesheet" href="../css/manageAmbulanceBooking.css">
+    <link rel="stylesheet" href="../css/styleAmbulance.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 

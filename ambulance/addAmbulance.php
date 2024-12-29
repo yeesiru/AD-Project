@@ -52,13 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navigation.css">    
     <link rel="stylesheet" href="../css/manageAmbulance.css">
+    <link rel="stylesheet" href="../css/styleAmbulance.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class="container" style="width: auto;">
-        <a href="./viewAmbulance.php" class="btn btn-secondary mb-3">Back</a>
+        <a href="./viewAmbulance.php" class="btn btn-secondary mb-3 btn-warning-custom">Back</a>
         <br>
         <h1 style="text-align: center;">Add New Ambulance</h1>
 
