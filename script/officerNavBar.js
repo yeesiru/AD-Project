@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <li> <a class="sub-btn">Our Services &#x25BE;</a>
                 <ul class="sidebar-dropdown">
-                    <li><a href="../Hall/manageHallBooking.php" class="sub-item">Hall Booking</a></li>
+                    <li><a href="../Hall/viewHallBooking.php" class="sub-item">Hall Booking</a></li>
                     <li><a href="../ambulance/viewAmbulanceBooking.php" class="sub-item">Ambulance Booking</a></li>
                     <li><a href="../Equipment_user/manageEquipmentBooking.php" class="sub-item">Equipment Booking</a></li>
                 </ul>
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <li class="hideOnMobile"> <a href="../mainPage/officerHomepage.html">Home</a></li>
             <li class="hideOnMobile"> <a href="#"> Our Services &#x25BE;</a>
                 <ul class="dropdown">
-                    <li><a href="../Hall/manageHallBooking.php">Hall Booking</a></li>
+                    <li><a href="../Hall/viewHallBooking.php">Hall Booking</a></li>
                     <li><a href="../ambulance/viewAmbulanceBooking.php">Ambulance Booking</a></li>
                     <li><a href="../Equipment_user/manageEquipmentBooking.php">Equipment Booking</a></li>
                 </ul>
