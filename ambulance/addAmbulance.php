@@ -55,6 +55,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/styleAmbulance.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .container{
+            background-color: #F5F0DD;
+        }
+        button[type="submit"] {
+        background-color: #1D5748;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #143D33;
+        }
+        
+        .custom-select-wrapper {
+            position: relative;
+        }
+    </style>
 </head>
 
 <body>
