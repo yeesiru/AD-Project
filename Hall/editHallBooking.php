@@ -68,37 +68,97 @@ $conn->close();
     <title>Edit Hall Booking</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/navigation.css">
-    <link rel="stylesheet" href="../css/manageAmbulanceBooking.css">    
+    <link rel="stylesheet" href="../css/navigation.css">    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        /* Add the additional styles here */
+        .modal-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-form {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-form h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #006d47;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .btn-secondary {
+            background-color: #777;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container bg-white p-4 rounded shadow">
-        
-        <h1>Edit Hall Booking Details</h1>
+    <div class="modal-container">
+        <div class="modal-form">
+            <h1>Edit Hall Booking Details</h1>
 
-        <form action="" method="POST">
-            <input type="hidden" name="bookingId" value="<?php echo htmlspecialchars($row['booking_id']); ?>">
+            <form action="" method="POST">
+                <input type="hidden" name="bookingId" value="<?php echo htmlspecialchars($row['booking_id']); ?>">
 
-            <div class="form-group">
-                <label for="name">Name<span class="text-danger">*</span></label>
-                <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
-            </div>
+                <div class="form-group">
+                    <label for="name">Name<span class="text-danger">*</span></label>
+                    <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
+                </div>
 
-            <div class="form-group mt-3">
-                <label for="date">Date<span class="text-danger">*</span></label>
-                <input type="date" id="date" name="date" class="form-control" value="<?php echo htmlspecialchars($row['date']); ?>" required>
-            </div>
+                <div class="form-group">
+                    <label for="date">Date<span class="text-danger">*</span></label>
+                    <input type="date" id="date" name="date" class="form-control" value="<?php echo htmlspecialchars($row['date']); ?>" required>
+                </div>
 
-            <div class="form-group mt-3">
-                <label for="timeSlot">Time<span class="text-danger">*</span></label>
-                <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
-            </div>
+                <div class="form-group">
+                    <label for="timeSlot">Time<span class="text-danger">*</span></label>
+                    <input type="time" id="timeSlot" name="timeSlot" class="form-control" value="<?php echo htmlspecialchars($row['time_slot']); ?>" required>
+                </div>
 
-            <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
-            <a href="./manageHallBooking.php" class="btn btn-secondary mb-3">Back</a>
-        </form>
+                <button type="submit" class="btn btn-primary mt-4">Update Booking</button>
+                <a href="./viewHallBooking.php" class="btn btn-secondary mb-3">Back</a>
+            </form>
+        </div>
     </div>
 </body>
 

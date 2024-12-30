@@ -59,7 +59,7 @@ if (isset($_GET['booking_id'])) {
     </script>";
 }
 
-echo "<script>window.location.href = 'manageHallBooking.php';</script>";
+echo "<script>window.location.href = 'viewHallBooking.php';</script>";
 
 $conn->close();
 ?>

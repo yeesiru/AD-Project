@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHall.php';
+                        window.location.href = 'viewHallList.php';
                     }
                 });
             });
@@ -127,39 +127,41 @@ $conn->close();
 </head>
 
 <body>
-    <div class="container">
-        <a href="./manageHall.php" class="btn btn-secondary mb-3">Back to Home</a>
-        <br>
-        <h1>Edit Hall Details</h1>
+    <div class="modal-container">
+        <div class="modal-form">
+            <h1>Edit Hall Details</h1>
 
-        <form action="" method="POST">
-            <div class="form-group hall-input">
-                <label for="hall_id">Hall ID<span class="text-danger">*</span></label>
-                <input type="text" id="hall_id" name="hall_id" value="<?php echo $row['hall_id']; ?>" readonly>
-            </div>
+            <form action="" method="POST">
+                <div class="form-group hall-input">
+                    <label for="hall_id">Hall ID<span class="text-danger">*</span></label>
+                    <input type="text" id="hall_id" name="hall_id" value="<?php echo $row['hall_id']; ?>" readonly>
+                </div>
 
-            <div class="form-group hall-input">
-                <label for="name">Name<span class="text-danger">*</span></label>
-                <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>" required>
-            </div>
+                <div class="form-group hall-input">
+                    <label for="name">Name<span class="text-danger">*</span></label>
+                    <input type="text" id="name" name="name" value="<?php echo $row['name']; ?>" required>
+                </div>
 
-            <div class="form-group hall-input">
-                <label for="capacity">Capacity<span class="text-danger">*</span></label>
-                <input type="number" id="capacity" name="capacity" value="<?php echo $row['capacity']; ?>" required min="1">
-            </div>
+                <div class="form-group hall-input">
+                    <label for="capacity">Capacity<span class="text-danger">*</span></label>
+                    <input type="number" id="capacity" name="capacity" value="<?php echo $row['capacity']; ?>" required min="1">
+                </div>
 
-            <div class="form-group hall-input">
-                <label for="location">Location<span class="text-danger">*</span></label>
-                <input type="text" id="location" name="location" value="<?php echo $row['location']; ?>" required>
-            </div>
+                <div class="form-group hall-input">
+                    <label for="location">Location<span class="text-danger">*</span></label>
+                    <input type="text" id="location" name="location" value="<?php echo $row['location']; ?>" required>
+                </div>
 
-            <div class="form-group hall-input">
-                <label for="facility">Facility<span class="text-danger">*</span></label>
-                <input type="text" id="facility" name="facility" value="<?php echo $row['facility']; ?>" required>
-            </div>
+                <div class="form-group hall-input">
+                    <label for="facility">Facility<span class="text-danger">*</span></label>
+                    <input type="text" id="facility" name="facility" value="<?php echo $row['facility']; ?>" required>
+                </div>
 
-            <button type="submit" class="btn btn-primary">Update Hall</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Update Hall</button>
+                <a href="./viewHallList.php" class="btn btn-secondary mb-3">Back to Home</a>
+
+            </form>
+        </div>
     </div>
 </body>
 

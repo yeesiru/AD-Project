@@ -41,8 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li><a href="../User/ownProfile.php">Profile</a></li>
                 <li><a class="sub-btn">Manage &#x25BE;</a>
                     <ul class="sidebar-dropdown">
-                        <li><a href="../Hall/manageHall.php" class="sub-item">Hall</a></li>
+                        <li><a href="../Hall/viewHallList.php" class="sub-item">Hall</a></li>
                         <li><a href="../ambulance/viewAmbulance.php" class="sub-item">Ambulance</a></li>
+                        <li><a class="sub-btn">Ambulance &#x25BE;</a>
+                            <ul class="sidebar-dropdown">
+                                <li><a href="../ambulance/viewAmbulance.php" class="sub-item">Manage Ambulance</a></li>
+                                <li><a href="../ambulance/viewAmbulanceBooking.php" class="sub-item">Manage Ambulance Booking</a></li>
+                            </ul>
+                        </li>
                         <li><a href="../Equipment/equipmmentList.php" class="sub-item">Equipment</a></li>
                     </ul>
                 </li>
@@ -56,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <li class="hideOnMobile"> <a href="../User/ownProfile.php">Profile</a></li>
             <li class="hideOnMobile"  style="width: 149px;"> <a href="#">Manage &#x25BE;</a>
                 <ul class="dropdown">
-                    <li><a href="../Hall/manageHall.php">Hall</a></li>
+                    <li><a href="../Hall/viewHallList.php">Hall</a></li>
                     <li><a href="../ambulance/viewAmbulance.php">Ambulance</a></li>
                     <li><a href="../Equipment/equipmmentList.php">Equipment</a></li>
                 </ul>

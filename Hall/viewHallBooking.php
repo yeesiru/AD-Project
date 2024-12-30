@@ -5,18 +5,21 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch all equipment records
-$sql = "SELECT * FROM equipment";
-$result = $conn->query($sql);
-
 // Initialize variables for search and filter
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Build the SQL query with search and filter
-$sql = "SELECT * FROM hall WHERE 1=1";
+$sql = "SELECT b.booking_id, b.hall_id, h.name AS hall_name, b.booked_by, b.date, b.time_slot 
+        FROM hallBooking b 
+        INNER JOIN hall h ON b.hall_id = h.hall_id 
+        WHERE 1=1";
 
 if (!empty($search)) {
-    $sql .= " AND (name LIKE '%" . $conn->real_escape_string($search) . "%' OR location LIKE '%" . $conn->real_escape_string($search) . "%')";
+    $sql .= " AND (h.name LIKE '%" . $conn->real_escape_string($search) . "%' OR b.booked_by LIKE '%" . $conn->real_escape_string($search) . "%')";
+}
+
+if (!empty($filter_date)) {
+    $sql .= " AND b.date = '" . $conn->real_escape_string($filter_date) . "'";
 }
 
 $result = $conn->query($sql);
@@ -26,7 +29,7 @@ $result = $conn->query($sql);
 <html lang="en">
 
 <head>
-    <title>Hall List</title>
+    <title>Hall Booking List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
@@ -34,7 +37,7 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../script/adminNavBar.js" defer></script>
+    <script src="../script/officerNavBar.js" defer></script>
     <style>
         /* General styling for the page */
         body {
@@ -156,14 +159,14 @@ $result = $conn->query($sql);
         <!-- Search Bar Section -->
         <form method="GET" action="">
             <div class="search-filter">          
-                <input style="width: 70%;" name="search" type="text" placeholder="Search By Name or Location" value="<?php echo htmlspecialchars($search); ?>">
+                <input style="width: 70%;" name="search" type="text" placeholder="Search By Name or Booked Name" value="<?php echo htmlspecialchars($search); ?>">
                 <button type="submit" class="filter-button" style="width: 20%;">Search</button>
             </div>
         </form>
 
         <!-- Add Hall Button -->
         <div class="mb-3 text-end">
-            <a href="addHall.php" class="btn btn-success">Add Hall</a>
+            <a href="addHallBooking.php" class="btn btn-success">Add Hall Booking</a>
         </div>
 
         <!-- Hall Table -->
@@ -171,11 +174,11 @@ $result = $conn->query($sql);
             <table class="table table-bordered table-striped">
                 <thead class="table-success">
                     <tr>
-                    <th>Hall ID</th>
-                    <th>Name</th>
-                    <th>Capacity</th>
-                    <th>Location</th>
-                    <th>Facilities</th>
+                    <th>Booking ID</th>
+                    <th>Hall Name</th>
+                    <th>Booked By</th>
+                    <th>Date</th>
+                    <th>Time Slot</th>
                     <th>Actions</th>
                     </tr>
                 </thead>
@@ -183,20 +186,20 @@ $result = $conn->query($sql);
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($row['hall_id']); ?></td>
-                            <td><?php echo htmlspecialchars($row['name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['capacity']); ?></td>
-                            <td><?php echo htmlspecialchars($row['location']); ?></td>
-                            <td><?php echo htmlspecialchars($row['facility']); ?></td>
+                            <td><?php echo htmlspecialchars($row['booking_id']); ?></td>
+                            <td><?php echo htmlspecialchars($row['hall_name']); ?></td>
+                            <td><?php echo htmlspecialchars($row['booked_by']); ?></td>
+                            <td><?php echo htmlspecialchars($row['date']); ?></td>
+                            <td><?php echo htmlspecialchars($row['time_slot']); ?></td>
                             <td>
-                                <a href="editHall.php?hall_id=<?php echo $row['hall_id']; ?>" class="btn btn-primary btn-sm me-2">Edit</a>
-                                <button class="btn btn-danger btn-sm" onclick="confirmDelete('<?php echo $row['hall_id']; ?>')">Delete</button>
-                            </td>
+                                <a href="editHallBooking.php?booking_id=<?php echo $row['booking_id']; ?>" class="btn btn-primary btn-sm me-2">Edit</a>
+                                <button class="btn btn-danger btn-sm" onclick="confirmDeleteBooking('<?php echo $row['booking_id']; ?>')">Delete</button>
+                            </td>   
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="6" class="text-center">No halls found.</td>
+                        <td colspan="6" class="text-center">No hall bookings found.</td>
                     </tr>
                 <?php endif; ?>
                 </tbody>

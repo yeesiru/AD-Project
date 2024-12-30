@@ -66,45 +66,70 @@ $ambulanceResult = $conn->query($ambulanceQuery);
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/manageAmbulance.css">
+    <link rel="stylesheet" href="../css/styleAmbulance.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .container{
+            background-color: #F5F0DD;
+        }
+        button[type="submit"] {
+        background-color: #1D5748;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #143D33;
+        }
+        
+        .custom-select-wrapper {
+            position: relative;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <a href="./viewAmbulanceBooking.php" class="btn btn-secondary mb-3">Back</a>
-        <h1 style="text-align: center;">Add Ambulance Booking</h1>
+        <a href="./viewAmbulanceBooking.php" class="btn btn-secondary mb-3 btn-warning-custom">Back</a>
+        <h1 >Add Ambulance Booking</h1>
 
-        <div class="booking-form">
-            <form id="addBookingForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 
                 <div class="form-group">
-                    <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                    <label for="name" >Name<span class="text-danger">*</span></label>
                     <input type="text" id="name" name="name" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="contact" class="form-label">Contact No<span class="text-danger">*</span></label>
+                    <label for="contact" >Contact No<span class="text-danger">*</span></label>
                     <input type="text" id="contact" name="contact" class="form-control" pattern="\d{10,11}" title="Contact number must be 10 or 11 digits" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="destination" class="form-label">Destination<span class="text-danger">*</span></label>
+                    <label for="destination">Destination<span class="text-danger">*</span></label>
                     <input type="text" id="destination" name="destination" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                    <label for="date">Date<span class="text-danger">*</span></label>
                     <input type="date" id="date" name="date" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="time" class="form-label">Time<span class="text-danger">*</span></label>
+                    <label for="time">Time<span class="text-danger">*</span></label>
                     <input type="time" id="time" name="time" class="form-control" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="vehicleId" class="form-label">Select Ambulance<span class="text-danger">*</span></label>
+                    <label for="vehicleId">Select Ambulance<span class="text-danger">*</span></label>
                     <select id="vehicleId" name="vehicleId" class="form-select" required>
                         <option value="" disabled selected>Select an available ambulance</option>
                         <?php
@@ -119,9 +144,8 @@ $ambulanceResult = $conn->query($ambulanceQuery);
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary mt-3">Book Ambulance</button>
+                <button type="submit" class="btn btn-primary mt-2 btn-warning-custom">Book Ambulance</button>
             </form>
-        </div>
     </div>
 
     <?php
