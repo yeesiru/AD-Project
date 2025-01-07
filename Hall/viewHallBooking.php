@@ -38,6 +38,22 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/officerNavBar.js" defer></script>
+    <script>
+        function confirmDeleteBooking(booking_id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This booking will be permanently deleted!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `deleteHallBooking.php?booking_id=${booking_id}`;
+                }
+            });
+        }
+    </script>
     <style>
         /* General styling for the page */
         body {
