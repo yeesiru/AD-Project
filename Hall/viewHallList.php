@@ -35,6 +35,22 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="../css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script/adminNavBar.js" defer></script>
+    <script>
+        function confirmDelete(hall_id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'You will not be able to recover this hall record!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `deleteHall.php?hall_id=${hall_id}`;
+                }
+            });
+        }
+    </script>
     <style>
         /* General styling for the page */
         body {
