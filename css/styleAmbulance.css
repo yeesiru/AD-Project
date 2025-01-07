@@ -1,0 +1,36 @@
+        .btn-warning-custom {
+            background-color: #1D5748;
+            border-color: #1D5748;
+            color: white;
+        }
+
+        .btn-warning-custom:hover {
+            background-color: #143D33;
+            border-color: #143D33;
+            color: white;
+        }
+
+        .btn-danger-custom {
+            background-color: #B22222;
+            border-color: #B22222;
+            color: white;
+        }
+
+        .btn-danger-custom:hover {
+            background-color: #7A1414;
+            border-color: #7A1414;
+        }
+
+        .table thead th {
+            background-color: #1D5748 !important; 
+            color: white !important; 
+        }
+        
+        .table tbody tr:nth-child(odd) {
+            background-color:rgb(255, 250, 233); /* Nude color */
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #FFFFFF; /* White color */
+        }
+
