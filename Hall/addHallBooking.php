@@ -6,11 +6,15 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
+    $name = $_POST['booked_by'];
     $contact = $_POST['contact'];
     $hallId = $_POST['hallId'];
     $date = $_POST['date'];
     $timeSlot = $_POST['timeSlot'];
+
+    // Define the SQL query
+    $sql = "INSERT INTO hallbooking (booked_by, hall_id, date, time_slot) 
+            VALUES ('$name', '$hallId', '$date', '$timeSlot')";
 
     // Check for success or error
     if ($conn->query($sql) === TRUE) {
