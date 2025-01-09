@@ -130,7 +130,7 @@ $hallResult = $conn->query($hallQuery);
                 
             <div class="form-group">
                     <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                    <input type="text" id="booked_by" name="booked_by" class="form-control" placeholder="John Doe" required>
                 </div>
 
                 <div class="form-group">
