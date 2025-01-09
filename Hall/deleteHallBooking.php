@@ -21,7 +21,7 @@ if (isset($_GET['booking_id'])) {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHallBooking.php';
+                        window.location.href = 'viewHallBooking.php';
                     }
                 });
             });
@@ -36,7 +36,7 @@ if (isset($_GET['booking_id'])) {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHallBooking.php';
+                        window.location.href = 'viewHallBooking.php';
                     }
                 });
             });
@@ -52,7 +52,7 @@ if (isset($_GET['booking_id'])) {
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = 'manageHallBooking.php';
+                    window.location.href = 'viewHallBooking.php';
                 }
             });
         });
