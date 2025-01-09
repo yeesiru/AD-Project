@@ -19,16 +19,14 @@ if ($result->num_rows > 0) {
 
 // Handle form submission for updating the booking
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = $_POST['name'];
-    $contact = $_POST['contact'];
+    $name = $_POST['booked_by'];
     $date = $_POST['date'];
     $timeSlot = $_POST['timeSlot'];
-    $hallId = $_POST['hallId'];
     $bookingId = $_POST['bookingId'];
 
     $updateSql = "UPDATE hallBooking 
-                  SET booked_by='$name', contact='$contact', date='$date', 
-                      time_slot='$timeSlot', hall_id='$hallId' 
+                  SET booked_by='$name', date='$date', 
+                      time_slot='$timeSlot' 
                   WHERE booking_id='$bookingId'";
     
     if ($conn->query($updateSql) === TRUE) {
@@ -41,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = 'manageHallBooking.php';
+                        window.location.href = 'viewHallBooking.php';
                     }
                 });
             });
@@ -142,7 +140,7 @@ $conn->close();
 
                 <div class="form-group">
                     <label for="name">Name<span class="text-danger">*</span></label>
-                    <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
+                    <input type="text" id="booked_by" name="booked_by" class="form-control" value="<?php echo htmlspecialchars($row['booked_by']); ?>" required>
                 </div>
 
                 <div class="form-group">
